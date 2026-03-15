@@ -157,8 +157,11 @@
         <label>Link da Imagem <span style="font-weight: normal; color: var(--text-gray);">(Opcional)</span>:</label>
         <input type="text" id="q_imagem" placeholder="https://exemplo.com/imagem.jpg">
 
+        <label>Texto de Apoio / Citação <span style="font-weight: normal; color: var(--text-gray);">(Opcional)</span>:</label>
+        <textarea id="q_texto_apoio" rows="3" placeholder="Insira o texto base ou contexto da questão..."></textarea>
+
         <label>Enunciado da Questão:</label>
-        <textarea id="q_pergunta" rows="4"></textarea>
+        <textarea id="q_pergunta" rows="4" placeholder="Digite o comando da questão aqui..."></textarea>
         
         <div class="grid-opcoes">
             <div><label>Opção A:</label><input type="text" id="q_a"></div>
@@ -288,7 +291,8 @@
             id: Date.now(),
             materia: document.getElementById('q_materia').value,
             assunto: document.getElementById('q_assunto').value,
-            imagem: document.getElementById('q_imagem').value, // Campo de imagem capturado aqui
+            imagem: document.getElementById('q_imagem').value,
+            texto_apoio: document.getElementById('q_texto_apoio').value,
             pergunta: document.getElementById('q_pergunta').value,
             a: document.getElementById('q_a').value,
             b: document.getElementById('q_b').value,
@@ -298,7 +302,7 @@
             resolucao: document.getElementById('q_resolucao').value
         };
 
-        if (!questao.materia || !questao.pergunta) { alert("Preencha os campos!"); return; }
+        if (!questao.materia || !questao.pergunta) { alert("Preencha os campos obrigatórios!"); return; }
 
         let banco = JSON.parse(localStorage.getItem('bancoQuestoes')) || [];
         banco.push(questao);
