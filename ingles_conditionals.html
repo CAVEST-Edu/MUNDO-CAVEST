@@ -6,7 +6,7 @@
 
     <style>
         body {
-            font-family: Arial;
+            font-family: Arial, sans-serif;
             background: #0f172a;
             color: white;
             padding: 40px;
@@ -14,20 +14,61 @@
 
         h1 {
             text-align: center;
+            color: #38bdf8; /* Sky Blue */
+            margin-bottom: 40px;
         }
 
-        .questao {
+        #container-questoes {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .grammar-cheat-sheet {
             background: #1e293b;
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 30px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            border-top: 5px solid #38bdf8;
+            font-size: 0.9em;
+        }
+
+        .grammar-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .grammar-table td, .grammar-table th {
+            padding: 8px;
+            border: 1px solid #334155;
+            text-align: left;
+        }
+
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #10b981; /* Emerald */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        label:hover {
+            background: #475569;
         }
 
         button {
-            background: #22c55e;
+            background: #10b981;
             border: none;
             padding: 10px 20px;
             border-radius: 6px;
@@ -35,19 +76,19 @@
             font-size: 15px;
             cursor: pointer;
             margin-top: 10px;
-            margin-right: 5px;
+            font-weight: bold;
         }
 
         button:hover {
-            background: #16a34a;
+            background: #059669;
         }
 
-        .resolucao {
-            display: none;
+        .resolucao-box {
             margin-top: 15px;
-            background: #334155;
+            background: #0f172a;
             padding: 15px;
             border-radius: 8px;
+            border: 1px dashed #38bdf8;
         }
 
         .voltar {
@@ -62,110 +103,119 @@
 
 <body>
 
-    <h1>English - Conditionals (If-clauses) 🔀</h1>
+    <h1>English Grammar - Conditionals 🔀</h1>
 
-    <div class="questao">
-        <p><b>1.</b> Complete the <strong>First Conditional</strong> sentence: <br><em>"If it _______ tomorrow, we _______ to the beach."</em></p>
-        <input type="radio" name="q1" value="a"> rains - won't go<br>
-        <input type="radio" name="q1" value="b"> rain - don't go<br>
-        <input type="radio" name="q2" value="c"> will rain - wouldn't go<br>
-        <input type="radio" name="q1" value="d"> rained - won't go<br>
-        <br>
-        <button onclick="corrigir(1,'a')">Responder</button>
-        <p id="resultado1"></p>
-        <button onclick="verResolucao(1)">Ver resolução</button>
-        
-        <div class="resolucao" id="res1">
-            <b>Resolução:</b><br><br>
-            A **First Conditional** trata de possibilidades reais. A estrutura é: **If + Simple Present**, **will + verbo**. Portanto: "If it rains... we won't go".<br><br>
-            Resposta correta: <strong>A</strong>
+    <div id="container-questoes">
+        <div class="grammar-cheat-sheet">
+            <h3 style="margin-top:0; color:#38bdf8;">📝 Quick Guide: If-Clauses</h3>
+            <table class="grammar-table">
+                <tr>
+                    <th>Type</th>
+                    <th>Structure</th>
+                    <th>Usage</th>
+                </tr>
+                <tr>
+                    <td><b>1st</b></td>
+                    <td>If + Simple Present | Will + Verb</td>
+                    <td>Real possibilities</td>
+                </tr>
+                <tr>
+                    <td><b>2nd</b></td>
+                    <td>If + Simple Past | Would + Verb</td>
+                    <td>Imaginary/Hypothetical</td>
+                </tr>
+                <tr>
+                    <td><b>3rd</b></td>
+                    <td>If + Past Perfect | Would have + Participle</td>
+                    <td>Past regrets</td>
+                </tr>
+            </table>
         </div>
+
+        <p style="text-align:center; color:#94a3b8;">Analyzing conditional structures...</p>
     </div>
 
-    <div class="questao">
-        <p><b>2.</b> In the <strong>Second Conditional</strong> (imaginary situations), what is the correct form: <br><em>"If I _______ rich, I _______ a private jet."</em></p>
-        <input type="radio" name="q2" value="a"> am - will buy<br>
-        <input type="radio" name="q2" value="b"> was - would bought<br>
-        <input type="radio" name="q2" value="c"> were - would buy<br>
-        <input type="radio" name="q2" value="d"> had been - would buy<br>
-        <br>
-        <button onclick="corrigir(2,'c')">Responder</button>
-        <p id="resultado2"></p>
-        <button onclick="verResolucao(2)">Ver resolução</button>
-        
-        <div class="resolucao" id="res2">
-            <b>Resolução:</b><br><br>
-            A **Second Conditional** usa **If + Simple Past**, **would + verbo**. Curiosidade: para o verbo "to be", usamos <strong>were</strong> para todas as pessoas (I, he, she, it) em contextos formais de condicional.<br><br>
-            Resposta correta: <strong>C</strong>
-        </div>
-    </div>
-
-    <div class="questao">
-        <p><b>3.</b> Which sentence represents a <strong>Third Conditional</strong> (regret about the past)?</p>
-        <input type="radio" name="q3" value="a"> If I study, I will pass.<br>
-        <input type="radio" name="q3" value="b"> If I had studied more, I would have passed the exam.<br>
-        <input type="radio" name="q3" value="c"> If I studied more, I would pass.<br>
-        <input type="radio" name="q3" value="d"> I pass if I study.<br>
-        <br>
-        <button onclick="corrigir(3,'b')">Responder</button>
-        <p id="resultado3"></p>
-        <button onclick="verResolucao(3)">Ver resolução</button>
-        
-        <div class="resolucao" id="res3">
-            <b>Resolução:</b><br><br>
-            A **Third Conditional** fala de algo que não aconteceu no passado. Estrutura: **If + Past Perfect (had + part.)**, **would have + part.**.<br><br>
-            Resposta correta: <strong>B</strong>
-        </div>
-    </div>
-
-    <a class="voltar" href="ingles.html">⬅ Voltar para Inglês</a>
+    <a class="voltar" href="ingles.html">⬅ Voltar</a>
 
     <script>
-    function corrigir(qNum, correta){
-        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-        if(!selecionada){
-            alert("Escolha uma alternativa!");
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: ingles e assunto: conditionals
+        const filtradas = banco.filter(q => q.materia === "ingles" && q.assunto === "conditionals");
+
+        const guideHtml = document.querySelector(".grammar-cheat-sheet").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = guideHtml + "<p style='text-align:center; color:#94a3b8;'>No conditionals found. Update your question bank!</p>";
             return;
         }
 
-        let acertou = selecionada.value === correta;
+        container.innerHTML = guideHtml; 
 
-        let respostas = JSON.parse(localStorage.getItem("respostasInglesConditionals")) || {};
-        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-        localStorage.setItem("respostasInglesConditionals", JSON.stringify(respostas));
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            let resolucaoHtml = q.resolucao ? `
+                <div id="res-${q.id}" style="display:none;" class="resolucao-box">
+                    <p style="color:#38bdf8; font-weight:bold; margin-bottom:5px;">🔍 Grammar Analysis:</p>
+                    <p style="font-size:14px; color:#cbd5e1;">${q.resolucao}</p>
+                </div>` : "";
+
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Submit Answer</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                ${resolucaoHtml}
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("Choose an option first!");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+
+        if (acertou) {
+            feedback.innerText = "✅ Correct! Well done!";
+            feedback.style.color = "#10b981";
+        } else {
+            feedback.innerText = `❌ Incorrect. The correct alternative was (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        if (resBox) resBox.style.display = "block";
 
         let logado = localStorage.getItem("logado");
         if(logado){
             let usuario = JSON.parse(localStorage.getItem(logado));
-            usuario.respondidas = (usuario.respondidas || 0) + 1;
-            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-            localStorage.setItem(logado, JSON.stringify(usuario));
-        }
-
-        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correct!" : "❌ Incorrect!";
-    }
-
-    function verResolucao(qNum){
-        document.getElementById(`res${qNum}`).style.display = "block";
-    }
-
-    function carregarRespostas(){
-        let respostas = JSON.parse(localStorage.getItem("respostasInglesConditionals"));
-        if(!respostas) return;
-        for(let q in respostas){
-            let info = respostas[q];
-            if(info.selecionada){
-                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-                if(input) input.checked = true;
-            }
-            if(info.acertou !== undefined){
-                let numero = q.replace("q","");
-                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correct!" : "❌ Incorrect!";
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
             }
         }
     }
 
-    window.onload = carregarRespostas;
+    window.onload = carregarQuestoes;
     </script>
 
 </body>

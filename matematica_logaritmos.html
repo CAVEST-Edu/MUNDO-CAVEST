@@ -1,164 +1,203 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>CAVEST - Logaritmos</title>
+    <meta charset="UTF-8">
+    <title>CAVEST - Logaritmos</title>
 
-<style>
-body{
-    font-family:Arial;
-    background:#0f172a;
-    color:white;
-    padding:40px;
-}
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
 
-h1{
-    text-align:center;
-}
+        h1 {
+            text-align: center;
+            color: #ec4899; /* Pink/Magenta */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-.questao{
-    background:#1e293b;
-    padding:20px;
-    border-radius:10px;
-    margin-bottom:30px;
-}
+        #container-questoes {
+            max-width: 850px;
+            margin: auto;
+        }
 
-button{
-    background:#22c55e;
-    border:none;
-    padding:10px 20px;
-    border-radius:6px;
-    color:white;
-    font-size:15px;
-    cursor:pointer;
-    margin-top:10px;
-}
+        .log-rules {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-bottom: 5px solid #ec4899;
+            display: flex;
+            justify-content: space-around;
+            font-size: 0.8em;
+        }
 
-button:hover{
-    background:#16a34a;
-}
+        .rule-card {
+            background: #0f172a;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+        }
 
-.resolucao{
-    display:none;
-    margin-top:15px;
-    background:#334155;
-    padding:15px;
-    border-radius:8px;
-}
-</style>
+        .rule-card b { color: #ec4899; }
+
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+            border-left: 5px solid #ec4899;
+        }
+
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+        }
+
+        label:hover {
+            background: #701a75; /* Purple/Magenta mix */
+            transform: scale(1.01);
+        }
+
+        button {
+            background: #ec4899;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #f472b6;
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+        }
+
+        .resolucao-box {
+            display: none;
+            margin-top: 15px;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #ec4899;
+            line-height: 1.6;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Matemática - Logaritmos</h1>
+    <h1>Matemática - Escalas Logarítmicas 📉</h1>
 
-<!-- QUESTÃO 1 -->
-<div class="questao">
-<p><b>1.</b> Qual é o valor de log₁₀ 1000?</p>
-<input type="radio" name="q1" value="a"> 2<br>
-<input type="radio" name="q1" value="b"> 3<br>
-<input type="radio" name="q1" value="c"> 10<br>
-<input type="radio" name="q1" value="d"> 100<br>
-<br>
-<button onclick="corrigir(1,'b')">Responder</button>
-<p id="resultado1"></p>
-<button onclick="verResolucao(1)">Ver resolução</button>
-<div class="resolucao" id="res1">
-<b>Resolução:</b><br><br>
-log₁₀ 1000 = x → 10ˣ = 1000 → x = 3  
-<br><br>Resposta correta: <strong>B</strong>
-</div>
-</div>
+    <div id="container-questoes">
+        <div class="log-rules">
+            <div class="rule-card"><b>Produto:</b> log(a.b) = log a + log b</div>
+            <div class="rule-card"><b>Quociente:</b> log(a/b) = log a - log b</div>
+            <div class="rule-card"><b>Potência:</b> log aⁿ = n.log a</div>
+        </div>
 
-<!-- QUESTÃO 2 -->
-<div class="questao">
-<p><b>2.</b> Qual é a propriedade correta de logaritmos?</p>
-<input type="radio" name="q2" value="a"> log(a × b) = log a + log b<br>
-<input type="radio" name="q2" value="b"> log(a + b) = log a + log b<br>
-<input type="radio" name="q2" value="c"> log(a - b) = log a - log b<br>
-<input type="radio" name="q2" value="d"> log(a ÷ b) = log a × log b<br>
-<br>
-<button onclick="corrigir(2,'a')">Responder</button>
-<p id="resultado2"></p>
-<button onclick="verResolucao(2)">Ver resolução</button>
-<div class="resolucao" id="res2">
-<b>Resolução:</b><br><br>
-A propriedade correta é: <strong>log(a × b) = log a + log b</strong>
-<br><br>Resposta correta: <strong>A</strong>
-</div>
-</div>
+        <p style="text-align:center; color:#64748b;">Descomplicando expoentes invisíveis...</p>
+    </div>
 
-<!-- QUESTÃO 3 -->
-<div class="questao">
-<p><b>3.</b> Se log₂ 8 = x, qual é o valor de x?</p>
-<input type="radio" name="q3" value="a"> 2<br>
-<input type="radio" name="q3" value="b"> 3<br>
-<input type="radio" name="q3" value="c"> 8<br>
-<input type="radio" name="q3" value="d"> 16<br>
-<br>
-<button onclick="corrigir(3,'b')">Responder</button>
-<p id="resultado3"></p>
-<button onclick="verResolucao(3)">Ver resolução</button>
-<div class="resolucao" id="res3">
-<b>Resolução:</b><br><br>
-log₂ 8 = x → 2ˣ = 8 → 2³ = 8 → x = <strong>3</strong>
-<br><br>Resposta correta: <strong>B</strong>
-</div>
-</div>
+    <a class="voltar" href="matematica.html">⬅ Voltar</a>
 
-<script>
-// Função genérica para corrigir qualquer questão
-function corrigir(qNum, correta){
-    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-    if(!selecionada){
-        alert("Escolha uma alternativa!");
-        return;
-    }
-
-    let acertou = selecionada.value === correta;
-
-    // salvar respostas da página
-    let respostas = JSON.parse(localStorage.getItem("respostasLogaritmos")) || {};
-    respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-    localStorage.setItem("respostasLogaritmos", JSON.stringify(respostas));
-
-    // atualizar progresso do usuário logado
-    let logado = localStorage.getItem("logado");
-    if(logado){
-        let usuario = JSON.parse(localStorage.getItem(logado));
-        usuario.respondidas = (usuario.respondidas || 0) + 1;
-        if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-        localStorage.setItem(logado, JSON.stringify(usuario));
-    }
-
-    // mostrar resultado
-    document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
-}
-
-// mostrar resolução
-function verResolucao(qNum){
-    document.getElementById(`res${qNum}`).style.display = "block";
-}
-
-// carregar respostas salvas
-function carregarRespostas(){
-    let respostas = JSON.parse(localStorage.getItem("respostasLogaritmos"));
-    if(!respostas) return;
-    for(let q in respostas){
-        let info = respostas[q];
-        if(info.selecionada){
-            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-            if(input) input.checked = true;
+    <script>
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: matematica e assunto: logaritmos
+        const filtradas = banco.filter(q => q.materia === "matematica" && q.assunto === "logaritmos");
+        const rulesHtml = document.querySelector(".log-rules").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = rulesHtml + "<p style='text-align:center; color:#94a3b8;'>Nenhum logaritmo encontrado no banco de dados.</p>";
+            return;
         }
-        if(info.acertou !== undefined){
-            let numero = q.replace("q","");
-            document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+
+        container.innerHTML = rulesHtml; 
+
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Resolver Log</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                
+                <div id="res-${q.id}" class="resolucao-box">
+                    <b style="color:#ec4899;">Aplicação da Definição:</b><br><br>
+                    ${q.resolucao || "Lembre-se: log na base B de A é o expoente que elevamos B para dar A."}
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("Aplique a definição antes de responder!");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+        resBox.style.display = "block";
+
+        if (acertou) {
+            feedback.innerText = "✅ Correto! Expoente encontrado com precisão.";
+            feedback.style.color = "#ec4899";
+        } else {
+            feedback.innerText = `❌ Incorreto. O valor logarítmico era (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        // Progresso Mundo CAVEST
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
+            }
         }
     }
-}
 
-window.onload = carregarRespostas;
-</script>
+    window.onload = carregarQuestoes;
+    </script>
 
 </body>
 </html>

@@ -2,11 +2,11 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CAVEST - Gramática</title>
+    <title>CAVEST - Gramática Aplicada</title>
 
     <style>
         body {
-            font-family: Arial;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #0f172a;
             color: white;
             padding: 40px;
@@ -14,40 +14,87 @@
 
         h1 {
             text-align: center;
+            color: #a78bfa; /* Amethyst Purple */
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
+
+        #container-questoes {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        /* Painel de Regras Mundo CAVEST */
+        .grammar-checklist {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-top: 5px solid #a78bfa;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            font-size: 0.85em;
+        }
+
+        .check-item {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            text-align: center;
+        }
+
+        .check-item b { color: #a78bfa; display: block; }
 
         .questao {
             background: #1e293b;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 12px;
             margin-bottom: 30px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-right: 5px solid #a78bfa;
+        }
+
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        label:hover {
+            background: #4c1d95; /* Deep Purple */
         }
 
         button {
-            background: #22c55e;
+            background: #a78bfa;
             border: none;
             padding: 10px 20px;
             border-radius: 6px;
-            color: white;
-            font-size: 15px;
+            color: #0f172a;
+            font-weight: bold;
             cursor: pointer;
             margin-top: 10px;
-            margin-right: 5px;
+            transition: 0.3s;
         }
 
         button:hover {
-            background: #16a34a;
+            background: #c4b5fd;
+            transform: translateY(-2px);
         }
 
-        .resolucao {
+        .resolucao-box {
             display: none;
             margin-top: 15px;
-            background: #334155;
+            background: #0f172a;
             padding: 15px;
             border-radius: 8px;
+            border: 1px solid #a78bfa;
+            line-height: 1.6;
         }
 
         .voltar {
@@ -62,115 +109,96 @@
 
 <body>
 
-    <h1>Português - Gramática ✍️</h1>
+    <h1>Português - Gramática e Norma Culta ✍️</h1>
 
-    <div class="questao">
-        <p><b>1.</b> Assinale a alternativa em que o uso da <strong>crase</strong> está correto:</p>
-        <input type="radio" name="q1" value="a"> Ele entregou o presente à ela.<br>
-        <input type="radio" name="q1" value="b"> Vamos à pé para a escola.<br>
-        <input type="radio" name="q1" value="c"> Referi-me à diretora da instituição.<br>
-        <input type="radio" name="q1" value="d"> O curso começará à partir de amanhã.<br>
-        <br>
-        <button onclick="corrigir(1,'c')">Responder</button>
-        <p id="resultado1"></p>
-        <button onclick="verResolucao(1)">Ver resolução</button>
-        
-        <div class="resolucao" id="res1">
-            <b>Resolução:</b><br><br>
-            A crase ocorre diante de substantivos femininos que admitem artigo. <br>
-            - Não há crase antes de pronome pessoal (ela), palavra masculina (pé) ou verbo (partir).<br><br>
-            Resposta correta: <strong>C</strong>
+    <div id="container-questoes">
+        <div class="grammar-checklist">
+            <div class="check-item"><b>Crase</b>A+A. Nunca antes de verbo ou masculino.</div>
+            <div class="check-item"><b>Regência</b>Verbos pedem preposição? Assistir a, Visar a.</div>
+            <div class="check-item"><b>Pontuação</b>Não se separa Sujeito de Verbo por vírgula.</div>
         </div>
+
+        <p style="text-align:center; color:#64748b;">Refinando o domínio da linguagem padrão...</p>
     </div>
 
-    <div class="questao">
-        <p><b>2.</b> Escolha a opção que completa corretamente a frase: <br><em>"_____ muitos anos que não vejo _____ pessoas, mas ontem elas _____ aqui."</em></p>
-        <input type="radio" name="q2" value="a"> Faz - aquelas - vieram<br>
-        <input type="radio" name="q2" value="b"> Fazem - aquelas - vieram<br>
-        <input type="radio" name="q2" value="c"> Faz - aquelas - viera<br>
-        <input type="radio" name="q2" value="d"> Fazem - àquelas - vieram<br>
-        <br>
-        <button onclick="corrigir(2,'a')">Responder</button>
-        <p id="resultado2"></p>
-        <button onclick="verResolucao(2)">Ver resolução</button>
-        
-        <div class="resolucao" id="res2">
-            <b>Resolução:</b><br><br>
-            O verbo <strong>Fazer</strong>, quando indica tempo decorrido, é impessoal (fica sempre no singular). Portanto: "Faz muitos anos".<br><br>
-            Resposta correta: <strong>A</strong>
-        </div>
-    </div>
-
-    <div class="questao">
-        <p><b>3.</b> Sobre a <strong>regência verbal</strong>, qual frase está em conformidade com a norma padrão?</p>
-        <input type="radio" name="q3" value="a"> Eu assisti o filme ontem à noite.<br>
-        <input type="radio" name="q3" value="b"> Os alunos aspiram o sucesso profissional.<br>
-        <input type="radio" name="q3" value="c"> Nós assistimos ao documentário na sala.<br>
-        <input type="radio" name="q3" value="d"> Ele esqueceu do livro em casa.<br>
-        <br>
-        <button onclick="corrigir(3,'c')">Responder</button>
-        <p id="resultado3"></p>
-        <button onclick="verResolucao(3)">Ver resolução</button>
-        
-        <div class="resolucao" id="res3">
-            <b>Resolução:</b><br><br>
-            O verbo <strong>Assistir</strong> no sentido de "ver" exige a preposição "a". Quem assiste, assiste <strong>a</strong> alguma coisa.<br><br>
-            Resposta correta: <strong>C</strong>
-        </div>
-    </div>
-
-    <a class="voltar" href="index.html">⬅ Voltar</a>
+    <a class="voltar" href="portugues.html">⬅ Voltar</a>
 
     <script>
-    // Função genérica para corrigir qualquer questão
-    function corrigir(qNum, correta){
-        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-        if(!selecionada){
-            alert("Escolha uma alternativa!");
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: portugues e assunto: gramatica
+        const filtradas = banco.filter(q => q.materia === "portugues" && q.assunto === "gramatica");
+        const checklistHtml = document.querySelector(".grammar-checklist").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = checklistHtml + "<p style='text-align:center; color:#94a3b8;'>Nenhum desvio gramatical detectado no banco.</p>";
             return;
         }
 
-        let acertou = selecionada.value === correta;
+        container.innerHTML = checklistHtml; 
 
-        // Salvar respostas na chave específica de Gramática
-        let respostas = JSON.parse(localStorage.getItem("respostasGramatica")) || {};
-        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-        localStorage.setItem("respostasGramatica", JSON.stringify(respostas));
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
 
-        // Atualizar progresso do usuário logado
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Analisar Norma Culta</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                
+                <div id="res-${q.id}" class="resolucao-box">
+                    <b style="color:#a78bfa;">Parecer Gramatical:</b><br><br>
+                    ${q.resolucao || "Avalie a relação entre os termos da oração para aplicar a regra correta."}
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("Selecione uma alternativa para análise!");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+        resBox.style.display = "block";
+
+        if (acertou) {
+            feedback.innerText = "✅ Correto! Domínio pleno da norma padrão.";
+            feedback.style.color = "#a78bfa";
+        } else {
+            feedback.innerText = `❌ Incorreto. A forma adequada seria a opção (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        // Sistema de Progresso Mundo CAVEST
         let logado = localStorage.getItem("logado");
         if(logado){
             let usuario = JSON.parse(localStorage.getItem(logado));
-            usuario.respondidas = (usuario.respondidas || 0) + 1;
-            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-            localStorage.setItem(logado, JSON.stringify(usuario));
-        }
-
-        // Mostrar resultado
-        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
-    }
-
-    function verResolucao(qNum){
-        document.getElementById(`res${qNum}`).style.display = "block";
-    }
-
-    function carregarRespostas(){
-        let respostas = JSON.parse(localStorage.getItem("respostasGramatica"));
-        if(!respostas) return;
-        for(let q in respostas){
-            let info = respostas[q];
-            if(info.selecionada){
-                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-                if(input) input.checked = true;
-            }
-            if(info.acertou !== undefined){
-                let numero = q.replace("q","");
-                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
             }
         }
     }
 
-    window.onload = carregarRespostas;
+    window.onload = carregarQuestoes;
     </script>
 
 </body>

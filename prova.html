@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova em Andamento - Mundo CAVEST</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --accent: #38bdf8;
+            --text-muted: #94a3b8;
+            --xp-color: #eab308;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container-prova {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header-prova {
+            display: flex;
+            justify-content: space-between;
+            background: var(--card);
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .questao-card {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .imagem-questao {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: block;
+            border: 1px solid #334155;
+        }
+
+        .pergunta-texto {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .opcoes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .opcao {
+            background: #0f172a;
+            border: 1px solid #334155;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: left;
+            color: white;
+            font-size: 16px;
+        }
+
+        .opcao:hover {
+            border-color: var(--accent);
+            background: #1e3a8a;
+        }
+
+        .opcao.selecionada {
+            background: var(--accent);
+            color: #0f172a;
+            font-weight: bold;
+            border-color: white;
+        }
+
+        .controles {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-proxima { background: var(--accent); color: #0f172a; }
+        .btn-finalizar { background: #22c55e; color: white; display: none; }
+
+        #resultado { display: none; text-align: center; }
+        .nota-box { font-size: 48px; color: var(--accent); margin: 10px 0; }
+        
+        /* Estilo XP */
+        .xp-ganho {
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid var(--xp-color);
+            color: var(--xp-color);
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-prova" id="boxProva">
+    <div class="header-prova">
+        <span id="infoMateria">Simulado Geral</span>
+        <span id="infoProgresso">Questão 1 de 10</span>
+    </div>
+
+    <div class="questao-card">
+        <div id="displayImagem"></div>
+        <p class="pergunta-texto" id="textoPergunta">Carregando questão...</p>
+        
+        <div class="opcoes-container">
+            <button class="opcao" onclick="selecionar(0)" id="opt_a">A) </button>
+            <button class="opcao" onclick="selecionar(1)" id="opt_b">B) </button>
+            <button class="opcao" onclick="selecionar(2)" id="opt_c">C) </button>
+            <button class="opcao" onclick="selecionar(3)" id="opt_d">D) </button>
+        </div>
+
+        <div class="controles">
+            <button class="btn btn-proxima" id="btnProxima" onclick="proximaQuestao()">PRÓXIMA QUESTÃO ➡</button>
+            <button class="btn btn-finalizar" id="btnFinalizar" onclick="mostrarResultado()">FINALIZAR SIMULADO ✅</button>
+        </div>
+    </div>
+</div>
+
+<div class="container-prova" id="resultado">
+    <div class="questao-card">
+        <h2>Simulado Finalizado!</h2>
+        <div class="nota-box" id="notaFinal">0%</div>
+        <div class="xp-ganho" id="xpTotalMsg">+0 XP Total</div>
+        <p id="msgFeedback"></p>
+        <hr style="border: 0; border-top: 1px solid #334155; margin: 20px 0;">
+        <button class="btn btn-proxima" onclick="window.location.href='simulados.html'">NOVO SIMULADO</button>
+        <button class="btn" style="background: #334155; color: white; margin-left: 10px;" onclick="window.location.href='dashboard.html'">VER PROGRESSO</button>
+    </div>
+</div>
+
+<script>
+    let questoesProva = [];
+    let indiceAtual = 0;
+    let acertos = 0;
+    let escolhaDoAluno = null;
+
+    function carregarProva() {
+        const config = JSON.parse(localStorage.getItem("configSimulado"));
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        if (banco.length === 0) {
+            alert("Nenhuma questão encontrada no banco!");
+            window.location.href = "simulados.html";
+            return;
+        }
+
+        let listaFiltrada = [];
+        if (config.tipo === 'materia') {
+            listaFiltrada = banco.filter(q => q.materia === config.materiaEscolhida);
+            document.getElementById("infoMateria").innerText = "Foco: " + config.materiaEscolhida.toUpperCase();
+        } else {
+            listaFiltrada = [...banco];
+        }
+
+        listaFiltrada.sort(() => Math.random() - 0.5);
+        let qtd = config.tipo === 'rapido' ? 10 : (config.tipo === 'maratona' ? 45 : listaFiltrada.length);
+        questoesProva = listaFiltrada.slice(0, qtd);
+
+        mostrarQuestao();
+    }
+
+    function mostrarQuestao() {
+        const q = questoesProva[indiceAtual];
+        escolhaDoAluno = null;
+        document.getElementById("infoProgresso").innerText = `Questão ${indiceAtual + 1} de ${questoesProva.length}`;
+        document.getElementById("textoPergunta").innerText = q.pergunta;
+        document.getElementById("opt_a").innerText = "A) " + q.a;
+        document.getElementById("opt_b").innerText = "B) " + q.b;
+        document.getElementById("opt_c").innerText = "C) " + q.c;
+        document.getElementById("opt_d").innerText = "D) " + q.d;
+        document.querySelectorAll('.opcao').forEach(btn => btn.classList.remove('selecionada'));
+        const areaImg = document.getElementById("displayImagem");
+        areaImg.innerHTML = q.imagem ? `<img src="${q.imagem}" class="imagem-questao">` : "";
+
+        if (indiceAtual === questoesProva.length - 1) {
+            document.getElementById("btnProxima").style.display = "none";
+            document.getElementById("btnFinalizar").style.display = "block";
+        }
+    }
+
+    function selecionar(idx) {
+        escolhaDoAluno = ["a", "b", "c", "d"][idx];
+        document.querySelectorAll('.opcao').forEach((btn, i) => {
+            btn.classList.toggle('selecionada', i === idx);
+        });
+    }
+
+    function proximaQuestao() {
+        if (!escolhaDoAluno) { alert("Selecione uma resposta!"); return; }
+        if (escolhaDoAluno === questoesProva[indiceAtual].correta) acertos++;
+        indiceAtual++;
+        mostrarQuestao();
+    }
+
+    function mostrarResultado() {
+        if (!escolhaDoAluno) { alert("Selecione uma resposta!"); return; }
+        if (escolhaDoAluno === questoesProva[indiceAtual].correta) acertos++;
+
+        // --- LÓGICA DE XP E SALVAMENTO ---
+        const nomeLogado = localStorage.getItem("logado");
+        let xpGanhos = (acertos * 50) + 100; // 50 por acerto + 100 de bônus por terminar
+
+        if (nomeLogado) {
+            let usuario = JSON.parse(localStorage.getItem(nomeLogado));
+            usuario.respondidas = (usuario.respondidas || 0) + questoesProva.length;
+            usuario.acertos = (usuario.acertos || 0) + acertos;
+            usuario.xp = (usuario.xp || 0) + xpGanhos;
+            
+            localStorage.setItem(nomeLogado, JSON.stringify(usuario));
+        }
+
+        document.getElementById("boxProva").style.display = "none";
+        document.getElementById("resultado").style.display = "block";
+
+        const porc = Math.round((acertos / questoesProva.length) * 100);
+        document.getElementById("notaFinal").innerText = porc + "%";
+        document.getElementById("xpTotalMsg").innerText = `+${xpGanhos} XP TOTAL`;
+        
+        let msg = porc >= 70 ? "Excelente desempenho! Continue assim." : "Bom treino! Revise os pontos onde teve dúvida.";
+        document.getElementById("msgFeedback").innerText = `Você acertou ${acertos} de ${questoesProva.length} questões. ${msg}`;
+    }
+
+    window.onload = carregarProva;
+</script>
+
+</body>
+</html>

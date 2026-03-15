@@ -1,165 +1,204 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>CAVEST - Trigonometria</title>
+    <meta charset="UTF-8">
+    <title>CAVEST - Trigonometria</title>
 
-<style>
-body{
-    font-family:Arial;
-    background:#0f172a;
-    color:white;
-    padding:40px;
-}
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
 
-h1{
-    text-align:center;
-}
+        h1 {
+            text-align: center;
+            color: #fb923c; /* Orange */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-.questao{
-    background:#1e293b;
-    padding:20px;
-    border-radius:10px;
-    margin-bottom:30px;
-}
+        #container-questoes {
+            max-width: 850px;
+            margin: auto;
+        }
 
-button{
-    background:#22c55e;
-    border:none;
-    padding:10px 20px;
-    border-radius:6px;
-    color:white;
-    font-size:15px;
-    cursor:pointer;
-    margin-top:10px;
-}
+        .trig-hub {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-bottom: 5px solid #fb923c;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
 
-button:hover{
-    background:#16a34a;
-}
+        .trig-card {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            border: 1px solid #334155;
+        }
 
-.resolucao{
-    display:none;
-    margin-top:15px;
-    background:#334155;
-    padding:15px;
-    border-radius:8px;
-}
-</style>
+        .trig-card b { color: #fb923c; display: block; }
+
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-left: 5px solid #fb923c;
+        }
+
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        label:hover {
+            background: #7c2d12; /* Orange-900 */
+        }
+
+        button {
+            background: #fb923c;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: #0f172a;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #fdba74;
+            transform: scale(1.05);
+        }
+
+        .resolucao-box {
+            display: none;
+            margin-top: 15px;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #fb923c;
+            line-height: 1.6;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Matemática - Trigonometria</h1>
+    <h1>Matemática - Ciclo Trigonométrico 📐</h1>
 
-<!-- QUESTÃO 1 -->
-<div class="questao">
-<p><b>1.</b> Qual é o valor de sen(90°)?</p>
-<input type="radio" name="q1" value="a"> 0<br>
-<input type="radio" name="q1" value="b"> 1<br>
-<input type="radio" name="q1" value="c"> 0,5<br>
-<input type="radio" name="q1" value="d"> -1<br>
-<br>
-<button onclick="corrigir(1,'b')">Responder</button>
-<p id="resultado1"></p>
-<button onclick="verResolucao(1)">Ver resolução</button>
-<div class="resolucao" id="res1">
-<b>Resolução:</b><br><br>
-O seno de 90° é <strong>1</strong>.<br><br>
-Resposta correta: <strong>B</strong>
-</div>
-</div>
+    <div id="container-questoes">
+        <div class="trig-hub">
+            <div class="trig-card"><b>Seno</b>Oposto / Hipotenusa</div>
+            <div class="trig-card"><b>Cosseno</b>Adjante / Hipotenusa</div>
+            <div class="trig-card"><b>Tangente</b>Oposto / Adjacente</div>
+        </div>
 
-<!-- QUESTÃO 2 -->
-<div class="questao">
-<p><b>2.</b> Qual é a relação trigonométrica de um triângulo retângulo para tangente?</p>
-<input type="radio" name="q2" value="a"> cateto adjacente / hipotenusa<br>
-<input type="radio" name="q2" value="b"> cateto oposto / hipotenusa<br>
-<input type="radio" name="q2" value="c"> cateto oposto / cateto adjacente<br>
-<input type="radio" name="q2" value="d"> hipotenusa / cateto oposto<br>
-<br>
-<button onclick="corrigir(2,'c')">Responder</button>
-<p id="resultado2"></p>
-<button onclick="verResolucao(2)">Ver resolução</button>
-<div class="resolucao" id="res2">
-<b>Resolução:</b><br><br>
-A <strong>tangente</strong> de um ângulo em um triângulo retângulo é a razão entre o cateto oposto e o cateto adjacente:<br>
-tan θ = cateto oposto / cateto adjacente.<br><br>
-Resposta correta: <strong>C</strong>
-</div>
-</div>
+        <p style="text-align:center; color:#64748b;">Navegando por ângulos e triângulos...</p>
+    </div>
 
-<!-- QUESTÃO 3 -->
-<div class="questao">
-<p><b>3.</b> Se cos(θ) = 0,5 e θ está no primeiro quadrante, qual é o valor de θ?</p>
-<input type="radio" name="q3" value="a"> 30°<br>
-<input type="radio" name="q3" value="b"> 45°<br>
-<input type="radio" name="q3" value="c"> 60°<br>
-<input type="radio" name="q3" value="d"> 90°<br>
-<br>
-<button onclick="corrigir(3,'c')">Responder</button>
-<p id="resultado3"></p>
-<button onclick="verResolucao(3)">Ver resolução</button>
-<div class="resolucao" id="res3">
-<b>Resolução:</b><br><br>
-No primeiro quadrante, se cos(θ) = 0,5, então θ = <strong>60°</strong>.<br><br>
-Resposta correta: <strong>C</strong>
-</div>
-</div>
+    <a class="voltar" href="matematica.html">⬅ Voltar</a>
 
-<script>
-// Função genérica para corrigir qualquer questão
-function corrigir(qNum, correta){
-    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-    if(!selecionada){
-        alert("Escolha uma alternativa!");
-        return;
-    }
-
-    let acertou = selecionada.value === correta;
-
-    // salvar respostas da página
-    let respostas = JSON.parse(localStorage.getItem("respostasTrigonometria")) || {};
-    respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-    localStorage.setItem("respostasTrigonometria", JSON.stringify(respostas));
-
-    // atualizar progresso do usuário logado
-    let logado = localStorage.getItem("logado");
-    if(logado){
-        let usuario = JSON.parse(localStorage.getItem(logado));
-        usuario.respondidas = (usuario.respondidas || 0) + 1;
-        if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-        localStorage.setItem(logado, JSON.stringify(usuario));
-    }
-
-    // mostrar resultado
-    document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
-}
-
-// mostrar resolução
-function verResolucao(qNum){
-    document.getElementById(`res${qNum}`).style.display = "block";
-}
-
-// carregar respostas salvas
-function carregarRespostas(){
-    let respostas = JSON.parse(localStorage.getItem("respostasTrigonometria"));
-    if(!respostas) return;
-    for(let q in respostas){
-        let info = respostas[q];
-        if(info.selecionada){
-            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-            if(input) input.checked = true;
+    <script>
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: matematica e assunto: trigonometria
+        const filtradas = banco.filter(q => q.materia === "matematica" && q.assunto === "trigonometria");
+        const hubHtml = document.querySelector(".trig-hub").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = hubHtml + "<p style='text-align:center; color:#94a3b8;'>Nenhum triângulo retângulo encontrado no banco.</p>";
+            return;
         }
-        if(info.acertou !== undefined){
-            let numero = q.replace("q","");
-            document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+
+        container.innerHTML = hubHtml; 
+
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Verificar Ângulo</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                
+                <div id="res-${q.id}" class="resolucao-box">
+                    <b style="color:#fb923c;">Projeção Trigonométrica:</b><br><br>
+                    ${q.resolucao || "Aplique a relação sen, cos ou tan correta para o triângulo em questão."}
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("Escolha um ponto no ciclo primeiro!");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+        resBox.style.display = "block";
+
+        if (acertou) {
+            feedback.innerText = "✅ Correto! Razão trigonométrica exata.";
+            feedback.style.color = "#fb923c";
+        } else {
+            feedback.innerText = `❌ Incorreto. O valor esperado era (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        // Sistema de Progresso Mundo CAVEST
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
+            }
         }
     }
-}
 
-window.onload = carregarRespostas;
-</script>
+    window.onload = carregarQuestoes;
+    </script>
 
 </body>
 </html>

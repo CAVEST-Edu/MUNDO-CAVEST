@@ -1,240 +1,202 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>CAVEST - Globalização</title>
+    <meta charset="UTF-8">
+    <title>CAVEST - Globalização</title>
 
-<style>
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
 
-body{
-font-family:Arial;
-background:#0f172a;
-color:white;
-padding:40px;
-}
+        h1 {
+            text-align: center;
+            color: #818cf8; /* Roxo tecnológico */
+            margin-bottom: 40px;
+        }
 
-h1{
-text-align:center;
-}
+        #container-questoes {
+            max-width: 800px;
+            margin: auto;
+        }
 
-.questao{
-background:#1e293b;
-padding:20px;
-border-radius:10px;
-margin-bottom:30px;
-}
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #6366f1;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
 
-button{
-background:#22c55e;
-border:none;
-padding:10px 20px;
-border-radius:6px;
-color:white;
-font-size:15px;
-cursor:pointer;
-margin-top:10px;
-}
+        .global-box {
+            background: #1e1b4b; /* Indigo profundo */
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid #818cf8;
+            font-size: 0.95em;
+            color: #e0e7ff;
+        }
 
-button:hover{
-background:#16a34a;
-}
+        .img-questao {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: block;
+        }
 
-.resolucao{
-display:none;
-margin-top:15px;
-background:#334155;
-padding:15px;
-border-radius:8px;
-}
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-</style>
+        label:hover {
+            background: #475569;
+        }
 
+        button {
+            background: #6366f1;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #4f46e5;
+        }
+
+        .resolucao-box {
+            margin-top: 15px;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #818cf8;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Geografia - Globalização</h1>
-
-<!-- QUESTÃO 1 -->
-
-<div class="questao">
-
-<p><b>1.</b> A globalização pode ser definida como:</p>
-
-<input type="radio" name="q1" value="a"> O isolamento cultural e econômico dos países<br>
-<input type="radio" name="q1" value="b"> O processo de integração econômica, cultural e política entre países<br>
-<input type="radio" name="q1" value="c"> A criação de fronteiras rígidas para o comércio internacional<br>
-<input type="radio" name="q1" value="d"> O aumento apenas do comércio agrícola<br>
-
-<br>
-
-<button onclick="corrigir(1,'b')">Responder</button>
-
-<p id="resultado1"></p>
-
-<button onclick="verResolucao(1)">Ver resolução</button>
-
-<div class="resolucao" id="res1">
-
-<b>Resolução:</b><br><br>
-
-A <strong>globalização</strong> é o processo de integração econômica, cultural e política entre países.
-
-Resposta correta: <strong>B</strong>
-
-</div>
-
-</div>
-
-<!-- QUESTÃO 2 -->
-
-<div class="questao">
-
-<p><b>2.</b> Um dos principais impactos da globalização cultural é:</p>
-
-<input type="radio" name="q2" value="a"> O fortalecimento exclusivo das culturas locais<br>
-<input type="radio" name="q2" value="b"> A uniformização cultural e a disseminação de culturas globais<br>
-<input type="radio" name="q2" value="c"> A eliminação da tecnologia<br>
-<input type="radio" name="q2" value="d"> A diminuição do comércio internacional<br>
-
-<br>
-
-<button onclick="corrigir(2,'b')">Responder</button>
-
-<p id="resultado2"></p>
-
-<button onclick="verResolucao(2)">Ver resolução</button>
-
-<div class="resolucao" id="res2">
-
-<b>Resolução:</b><br><br>
-
-A globalização cultural pode levar à <strong>uniformização cultural</strong>.
-
-Resposta correta: <strong>B</strong>
-
-</div>
-
-</div>
-
-<!-- QUESTÃO 3 -->
-
-<div class="questao">
-
-<p><b>3.</b> Qual setor é mais diretamente beneficiado pela globalização econômica?</p>
-
-<input type="radio" name="q3" value="a"> Agricultura de subsistência<br>
-<input type="radio" name="q3" value="b"> Comércio e serviços internacionais<br>
-<input type="radio" name="q3" value="c"> Comunidades isoladas<br>
-<input type="radio" name="q3" value="d"> Culturas tradicionais sem exportação<br>
-
-<br>
-
-<button onclick="corrigir(3,'b')">Responder</button>
-
-<p id="resultado3"></p>
-
-<button onclick="verResolucao(3)">Ver resolução</button>
-
-<div class="resolucao" id="res3">
-
-<b>Resolução:</b><br><br>
-
-A globalização econômica favorece principalmente o <strong>comércio e serviços internacionais</strong>.
-
-Resposta correta: <strong>B</strong>
-
-</div>
-
-</div>
-
-<script>
-
-// corrigir questão
-function corrigir(qNum, correta){
-
-let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-
-if(!selecionada){
-alert("Escolha uma alternativa");
-return;
-}
-
-let acertou = selecionada.value === correta;
-
-// salvar respostas da página
-let respostas = JSON.parse(localStorage.getItem("respostasGlobalizacao")) || {};
-
-respostas[`q${qNum}`] = {
-selecionada: selecionada.value,
-acertou: acertou
-};
-
-localStorage.setItem("respostasGlobalizacao", JSON.stringify(respostas));
-
-// atualizar progresso do usuário
-let logado = localStorage.getItem("logado");
-
-if(logado){
-
-let usuario = JSON.parse(localStorage.getItem(logado));
-
-usuario.respondidas = (usuario.respondidas || 0) + 1;
-
-if(acertou){
-usuario.acertos = (usuario.acertos || 0) + 1;
-}
-
-localStorage.setItem(logado, JSON.stringify(usuario));
-
-}
-
-// mostrar resultado
-document.getElementById(`resultado${qNum}`).innerHTML =
-acertou ? "✅ Correto!" : "❌ Incorreto!";
-
-}
-
-// mostrar resolução
-function verResolucao(qNum){
-document.getElementById(`res${qNum}`).style.display="block";
-}
-
-// carregar respostas salvas
-function carregarRespostas(){
-
-let respostas = JSON.parse(localStorage.getItem("respostasGlobalizacao"));
-
-if(!respostas) return;
-
-for(let q in respostas){
-
-let info = respostas[q];
-
-if(info.selecionada){
-
-let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-
-if(input) input.checked = true;
-
-}
-
-if(info.acertou !== undefined){
-
-let numero = q.replace("q","");
-
-document.getElementById(`resultado${numero}`).innerHTML =
-info.acertou ? "✅ Correto!" : "❌ Incorreto!";
-
-}
-
-}
-
-}
-
-window.onload = carregarRespostas;
-
-</script>
+    <h1>Geografia - Mundo Globalizado 🌐</h1>
+
+    <div id="container-questoes">
+        <div class="global-box">
+            <h3 style="margin-top:0; color:#c7d2fe;">📡 Conexões Globais</h3>
+            <b>Compressão Tempo-Espaço:</b> Graças aos transportes e comunicações, as distâncias parecem menores.<br>
+            <b>Meio Técnico-Científico-Informacional:</b> A ciência e a técnica a serviço da informação e do mercado.<br>
+            <b>Transnacionais:</b> Empresas que operam em diversos países, fragmentando a produção.<br>
+            <b>Aldeia Global:</b> A ideia de que o mundo está conectado culturalmente por uma rede de informações massiva.
+        </div>
+
+        <p style="text-align:center; color:#94a3b8;">Sincronizando dados com o servidor...</p>
+    </div>
+
+    <a class="voltar" href="geografia.html">⬅ Voltar</a>
+
+    <script>
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: geografia e assunto: globalizacao
+        const filtradas = banco.filter(q => q.materia === "geografia" && q.assunto === "globalizacao");
+
+        const infoHtml = document.querySelector(".global-box").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = infoHtml + "<p style='text-align:center; color:#94a3b8;'>Conexão perdida. Nenhuma questão de Globalização encontrada no banco.</p>";
+            return;
+        }
+
+        container.innerHTML = infoHtml; 
+
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            let imgHtml = q.imagem ? `<img src="${q.imagem}" class="img-questao">` : "";
+            let resolucaoHtml = q.resolucao ? `
+                <div id="res-${q.id}" style="display:none;" class="resolucao-box">
+                    <p style="color:#818cf8; font-weight:bold; margin-bottom:5px;">🔍 Resolução em Rede:</p>
+                    <p style="font-size:14px; color:#cbd5e1;">${q.resolucao}</p>
+                </div>` : "";
+
+            div.innerHTML = `
+                ${imgHtml}
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Responder</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                ${resolucaoHtml}
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("Acesse uma alternativa para continuar!");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+
+        if (acertou) {
+            feedback.innerText = "✅ Correto! Você está plenamente integrado ao conhecimento.";
+            feedback.style.color = "#818cf8";
+        } else {
+            feedback.innerText = `❌ Incorreto. A resposta da rede era (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        if (resBox) resBox.style.display = "block";
+
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
+            }
+        }
+    }
+
+    window.onload = carregarQuestoes;
+    </script>
 
 </body>
 </html>

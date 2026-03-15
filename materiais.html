@@ -4,75 +4,110 @@
     <meta charset="UTF-8">
     <title>Materiais - Mundo CAVEST</title>
     <style>
-        body { font-family: Arial; background: #0f172a; color: white; text-align: center; }
-        h1 { margin-top: 40px; }
-        #areaProfessor {
-            display: none; background: #1e3a8a; max-width: 600px;
-            margin: 20px auto; padding: 20px; border-radius: 15px; border: 2px dashed #38bdf8;
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: #0f172a; 
+            color: white; 
+            text-align: center; 
+            margin: 0;
+            padding: 20px;
         }
-        #areaProfessor input, #areaProfessor select, #areaProfessor button {
-            padding: 10px; margin: 5px; border-radius: 5px; border: none;
+
+        h1 { 
+            margin-top: 40px; 
+            color: #38bdf8;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 900px; margin: auto; padding: 40px; }
-        .card { background: #1e293b; padding: 30px; border-radius: 10px; transition: 0.3s; }
-        .card:hover { background: #334155; transform: scale(1.05); }
-        a { text-decoration: none; color: white; font-size: 18px; font-weight: bold; }
-        .voltar { margin-top: 20px; display: inline-block; color: #94a3b8; text-decoration: none; }
+
+        /* Botão de Atalho para o Professor */
+        #btnAdmin {
+            display: none;
+            background: #1e3a8a;
+            color: #38bdf8;
+            border: 1px solid #38bdf8;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 30px;
+            transition: 0.3s;
+        }
+
+        #btnAdmin:hover {
+            background: #38bdf8;
+            color: #0f172a;
+        }
+
+        .container { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 20px; 
+            max-width: 1000px; 
+            margin: 40px auto; 
+        }
+
+        .card { 
+            background: #1e293b; 
+            padding: 40px 20px; 
+            border-radius: 12px; 
+            border-bottom: 4px solid #334155;
+            transition: 0.3s ease-in-out; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card:hover { 
+            background: #1e3a8a; 
+            transform: translateY(-5px);
+            border-bottom-color: #38bdf8;
+        }
+
+        .card a { 
+            text-decoration: none; 
+            color: white; 
+            font-size: 20px; 
+            font-weight: bold; 
+            width: 100%;
+            height: 100%;
+        }
+
+        .voltar { 
+            margin-top: 40px; 
+            display: inline-block; 
+            color: #94a3b8; 
+            text-decoration: none; 
+            font-size: 14px;
+        }
+
+        .voltar:hover { color: white; }
     </style>
 </head>
 <body>
 
-    <h1>Materiais</h1>
+    <h1>📚 Biblioteca de Materiais</h1>
 
-    <div id="areaProfessor">
-        <h3>👨‍🏫 Painel do Professor</h3>
-        <input type="text" id="nomeArquivo" placeholder="Nome do Assunto (Ex: Óptica)">
-        <select id="categoriaMateria">
-            <option value="fisica">Física</option>
-            <option value="historia">História</option>
-            <option value="biologia">Biologia</option>
-            <option value="geografia">Geografia</option>
-            <option value="matematica">Matemática</option>
-            <option value="quimica">Química</option>
-            <option value="portugues">Português</option>
-        </select>
-        <input type="text" id="linkArquivo" placeholder="Link do Material">
-        <button style="background:#22c55e; color:white; cursor:pointer;" onclick="adicionarMaterial()">Enviar Material</button>
-    </div>
+    <a href="painel-professor.html" id="btnAdmin">⚙️ IR PARA PAINEL DE CONTROLE</a>
 
     <div class="container">
-        <div class="card"><a href="materiais_fisica.html">Física</a></div>
-        <div class="card"><a href="materiais_historia.html">História</a></div>
-        <div class="card"><a href="materiais_biologia.html">Biologia</a></div>
-        <div class="card"><a href="materiais_geografia.html">Geografia</a></div>
-        <div class="card"><a href="materiais_matematica.html">Matemática</a></div>
-        <div class="card"><a href="materiais_quimica.html">Química</a></div>
-        <div class="card"><a href="materiais_portugues.html">Português</a></div>
+        <div class="card"><a href="materiais_fisica.html">🧪 Física</a></div>
+        <div class="card"><a href="materiais_quimica.html">⚗️ Química</a></div>
+        <div class="card"><a href="materiais_biologia.html">🧬 Biologia</a></div>
+        <div class="card"><a href="materiais_matematica.html">📐 Matemática</a></div>
+        <div class="card"><a href="materiais_historia.html">📜 História</a></div>
+        <div class="card"><a href="materiais_geografia.html">🌍 Geografia</a></div>
+        <div class="card"><a href="materiais_portugues.html">✍️ Português</a></div>
     </div>
 
-    <a class="voltar" href="index.html">⬅ Voltar</a>
+    <a class="voltar" href="index.html">⬅ Voltar para o Início</a>
 
     <script>
+        // Verifica se é professor para mostrar o botão de atalho
         const usuario = JSON.parse(localStorage.getItem("usuarioAtual")) || { cargo: "aluno" };
+        
         if (usuario.cargo === "professor") {
-            document.getElementById("areaProfessor").style.display = "block";
-        }
-
-        function adicionarMaterial() {
-            const nome = document.getElementById("nomeArquivo").value;
-            const link = document.getElementById("linkArquivo").value;
-            const materia = document.getElementById("categoriaMateria").value;
-
-            if (!nome || !link) { alert("Preencha tudo!"); return; }
-
-            const novoMaterial = { nome, link, materia };
-            let bancoMateriais = JSON.parse(localStorage.getItem("bancoMateriais")) || [];
-            bancoMateriais.push(novoMaterial);
-            localStorage.setItem("bancoMateriais", JSON.stringify(bancoMateriais));
-
-            alert("Material enviado para a pasta de " + materia + "!");
-            document.getElementById("nomeArquivo").value = "";
-            document.getElementById("linkArquivo").value = "";
+            document.getElementById("btnAdmin").style.display = "inline-block";
         }
     </script>
 </body>

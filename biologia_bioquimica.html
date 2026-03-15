@@ -14,13 +14,44 @@ body{
 
 h1{
     text-align:center;
+    color: #38bdf8;
+    margin-bottom: 40px;
+}
+
+/* Container para as questões dinâmicas */
+#container-questoes {
+    max-width: 800px;
+    margin: auto;
 }
 
 .questao{
     background:#1e293b;
-    padding:20px;
-    border-radius:10px;
+    padding:25px;
+    border-radius:15px;
     margin-bottom:30px;
+    border-left: 5px solid #22c55e;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.img-questao {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+label {
+    display: block;
+    background: #334155;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+label:hover {
+    background: #475569;
 }
 
 button{
@@ -32,27 +63,28 @@ button{
     font-size:15px;
     cursor:pointer;
     margin-top:10px;
+    font-weight: bold;
 }
 
 button:hover{
     background:#16a34a;
 }
 
-.resolucao{
-    display:none;
+.resolucao-box{
     margin-top:15px;
-    background:#334155;
+    background:#0f172a;
     padding:15px;
     border-radius:8px;
+    border: 1px dashed #facc15;
 }
 
 .voltar {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #94a3b8;
-            text-decoration: none;
-        }
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #94a3b8;
+    text-decoration: none;
+}
 </style>
 </head>
 
@@ -60,131 +92,98 @@ button:hover{
 
 <h1>Biologia - Bioquímica</h1>
 
-<!-- QUESTÃO 1 -->
-<div class="questao">
-<p><b>1.</b> Qual é a principal função dos carboidratos nas células?</p>
-<input type="radio" name="q1" value="a"> Armazenar informação genética<br>
-<input type="radio" name="q1" value="b"> Produzir energia<br>
-<input type="radio" name="q1" value="c"> Transportar oxigênio<br>
-<input type="radio" name="q1" value="d"> Sintetizar hormônios<br>
-<br>
-<button onclick="corrigir(1,'b')">Responder</button>
-<p id="resultado1"></p>
-<button onclick="verResolucao(1)">Ver resolução</button>
-<div class="resolucao" id="res1">
-<b>Resolução:</b><br><br>
-Os <strong>carboidratos</strong> são a principal fonte de energia das células, sendo utilizados na respiração celular.
-<br><br>Resposta correta: <strong>B</strong>
-</div>
+<div id="container-questoes">
+    <p style="text-align:center; color:#94a3b8;">Buscando questões de Bioquímica...</p>
 </div>
 
-<!-- QUESTÃO 2 -->
-<div class="questao">
-<p><b>2.</b> Qual biomolécula é formada por aminoácidos e realiza funções como catalisar reações?</p>
-<input type="radio" name="q2" value="a"> Carboidrato<br>
-<input type="radio" name="q2" value="b"> Lipídio<br>
-<input type="radio" name="q2" value="c"> Proteína<br>
-<input type="radio" name="q2" value="d"> Ácido nucleico<br>
-<br>
-<button onclick="corrigir(2,'c')">Responder</button>
-<p id="resultado2"></p>
-<button onclick="verResolucao(2)">Ver resolução</button>
-<div class="resolucao" id="res2">
-<b>Resolução:</b><br><br>
-As <strong>proteínas</strong> são formadas por aminoácidos e podem atuar como enzimas, catalisando reações químicas.
-<br><br>Resposta correta: <strong>C</strong>
-</div>
-</div>
-
-<!-- QUESTÃO 3 -->
-<div class="questao">
-<p><b>3.</b> Qual é a função dos lipídios nas células?</p>
-<input type="radio" name="q3" value="a"> Armazenar energia e formar membranas<br>
-<input type="radio" name="q3" value="b"> Produzir ATP diretamente<br>
-<input type="radio" name="q3" value="c"> Sintetizar DNA<br>
-<input type="radio" name="q3" value="d"> Realizar fotossíntese<br>
-<br>
-<button onclick="corrigir(3,'a')">Responder</button>
-<p id="resultado3"></p>
-<button onclick="verResolucao(3)">Ver resolução</button>
-<div class="resolucao" id="res3">
-<b>Resolução:</b><br><br>
-Os <strong>lipídios</strong> armazenam energia a longo prazo e são componentes principais das membranas celulares.
-<br><br>Resposta correta: <strong>A</strong>
-</div>
-</div>
 <a class="voltar" href="biologia.html">⬅ Voltar para Biologia</a>
 
 <script>
-function corrigir(qNum, respostaCorreta){
-    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`)
-    if(!selecionada){
-        alert("Escolha uma alternativa!")
-        return
+// FUNÇÃO PARA CARREGAR AS QUESTÕES DO BANCO
+function carregarQuestoes() {
+    const container = document.getElementById("container-questoes");
+    const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+    
+    // Filtra por MATERIA e ASSUNTO (conforme definido no seu painel)
+    const filtradas = banco.filter(q => q.materia === "biologia" && q.assunto === "bioquimica");
+
+    if (filtradas.length === 0) {
+        container.innerHTML = "<p style='text-align:center; color:#94a3b8;'>Nenhuma questão cadastrada para Bioquímica ainda.</p>";
+        return;
     }
 
-    let acertou = selecionada.value === respostaCorreta
+    container.innerHTML = ""; // Limpa o texto de carregamento
 
-    // --- SALVA NO LOCALSTORAGE PARA MARCAR ALTERNATIVAS ---
-    let respostas = JSON.parse(localStorage.getItem("respostasBioquimica")) || {}
-    respostas[`q${qNum}`] = {
-        selecionada: selecionada.value,
-        acertou: acertou
+    filtradas.forEach((q, index) => {
+        const div = document.createElement("div");
+        div.className = "questao";
+
+        let imgHtml = q.imagem ? `<img src="${q.imagem}" class="img-questao">` : "";
+        let resolucaoHtml = q.resolucao ? `
+            <div id="res-${q.id}" style="display:none;" class="resolucao-box">
+                <p style="color:#facc15; font-weight:bold; margin-bottom:5px;">💡 Resolução Comentada:</p>
+                <p style="font-size:14px; color:#cbd5e1;">${q.resolucao}</p>
+            </div>` : "";
+
+        div.innerHTML = `
+            ${imgHtml}
+            <p><b>${index + 1}.</b> ${q.pergunta}</p>
+            <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+            <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+            <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+            <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+            
+            <button onclick="verificar('${q.id}', '${q.correta}')">Responder</button>
+            <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+            ${resolucaoHtml}
+        `;
+        container.appendChild(div);
+    });
+}
+
+// FUNÇÃO PARA VERIFICAR RESPOSTA E SOMAR AO PROGRESSO
+function verificar(id, correta) {
+    const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+    const feedback = document.getElementById(`feedback-${id}`);
+    const resBox = document.getElementById(`res-${id}`);
+
+    if (!selecionada) {
+        alert("Por favor, selecione uma alternativa!");
+        return;
     }
-    localStorage.setItem("respostasBioquimica", JSON.stringify(respostas))
-    // --- FIM ---
 
-    // --- ATUALIZA PROGRESSO DO USUÁRIO LOGADO ---
-    let logado = localStorage.getItem("logado")
+    const acertou = selecionada.value === correta;
+
+    if (acertou) {
+        feedback.innerText = "✅ Correto!";
+        feedback.style.color = "#22c55e";
+    } else {
+        feedback.innerText = `❌ Incorreto! A resposta certa era (${correta.toUpperCase()})`;
+        feedback.style.color = "#ef4444";
+    }
+
+    // Mostra resolução se existir
+    if (resBox) resBox.style.display = "block";
+
+    // --- ATUALIZA PROGRESSO DO USUÁRIO ---
+    let logado = localStorage.getItem("logado");
     if(logado){
-        let usuario = JSON.parse(localStorage.getItem(logado))
-
-        if(!usuario.qBioquimica) usuario.qBioquimica = {}
-
-        if(!usuario.qBioquimica[`q${qNum}`]){
-            usuario.respondidas = (usuario.respondidas || 0) + 1
-            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1
-        } else {
-            let antes = usuario.qBioquimica[`q${qNum}`].acertou
-            if(antes !== acertou){
-                if(acertou) usuario.acertos++
-                else usuario.acertos--
-            }
-        }
-
-        usuario.qBioquimica[`q${qNum}`] = {acertou}
-        localStorage.setItem(logado, JSON.stringify(usuario))
-    }
-    // --- FIM ---
-
-    document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!"
-}
-
-// Mostrar resolução
-function verResolucao(qNum){
-    document.getElementById(`res${qNum}`).style.display = "block"
-}
-
-// --- CARREGA RESPOSTAS SALVAS AO ABRIR A PÁGINA ---
-function carregarRespostas(){
-    let respostas = JSON.parse(localStorage.getItem("respostasBioquimica"))
-    if(!respostas) return
-
-    for(let q in respostas){
-        let info = respostas[q]
-        if(info.selecionada){
-            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`)
-            if(input) input.checked = true
-        }
-        if(info.acertou !== undefined){
-            let qNum = q.replace("q","")
-            document.getElementById(`resultado${qNum}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!"
+        let usuario = JSON.parse(localStorage.getItem(logado));
+        
+        // Evita contar a mesma questão duas vezes se ele clicar de novo
+        if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+        
+        if(!usuario.questoesResolvidas.includes(id)){
+            usuario.respondidas = (usuario.respondidas || 0) + 1;
+            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+            usuario.questoesResolvidas.push(id);
+            localStorage.setItem(logado, JSON.stringify(usuario));
         }
     }
 }
 
-// Chama ao carregar a página
-window.onload = carregarRespostas
+// Inicializa a carga
+window.onload = carregarQuestoes;
 </script>
 
 </body>

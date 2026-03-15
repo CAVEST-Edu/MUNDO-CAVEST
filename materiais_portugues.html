@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Materiais de Português - Mundo CAVEST</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 { 
+            color: #ef4444; /* Vermelho Literatura */
+            margin-bottom: 30px; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        /* Estilo dos Cards - Temática Linguagens */
+        .card-material {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #ef4444;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .card-material:hover {
+            background: #450a0a; /* Tom vinho escuro */
+            transform: translateY(-5px);
+            border-left: 4px solid #fca5a5;
+        }
+
+        .card-material a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .tag {
+            font-size: 12px;
+            background: #ef4444;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .voltar {
+            margin-top: 40px;
+            display: inline-block;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .voltar:hover {
+            color: #ef4444;
+        }
+        
+        .aviso-vazio {
+            grid-column: 1 / -1;
+            color: #64748b;
+            font-style: italic;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📚 Português e Literatura</h1>
+
+    <div class="container" id="listaMateriais">
+        <div class="card-material">
+            <span class="tag">Oficial</span>
+            <a href="LINK_DO_PDF_GRAMATICA" target="_blank">Manual de Gramática: Sintaxe do Período</a>
+        </div>
+
+        <div class="card-material">
+            <span class="tag">Oficial</span>
+            <a href="LINK_DO_PDF_LITERATURA" target="_blank">Resumo: Escolas Literárias (Enem)</a>
+        </div>
+    </div>
+
+    <a href="materiais.html" class="voltar">⬅ Voltar para Matérias</a>
+
+    <script>
+        function carregarMateriaisDinamicos() {
+            const container = document.getElementById("listaMateriais");
+            const banco = JSON.parse(localStorage.getItem("bancoMateriais")) || [];
+            
+            // FILTRO: materia === "portugues"
+            const materiaisFiltrados = banco.filter(item => item.materia === "portugues");
+
+            if (materiaisFiltrados.length === 0) {
+                const temMensagem = document.querySelector(".aviso-vazio");
+                if (!temMensagem) {
+                    container.innerHTML += `<p class="aviso-vazio">A estante de materiais extras está vazia por enquanto.</p>`;
+                }
+                return;
+            }
+
+            materiaisFiltrados.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "card-material";
+                div.innerHTML = `
+                    <span class="tag" style="background: #f59e0b; color: #000;">Extra</span>
+                    <a href="${item.link}" target="_blank">${item.nome}</a>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        window.onload = carregarMateriaisDinamicos;
+    </script>
+
+</body>
+</html>

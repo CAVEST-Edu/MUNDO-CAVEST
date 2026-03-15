@@ -1,240 +1,203 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>CAVEST - Brasil República</title>
+    <meta charset="UTF-8">
+    <title>CAVEST - Brasil República</title>
 
-<style>
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
 
-body{
-font-family:Arial;
-background:#0f172a;
-color:white;
-padding:40px;
-}
+        h1 {
+            text-align: center;
+            color: #38bdf8; /* Azul República */
+            margin-bottom: 40px;
+        }
 
-h1{
-text-align:center;
-}
+        #container-questoes {
+            max-width: 800px;
+            margin: auto;
+        }
 
-.questao{
-background:#1e293b;
-padding:20px;
-border-radius:10px;
-margin-bottom:30px;
-}
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #38bdf8;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
 
-button{
-background:#22c55e;
-border:none;
-padding:10px 20px;
-border-radius:6px;
-color:white;
-font-size:15px;
-cursor:pointer;
-margin-top:10px;
-}
+        .republic-box {
+            background: #0c4a6e; /* Azul profundo */
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid #7dd3fc;
+            font-size: 0.95em;
+            color: #e0f2fe;
+        }
 
-button:hover{
-background:#16a34a;
-}
+        .img-questao {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: block;
+        }
 
-.resolucao{
-display:none;
-margin-top:15px;
-background:#334155;
-padding:15px;
-border-radius:8px;
-}
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-</style>
+        label:hover {
+            background: #475569;
+        }
 
+        button {
+            background: #38bdf8;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: #0c4a6e;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #0ea5e9;
+        }
+
+        .resolucao-box {
+            margin-top: 15px;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #38bdf8;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>História - Brasil República</h1>
-
-<!-- QUESTÃO 1 -->
-
-<div class="questao">
-
-<p><b>1.</b> Em que ano ocorreu a Proclamação da República no Brasil?</p>
-
-<input type="radio" name="q1" value="a"> 1822<br>
-<input type="radio" name="q1" value="b"> 1889<br>
-<input type="radio" name="q1" value="c"> 1891<br>
-<input type="radio" name="q1" value="d"> 1930<br>
-
-<br>
-
-<button onclick="corrigir(1,'b')">Responder</button>
-
-<p id="resultado1"></p>
-
-<button onclick="verResolucao(1)">Ver resolução</button>
-
-<div class="resolucao" id="res1">
-
-<b>Resolução:</b><br><br>
-
-A Proclamação da República ocorreu em <strong>1889</strong>, quando Marechal Deodoro da Fonseca proclamou o fim do Império.
-
-Resposta correta: <strong>B</strong>
-
-</div>
-
-</div>
-
-<!-- QUESTÃO 2 -->
-
-<div class="questao">
-
-<p><b>2.</b> O que marcou o governo de Getúlio Vargas entre 1930 e 1945?</p>
-
-<input type="radio" name="q2" value="a"> Primeira República e coronelismo<br>
-<input type="radio" name="q2" value="b"> Estado Novo e centralização do poder<br>
-<input type="radio" name="q2" value="c"> Proclamação da República<br>
-<input type="radio" name="q2" value="d"> Independência do Brasil<br>
-
-<br>
-
-<button onclick="corrigir(2,'b')">Responder</button>
-
-<p id="resultado2"></p>
-
-<button onclick="verResolucao(2)">Ver resolução</button>
-
-<div class="resolucao" id="res2">
-
-<b>Resolução:</b><br><br>
-
-O governo Vargas ficou marcado pelo <strong>Estado Novo</strong>, com centralização do poder e políticas trabalhistas.
-
-Resposta correta: <strong>B</strong>
-
-</div>
-
-</div>
-
-<!-- QUESTÃO 3 -->
-
-<div class="questao">
-
-<p><b>3.</b> Durante a República Velha (1889-1930), qual foi o principal modelo político predominante?</p>
-
-<input type="radio" name="q3" value="a"> Coronelismo e política do café com leite<br>
-<input type="radio" name="q3" value="b"> Ditadura militar<br>
-<input type="radio" name="q3" value="c"> Monarquia constitucional<br>
-<input type="radio" name="q3" value="d"> Estado Novo<br>
-
-<br>
-
-<button onclick="corrigir(3,'a')">Responder</button>
-
-<p id="resultado3"></p>
-
-<button onclick="verResolucao(3)">Ver resolução</button>
-
-<div class="resolucao" id="res3">
-
-<b>Resolução:</b><br><br>
-
-Na República Velha predominava o <strong>coronelismo</strong> e a política do café com leite.
-
-Resposta correta: <strong>A</strong>
-
-</div>
-
-</div>
-
-<script>
-
-// corrigir questão
-function corrigir(qNum, correta){
-
-let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-
-if(!selecionada){
-alert("Escolha uma alternativa");
-return;
-}
-
-let acertou = selecionada.value === correta;
-
-// salvar respostas da página
-let respostas = JSON.parse(localStorage.getItem("respostasBrasilRepublica")) || {};
-
-respostas[`q${qNum}`] = {
-selecionada: selecionada.value,
-acertou: acertou
-};
-
-localStorage.setItem("respostasBrasilRepublica", JSON.stringify(respostas));
-
-// atualizar progresso do usuário
-let logado = localStorage.getItem("logado");
-
-if(logado){
-
-let usuario = JSON.parse(localStorage.getItem(logado));
-
-usuario.respondidas = (usuario.respondidas || 0) + 1;
-
-if(acertou){
-usuario.acertos = (usuario.acertos || 0) + 1;
-}
-
-localStorage.setItem(logado, JSON.stringify(usuario));
-
-}
-
-// mostrar resultado
-document.getElementById(`resultado${qNum}`).innerHTML =
-acertou ? "✅ Correto!" : "❌ Incorreto!";
-
-}
-
-// mostrar resolução
-function verResolucao(qNum){
-document.getElementById(`res${qNum}`).style.display="block";
-}
-
-// carregar respostas salvas
-function carregarRespostas(){
-
-let respostas = JSON.parse(localStorage.getItem("respostasBrasilRepublica"));
-
-if(!respostas) return;
-
-for(let q in respostas){
-
-let info = respostas[q];
-
-if(info.selecionada){
-
-let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-
-if(input) input.checked = true;
-
-}
-
-if(info.acertou !== undefined){
-
-let numero = q.replace("q","");
-
-document.getElementById(`resultado${numero}`).innerHTML =
-info.acertou ? "✅ Correto!" : "❌ Incorreto!";
-
-}
-
-}
-
-}
-
-window.onload = carregarRespostas;
-
-</script>
+    <h1>Brasil República: Ordem e Progresso? 🇧🇷</h1>
+
+    <div id="container-questoes">
+        <div class="republic-box">
+            <h3 style="margin-top:0; color:#7dd3fc;">📅 Linha do Tempo Republicana</h3>
+            <b>República Velha (1889-1930):</b> Domínio das oligarquias (Café com Leite), Coronelismo e Voto de Cabresto.<br>
+            <b>Era Vargas (1930-1945):</b> Centralização, industrialização (CSN/Vale) e direitos trabalhistas (CLT).<br>
+            <b>Período Populista (1945-1964):</b> JK e os "50 anos em 5", construção de Brasília e vinda de multinacionais.<br>
+            <b>Ditadura Militar (1964-1985):</b> Milagre Econômico, censura, AI-5 e o movimento "Diretas Já".<br>
+            <b>Nova República (1985-Hoje):</b> Redemocratização, Constituição de 1988 ("Cidadã") e Plano Real.
+        </div>
+
+        <p style="text-align:center; color:#94a3b8;">Sintonizando a "Voz do Brasil" do conhecimento...</p>
+    </div>
+
+    <a class="voltar" href="historia.html">⬅ Voltar</a>
+
+    <script>
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: historia e assunto: brasil-republica
+        const filtradas = banco.filter(q => q.materia === "historia" && q.assunto === "brasil-republica");
+
+        const infoHtml = document.querySelector(".republic-box").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = infoHtml + "<p style='text-align:center; color:#94a3b8;'>O arquivo nacional está vazio. Adicione questões ao banco.</p>";
+            return;
+        }
+
+        container.innerHTML = infoHtml; 
+
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            let imgHtml = q.imagem ? `<img src="${q.imagem}" class="img-questao">` : "";
+            let resolucaoHtml = q.resolucao ? `
+                <div id="res-${q.id}" style="display:none;" class="resolucao-box">
+                    <p style="color:#7dd3fc; font-weight:bold; margin-bottom:5px;">🔍 Análise da República:</p>
+                    <p style="font-size:14px; color:#cbd5e1;">${q.resolucao}</p>
+                </div>` : "";
+
+            div.innerHTML = `
+                ${imgHtml}
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Responder</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                ${resolucaoHtml}
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("O voto é obrigatório! Escolha uma alternativa.");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+
+        if (acertou) {
+            feedback.innerText = "✅ Correto! Você acaba de subir a rampa do conhecimento.";
+            feedback.style.color = "#38bdf8";
+        } else {
+            feedback.innerText = `❌ Incorreto. O registro histórico aponta a alternativa (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        if (resBox) resBox.style.display = "block";
+
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
+            }
+        }
+    }
+
+    window.onload = carregarQuestoes;
+    </script>
 
 </body>
 </html>

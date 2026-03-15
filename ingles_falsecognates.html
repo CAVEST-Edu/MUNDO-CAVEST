@@ -6,7 +6,7 @@
 
     <style>
         body {
-            font-family: Arial;
+            font-family: Arial, sans-serif;
             background: #0f172a;
             color: white;
             padding: 40px;
@@ -14,40 +14,87 @@
 
         h1 {
             text-align: center;
+            color: #fb923c; /* Orange Alert */
+            margin-bottom: 40px;
+        }
+
+        #container-questoes {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .alert-box {
+            background: #2e1065; /* Deep Purple */
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #fb923c;
+            font-size: 0.9em;
+        }
+
+        .false-friends-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            color: #e9d5ff;
+        }
+
+        .false-friends-table th {
+            text-align: left;
+            border-bottom: 1px solid #fb923c;
+            padding: 5px;
+        }
+
+        .false-friends-table td {
+            padding: 8px 5px;
+            border-bottom: 1px solid #4c1d95;
         }
 
         .questao {
             background: #1e293b;
-            padding: 20px;
+            padding: 25px;
             border-radius: 10px;
             margin-bottom: 30px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            border-left: 5px solid #a855f7; /* Purple */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        label:hover {
+            background: #4c1d95;
         }
 
         button {
-            background: #22c55e;
+            background: #fb923c;
             border: none;
             padding: 10px 20px;
             border-radius: 6px;
-            color: white;
+            color: #0f172a;
             font-size: 15px;
             cursor: pointer;
             margin-top: 10px;
-            margin-right: 5px;
+            font-weight: bold;
         }
 
         button:hover {
-            background: #16a34a;
+            background: #f97316;
         }
 
-        .resolucao {
-            display: none;
+        .resolucao-box {
             margin-top: 15px;
-            background: #334155;
+            background: #0f172a;
             padding: 15px;
             border-radius: 8px;
+            border: 1px dashed #fb923c;
         }
 
         .voltar {
@@ -62,110 +109,125 @@
 
 <body>
 
-    <h1>English - False Cognates 👺⚠️</h1>
+    <h1>English - False Friends 👺⚠️</h1>
 
-    <div class="questao">
-        <p><b>1.</b> Você está em uma biblioteca e lê um aviso: <em>"Parents are responsible for their children"</em>. A palavra <strong>"Parents"</strong> refere-se a:</p>
-        <input type="radio" name="q1" value="a"> Parentes em geral (tios, primos, etc).<br>
-        <input type="radio" name="q1" value="b"> Padrinhos e madrinhas.<br>
-        <input type="radio" name="q1" value="c"> Pais (pai e mãe).<br>
-        <input type="radio" name="q1" value="d"> Professores e diretores.<br>
-        <br>
-        <button onclick="corrigir(1,'c')">Responder</button>
-        <p id="resultado1"></p>
-        <button onclick="verResolucao(1)">Ver resolução</button>
-        
-        <div class="resolucao" id="res1">
-            <b>Resolução:</b><br><br>
-            <strong>"Parents"</strong> significa especificamente <strong>pais</strong>. Para dizer "parentes" (família estendida), usamos a palavra <em>relatives</em>.<br><br>
-            Resposta correta: <strong>C</strong>
+    <div id="container-questoes">
+        <div class="alert-box">
+            <h3 style="margin-top:0; color:#fb923c;">⚠️ Don't Be Fooled!</h3>
+            <p>Muitas palavras em inglês parecem com português devido à raiz latina, mas o significado mudou com o tempo.</p>
+            <table class="false-friends-table">
+                <tr>
+                    <th>Word</th>
+                    <th>Looks like...</th>
+                    <th>Real Meaning</th>
+                </tr>
+                <tr>
+                    <td><b>Library</b></td>
+                    <td>Livraria</td>
+                    <td>Biblioteca</td>
+                </tr>
+                <tr>
+                    <td><b>Actually</b></td>
+                    <td>Atualmente</td>
+                    <td>Na verdade</td>
+                </tr>
+                <tr>
+                    <td><b>Push</b></td>
+                    <td>Puxe</td>
+                    <td>Empurre</td>
+                </tr>
+                <tr>
+                    <td><b>Notice</b></td>
+                    <td>Notícia</td>
+                    <td>Perceber</td>
+                </tr>
+            </table>
         </div>
+
+        <p style="text-align:center; color:#94a3b8;">Unmasking deceptive words...</p>
     </div>
 
-    <div class="questao">
-        <p><b>2.</b> A palavra <strong>"Pretend"</strong> em uma frase como <em>"She pretends to be a princess"</em> significa:</p>
-        <input type="radio" name="q2" value="a"> Pretender (ter a intenção).<br>
-        <input type="radio" name="q2" value="b"> Fingir (fazer de conta).<br>
-        <input type="radio" name="q2" value="c"> Preparar.<br>
-        <input type="radio" name="q2" value="d"> Presentear.<br>
-        <br>
-        <button onclick="corrigir(2,'b')">Responder</button>
-        <p id="resultado2"></p>
-        <button onclick="verResolucao(2)">Ver resolução</button>
-        
-        <div class="resolucao" id="res2">
-            <b>Resolução:</b><br><br>
-            <strong>"Pretend"</strong> significa <strong>fingir</strong>. Se você quiser dizer "pretender" (ter a intenção), o verbo correto é <em>intend</em>.<br><br>
-            Resposta correta: <strong>B</strong>
-        </div>
-    </div>
-
-    <div class="questao">
-        <p><b>3.</b> No restaurante, o garçom pergunta se você quer um <strong>"Steak"</strong>. Ele está oferecendo:</p>
-        <input type="radio" name="q3" value="a"> Um espetinho de legumes.<br>
-        <input type="radio" name="q3" value="b"> Um bife de carne.<br>
-        <input type="radio" name="q3" value="c"> Um copo de suco.<br>
-        <input type="radio" name="q3" value="d"> Uma estaca de madeira.<br>
-        <br>
-        <button onclick="corrigir(3,'b')">Responder</button>
-        <p id="resultado3"></p>
-        <button onclick="verResolucao(3)">Ver resolução</button>
-        
-        <div class="resolucao" id="res3">
-            <b>Resolução:</b><br><br>
-            A pronúncia parece "estaca", mas <strong>"Steak"</strong> significa <strong>bife/filé de carne</strong>. <br><br>
-            Resposta correta: <strong>B</strong>
-        </div>
-    </div>
-
-    <a class="voltar" href="ingles.html">⬅ Voltar para Inglês</a>
+    <a class="voltar" href="ingles.html">⬅ Voltar</a>
 
     <script>
-    function corrigir(qNum, correta){
-        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-        if(!selecionada){
-            alert("Escolha uma alternativa!");
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: ingles e assunto: false-cognates
+        const filtradas = banco.filter(q => q.materia === "ingles" && q.assunto === "false-cognates");
+
+        const alertHtml = document.querySelector(".alert-box").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = alertHtml + "<p style='text-align:center; color:#94a3b8;'>No impostors found! Add false cognates to the bank.</p>";
             return;
         }
 
-        let acertou = selecionada.value === correta;
+        container.innerHTML = alertHtml; 
 
-        let respostas = JSON.parse(localStorage.getItem("respostasInglesFalseCognates")) || {};
-        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-        localStorage.setItem("respostasInglesFalseCognates", JSON.stringify(respostas));
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            let resolucaoHtml = q.resolucao ? `
+                <div id="res-${q.id}" style="display:none;" class="resolucao-box">
+                    <p style="color:#fb923c; font-weight:bold; margin-bottom:5px;">🔍 The Truth Revealed:</p>
+                    <p style="font-size:14px; color:#cbd5e1;">${q.resolucao}</p>
+                </div>` : "";
+
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Unmask Answer</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                ${resolucaoHtml}
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("Don't be shy! Choose an option.");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+
+        if (acertou) {
+            feedback.innerText = "✅ Correct! You didn't fall for the trap.";
+            feedback.style.color = "#fb923c";
+        } else {
+            feedback.innerText = `❌ Incorrect. You were deceived! The right one was (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        if (resBox) resBox.style.display = "block";
 
         let logado = localStorage.getItem("logado");
         if(logado){
             let usuario = JSON.parse(localStorage.getItem(logado));
-            usuario.respondidas = (usuario.respondidas || 0) + 1;
-            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-            localStorage.setItem(logado, JSON.stringify(usuario));
-        }
-
-        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correct!" : "❌ Incorrect!";
-    }
-
-    function verResolucao(qNum){
-        document.getElementById(`res${qNum}`).style.display = "block";
-    }
-
-    function carregarRespostas(){
-        let respostas = JSON.parse(localStorage.getItem("respostasInglesFalseCognates"));
-        if(!respostas) return;
-        for(let q in respostas){
-            let info = respostas[q];
-            if(info.selecionada){
-                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-                if(input) input.checked = true;
-            }
-            if(info.acertou !== undefined){
-                let numero = q.replace("q","");
-                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correct!" : "❌ Incorrect!";
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
             }
         }
     }
 
-    window.onload = carregarRespostas;
+    window.onload = carregarQuestoes;
     </script>
 
 </body>

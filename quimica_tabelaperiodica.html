@@ -1,210 +1,220 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>CAVEST - Tabela Periódica</title>
+    <meta charset="UTF-8">
+    <title>CAVEST - Tabela Periódica</title>
 
-<style>
-body{
-    font-family:Arial;
-    background:#0f172a;
-    color:white;
-    padding:40px;
-}
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
 
-h1{
-    text-align:center;
-}
+        h1 {
+            text-align: center;
+            color: #fbbf24; /* Amber */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
+        }
 
-.questao{
-    background:#1e293b;
-    padding:20px;
-    border-radius:10px;
-    margin-bottom:30px;
-}
+        #container-questoes {
+            max-width: 850px;
+            margin: auto;
+        }
 
-button{
-    background:#22c55e;
-    border:none;
-    padding:10px 20px;
-    border-radius:6px;
-    color:white;
-    font-size:15px;
-    cursor:pointer;
-    margin-top:10px;
-}
+        /* Guia de Tendências Mundo CAVEST */
+        .periodic-trends {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-top: 5px solid #fbbf24;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
 
-button:hover{
-    background:#16a34a;
-}
+        .trend-card {
+            background: #0f172a;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            border: 1px solid #334155;
+        }
 
-.resolucao{
-    display:none;
-    margin-top:15px;
-    background:#334155;
-    padding:15px;
-    border-radius:8px;
-}
+        .trend-card b { color: #fbbf24; display: block; margin-bottom: 4px; }
 
-.voltar {
-    display: inline-block;
-    text-decoration: none;
-    color: white;
-    background: #38bdf8;
-    padding: 10px 30px;
-    border-radius: 6px;
-    margin-top: 30px;
-}
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-right: 5px solid #fbbf24;
+        }
 
-.voltar:hover {
-    background: #0ea5e9;
-}
-</style>
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        label:hover {
+            background: #451a03; /* Amber-950/Brown */
+        }
+
+        button {
+            background: #fbbf24;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: #0f172a;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #fcd34d;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+        }
+
+        .resolucao-box {
+            display: none;
+            margin-top: 15px;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #fbbf24;
+            line-height: 1.6;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .voltar:hover { color: #fbbf24; }
+    </style>
 </head>
 
 <body>
 
-<h1>Química - Tabela Periódica</h1>
+    <h1>Química - Tabela Periódica 🗺️</h1>
 
-<!-- QUESTÃO 1 -->
-<div class="questao">
-<p><b>1.</b> Qual propriedade dos elementos aumenta da esquerda para a direita em um período da tabela periódica?</p>
-<input type="radio" name="q1" value="a"> Raio atômico<br>
-<input type="radio" name="q1" value="b"> Eletronegatividade<br>
-<input type="radio" name="q1" value="c"> Número de nêutrons<br>
-<input type="radio" name="q1" value="d"> Massa molar<br>
-<br>
-<button onclick="corrigir(1,'b')">Responder</button>
-<p id="resultado1"></p>
-<button onclick="verResolucao(1)">Ver resolução</button>
-<div class="resolucao" id="res1">
-<b>Resolução:</b><br><br>
-A <strong>eletronegatividade</strong> aumenta da esquerda para a direita em um período, pois os átomos tendem a atrair mais fortemente os elétrons em ligações químicas.<br><br>
-Resposta correta: <strong>B</strong>
-</div>
-</div>
+    <div id="container-questoes">
+        <div class="periodic-trends">
+            <div class="trend-card">
+                <b>Raio Atômico ↔️</b>
+                Aumenta para a Esquerda e para Baixo.
+            </div>
+            <div class="trend-card">
+                <b>Eletronegatividade ↗️</b>
+                Aumenta para a Direita e para Cima.
+            </div>
+            <div class="trend-card">
+                <b>Potencial de Ionização ↗️</b>
+                Dificuldade em retirar um elétron.
+            </div>
+            <div class="trend-card">
+                <b>Famílias e Períodos</b>
+                Colunas (Propriedades similares) e Linhas (Camadas eletrônicas).
+            </div>
+        </div>
 
-<!-- QUESTÃO 2 -->
-<div class="questao">
-<p><b>2.</b> Qual é a família da tabela periódica que possui todos os gases nobres?</p>
-<input type="radio" name="q2" value="a"> Alcalinos<br>
-<input type="radio" name="q2" value="b"> Halogênios<br>
-<input type="radio" name="q2" value="c"> Gases nobres<br>
-<input type="radio" name="q2" value="d"> Calcogênios<br>
-<br>
-<button onclick="corrigir(2,'c')">Responder</button>
-<p id="resultado2"></p>
-<button onclick="verResolucao(2)">Ver resolução</button>
-<div class="resolucao" id="res2">
-<b>Resolução:</b><br><br>
-A família dos <strong>gases nobres</strong> está localizada na última coluna da tabela periódica, com elementos quimicamente estáveis e pouco reativos.<br><br>
-Resposta correta: <strong>C</strong>
-</div>
-</div>
+        <p style="text-align:center; color:#64748b; margin-bottom: 20px;">Navegando pelas propriedades dos elementos...</p>
+    </div>
 
-<!-- QUESTÃO 3 -->
-<div class="questao">
-<p><b>3.</b> O que representa o número atômico de um elemento?</p>
-<input type="radio" name="q3" value="a"> A soma de prótons e nêutrons<br>
-<input type="radio" name="q3" value="b"> O número de elétrons e nêutrons<br>
-<input type="radio" name="q3" value="c"> O número de prótons no núcleo<br>
-<input type="radio" name="q3" value="d"> A massa molar do elemento<br>
-<br>
-<button onclick="corrigir(3,'c')">Responder</button>
-<p id="resultado3"></p>
-<button onclick="verResolucao(3)">Ver resolução</button>
-<div class="resolucao" id="res3">
-<b>Resolução:</b><br><br>
-O <strong>número atômico</strong> representa o número de prótons no núcleo de um átomo, que também determina sua posição na tabela periódica.<br><br>
-Resposta correta: <strong>C</strong>
-</div>
-</div>
+     <a class="voltar" href="quimica.html">⬅ Voltar</a>
 
-<!-- Botão Voltar -->
-<div style="text-align: center;">
-    <a href="dashboard.html" class="voltar">← Voltar ao Dashboard</a>
-</div>
-
-<script>
-// Função genérica para corrigir qualquer questão
-function corrigir(qNum, correta){
-    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-    if(!selecionada){
-        alert("Escolha uma alternativa!");
-        return;
-    }
-
-    // Verificar se já respondeu (opcional - evitar dupla contagem)
-    let respostas = JSON.parse(localStorage.getItem("respostasTabelaPeriodica")) || {};
-    if(respostas[`q${qNum}`]) {
-        if(!confirm("Você já respondeu esta questão. Deseja responder novamente?")) {
+    <script>
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: quimica e assunto: tabela periodica
+        const filtradas = banco.filter(q => q.materia === "quimica" && (q.assunto === "tabela periodica" || q.assunto === "periodocidade"));
+        const trendsHtml = document.querySelector(".periodic-trends").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = trendsHtml + "<p style='text-align:center; color:#94a3b8;'>Nenhum elemento detectado. Adicione questões de Tabela Periódica ao banco.</p>";
             return;
         }
+
+        container.innerHTML = trendsHtml; 
+
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Consultar Elemento</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                
+                <div id="res-${q.id}" class="resolucao-box">
+                    <b style="color:#fbbf24;">Análise Periódica:</b><br><br>
+                    ${q.resolucao || "Lembre-se das setas de crescimento das propriedades e da localização das famílias (Alcalinos, Halogênios, etc)."}
+                </div>
+            `;
+            container.appendChild(div);
+        });
     }
 
-    let acertou = selecionada.value === correta;
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
 
-    // salvar respostas da página
-    respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-    localStorage.setItem("respostasTabelaPeriodica", JSON.stringify(respostas));
+        if (!selecionada) {
+            alert("Localize sua resposta na tabela antes de prosseguir!");
+            return;
+        }
 
-    // atualizar progresso do usuário logado
-    let logado = localStorage.getItem("logado");
-    if(logado){
-        let usuario = JSON.parse(localStorage.getItem(logado));
-        
-        // Inicializar contadores se não existirem
-        if(!usuario.respondidas) usuario.respondidas = 0;
-        if(!usuario.acertos) usuario.acertos = 0;
-        
-        // Verificar se esta questão já foi respondida antes para não contar duas vezes
-        let respostasAntigas = JSON.parse(localStorage.getItem("respostasTabelaPeriodica")) || {};
-        if(!respostasAntigas[`q${qNum}`]) {
-            usuario.respondidas += 1;
-            if(acertou) usuario.acertos += 1;
+        const acertou = selecionada.value === correta;
+        resBox.style.display = "block";
+
+        if (acertou) {
+            feedback.innerText = "✅ Correto! Você domina as tendências periódicas.";
+            feedback.style.color = "#fbbf24";
         } else {
-            // Se já respondeu, ajustar contagem (remover contagem anterior e adicionar nova)
-            if(respostasAntigas[`q${qNum}`].acertou && !acertou) {
-                usuario.acertos -= 1; // perdeu o acerto
-            } else if(!respostasAntigas[`q${qNum}`].acertou && acertou) {
-                usuario.acertos += 1; // ganhou um acerto
+            feedback.innerText = `❌ Incorreto. O elemento de resposta correta era (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        // Sistema de Progresso Mundo CAVEST
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
             }
-            // Se respondeu de novo, não incrementa respondidas
-        }
-        
-        localStorage.setItem(logado, JSON.stringify(usuario));
-    }
-
-    // mostrar resultado
-    document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
-}
-
-// mostrar resolução
-function verResolucao(qNum){
-    document.getElementById(`res${qNum}`).style.display = "block";
-}
-
-// carregar respostas salvas
-function carregarRespostas(){
-    let respostas = JSON.parse(localStorage.getItem("respostasTabelaPeriodica"));
-    if(!respostas) return;
-    
-    for(let q in respostas){
-        let info = respostas[q];
-        if(info.selecionada){
-            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-            if(input) input.checked = true;
-        }
-        if(info.acertou !== undefined){
-            let numero = q.replace("q","");
-            document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
         }
     }
-}
 
-// Carregar respostas quando a página abrir
-window.onload = carregarRespostas;
-</script>
+    window.onload = carregarQuestoes;
+    </script>
 
 </body>
 </html>

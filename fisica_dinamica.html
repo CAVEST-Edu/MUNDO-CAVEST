@@ -1,192 +1,203 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>CAVEST - Dinâmica</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <meta charset="UTF-8">
+    <title>CAVEST - Dinâmica</title>
 
-<style>
-body{
-font-family:Arial;
-background:#0f172a;
-color:white;
-padding:40px;
-}
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
 
-h1{
-text-align:center;
-}
+        h1 {
+            text-align: center;
+            color: #38bdf8;
+            margin-bottom: 40px;
+        }
 
-.questao{
-background:#1e293b;
-padding:20px;
-border-radius:10px;
-margin-bottom:30px;
-}
+        #container-questoes {
+            max-width: 800px;
+            margin: auto;
+        }
 
-button{
-background:#22c55e;
-border:none;
-padding:10px 20px;
-border-radius:6px;
-color:white;
-font-size:15px;
-cursor:pointer;
-margin-top:10px;
-}
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #38bdf8;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
 
-button:hover{
-background:#16a34a;
-}
+        .form-box {
+            background: #0c4a6e;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid #0ea5e9;
+            font-size: 0.95em;
+            color: #e0f2fe;
+        }
 
-.resolucao{
-display:none;
-margin-top:15px;
-background:#334155;
-padding:15px;
-border-radius:8px;
-}
-</style>
+        .img-questao {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: block;
+        }
 
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        label:hover {
+            background: #475569;
+        }
+
+        button {
+            background: #22c55e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .resolucao-box {
+            margin-top: 15px;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #38bdf8;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Física - Dinâmica</h1>
+    <h1>Física - Dinâmica (Leis de Newton) 🚀</h1>
 
-<!-- QUESTÃO 1 -->
-<div class="questao">
-<p><b>1.</b> De acordo com a Primeira Lei de Newton, um corpo tende a:</p>
+    <div id="container-questoes">
+        <div class="form-box">
+            <h3 style="margin-top:0; color:#7dd3fc;">📐 Fórmulas de Apoio</h3>
+            <b>2ª Lei de Newton (Princípio Fundamental):</b> $$F_R = m \cdot a$$ <br>
+            <b>Força Peso:</b> $$P = m \cdot g$$ <br>
+            <b>Força de Atrito:</b> $$f_{at} = \mu \cdot N$$
+        </div>
 
-<input type="radio" name="q1" value="a"> permanecer em repouso ou movimento uniforme se nenhuma força atuar<br>
-<input type="radio" name="q1" value="b"> parar imediatamente quando perde força<br>
-<input type="radio" name="q1" value="c"> sempre acelerar<br>
-<input type="radio" name="q1" value="d"> mover-se apenas se houver força constante<br>
+        <p style="text-align:center; color:#94a3b8;">Carregando as forças do universo...</p>
+    </div>
 
-<br>
-<button onclick="corrigir(1,'a')">Responder</button>
-<p id="resultado1"></p>
+    <a class="voltar" href="fisica.html">⬅ Voltar</a>
 
-<button onclick="verResolucao(1)">Ver resolução</button>
+    <script>
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtro por materia: fisica e assunto: dinamica
+        const filtradas = banco.filter(q => q.materia === "fisica" && q.assunto === "dinamica");
 
-<div class="resolucao" id="res1">
-<b>Resolução:</b><br><br>
-A Primeira Lei de Newton é chamada de <strong>Lei da Inércia</strong>.<br>
-Ela diz que um corpo tende a manter seu estado de repouso ou movimento retilíneo uniforme caso nenhuma força resultante atue sobre ele.<br><br>
-Resposta correta: <strong>A</strong>
-</div>
-</div>
+        const formHtml = document.querySelector(".form-box").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = formHtml + "<p style='text-align:center; color:#94a3b8;'>Ainda não há questões de Dinâmica no banco de dados.</p>";
+            return;
+        }
 
-<!-- QUESTÃO 2 -->
-<div class="questao">
-<p><b>2.</b> Um corpo de massa 2 kg sofre uma força resultante de 10 N. Qual será sua aceleração?</p>
+        container.innerHTML = formHtml; 
 
-<input type="radio" name="q2" value="a"> 2 m/s²<br>
-<input type="radio" name="q2" value="b"> 5 m/s²<br>
-<input type="radio" name="q2" value="c"> 10 m/s²<br>
-<input type="radio" name="q2" value="d"> 20 m/s²<br>
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
 
-<br>
-<button onclick="corrigir(2,'b')">Responder</button>
-<p id="resultado2"></p>
+            let imgHtml = q.imagem ? `<img src="${q.imagem}" class="img-questao">` : "";
+            let resolucaoHtml = q.resolucao ? `
+                <div id="res-${q.id}" style="display:none;" class="resolucao-box">
+                    <p style="color:#7dd3fc; font-weight:bold; margin-bottom:5px;">💡 Resolução Passo a Passo:</p>
+                    <p style="font-size:14px; color:#cbd5e1;">${q.resolucao}</p>
+                </div>` : "";
 
-<button onclick="verResolucao(2)">Ver resolução</button>
+            div.innerHTML = `
+                ${imgHtml}
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Responder</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                ${resolucaoHtml}
+            `;
+            container.appendChild(div);
+        });
+    }
 
-<div class="resolucao" id="res2">
-<b>Resolução:</b><br><br>
-Usamos a <strong>Segunda Lei de Newton</strong>:<br>
-F = m · a → a = F / m<br><br>
-a = 10 / 2 → a = 5 m/s²<br><br>
-Resposta correta: <strong>B</strong>
-</div>
-</div>
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
 
-<script>
+        if (!selecionada) {
+            alert("Escolha uma alternativa!");
+            return;
+        }
 
-// corrigir questão
-function corrigir(qNum, correta){
+        const acertou = selecionada.value === correta;
 
-let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+        if (acertou) {
+            feedback.innerText = "✅ Excelente! Você venceu a inércia.";
+            feedback.style.color = "#22c55e";
+        } else {
+            feedback.innerText = `❌ Incorreto. A resposta certa era (${correta.toUpperCase()})`;
+            feedback.style.color = "#ef4444";
+        }
 
-if(!selecionada){
-alert("Escolha uma alternativa");
-return;
-}
+        if (resBox) resBox.style.display = "block";
 
-let acertou = selecionada.value === correta;
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
+            }
+        }
+    }
 
-// salvar respostas
-let respostas = JSON.parse(localStorage.getItem("respostasDinamica")) || {};
-
-respostas[`q${qNum}`] = {
-selecionada: selecionada.value,
-acertou: acertou
-};
-
-localStorage.setItem("respostasDinamica", JSON.stringify(respostas));
-
-// atualizar progresso do usuário
-let logado = localStorage.getItem("logado");
-
-if(logado){
-
-let usuario = JSON.parse(localStorage.getItem(logado));
-
-usuario.respondidas = (usuario.respondidas || 0) + 1;
-
-if(acertou){
-usuario.acertos = (usuario.acertos || 0) + 1;
-}
-
-localStorage.setItem(logado, JSON.stringify(usuario));
-
-}
-
-// mostrar resultado
-document.getElementById(`resultado${qNum}`).innerHTML =
-acertou ? "✅ Correto!" : "❌ Incorreto!";
-
-}
-
-// mostrar resolução
-function verResolucao(qNum){
-document.getElementById(`res${qNum}`).style.display = "block";
-}
-
-// carregar respostas salvas
-function carregarRespostas(){
-
-let respostas = JSON.parse(localStorage.getItem("respostasDinamica"));
-
-if(!respostas) return;
-
-for(let q in respostas){
-
-let info = respostas[q];
-
-if(info.selecionada){
-
-let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-
-if(input) input.checked = true;
-
-}
-
-if(info.acertou !== undefined){
-
-let numero = q.replace("q","");
-
-document.getElementById(`resultado${numero}`).innerHTML =
-info.acertou ? "✅ Correto!" : "❌ Incorreto!";
-
-}
-
-}
-
-}
-
-window.onload = carregarRespostas;
-
-</script>
+    window.onload = carregarQuestoes;
+    </script>
 
 </body>
 </html>

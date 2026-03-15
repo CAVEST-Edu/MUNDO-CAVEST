@@ -1,169 +1,203 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>CAVEST - Probabilidade</title>
+    <meta charset="UTF-8">
+    <title>CAVEST - Probabilidade</title>
 
-<style>
-body{
-    font-family:Arial;
-    background:#0f172a;
-    color:white;
-    padding:40px;
-}
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
 
-h1{
-    text-align:center;
-}
+        h1 {
+            text-align: center;
+            color: #a855f7; /* Violet */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-.questao{
-    background:#1e293b;
-    padding:20px;
-    border-radius:10px;
-    margin-bottom:30px;
-}
+        #container-questoes {
+            max-width: 850px;
+            margin: auto;
+        }
 
-button{
-    background:#22c55e;
-    border:none;
-    padding:10px 20px;
-    border-radius:6px;
-    color:white;
-    font-size:15px;
-    cursor:pointer;
-    margin-top:10px;
-}
+        .prob-formula {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-top: 5px solid #a855f7;
+            text-align: center;
+        }
 
-button:hover{
-    background:#16a34a;
-}
+        .formula-box {
+            display: inline-block;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            font-size: 1.1em;
+        }
 
-.resolucao{
-    display:none;
-    margin-top:15px;
-    background:#334155;
-    padding:15px;
-    border-radius:8px;
-}
-</style>
+        .formula-box b { color: #a855f7; }
+
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-right: 5px solid #a855f7;
+        }
+
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        label:hover {
+            background: #4c1d95; /* Violet-900 */
+        }
+
+        button {
+            background: #a855f7;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #c084fc;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .resolucao-box {
+            display: none;
+            margin-top: 15px;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #a855f7;
+            line-height: 1.6;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Matemática - Probabilidade</h1>
+    <h1>Matemática - Chance e Probabilidade 🎲</h1>
 
-<!-- QUESTÃO 1 -->
-<div class="questao">
-<p><b>1.</b> Qual é a probabilidade de lançar um dado e obter um número par?</p>
-<input type="radio" name="q1" value="a"> 1/6<br>
-<input type="radio" name="q1" value="b"> 1/2<br>
-<input type="radio" name="q1" value="c"> 1/3<br>
-<input type="radio" name="q1" value="d"> 1/4<br>
-<br>
-<button onclick="corrigir(1,'b')">Responder</button>
-<p id="resultado1"></p>
-<button onclick="verResolucao(1)">Ver resolução</button>
-<div class="resolucao" id="res1">
-<b>Resolução:</b><br><br>
-Um dado possui os números 1, 2, 3, 4, 5 e 6. Os números pares são 2, 4 e 6 → 3 resultados favoráveis em 6 possíveis.<br>
-Probabilidade = 3/6 = <strong>1/2</strong>.<br><br>
-Resposta correta: <strong>B</strong>
-</div>
-</div>
+    <div id="container-questoes">
+        <div class="prob-formula">
+            <div class="formula-box">
+                P(E) = <b>Favoráveis</b> / <b>Total (Espaço Amostral)</b>
+            </div>
+            <p style="font-size: 0.8em; margin-top: 10px; color: #94a3b8;">A probabilidade sempre estará entre 0 (impossível) e 1 (certeza).</p>
+        </div>
 
-<!-- QUESTÃO 2 -->
-<div class="questao">
-<p><b>2.</b> Uma urna contém 5 bolas vermelhas e 3 bolas azuis. Qual a probabilidade de retirar uma bola vermelha?</p>
-<input type="radio" name="q2" value="a"> 3/8<br>
-<input type="radio" name="q2" value="b"> 5/8<br>
-<input type="radio" name="q2" value="c"> 1/2<br>
-<input type="radio" name="q2" value="d"> 2/5<br>
-<br>
-<button onclick="corrigir(2,'b')">Responder</button>
-<p id="resultado2"></p>
-<button onclick="verResolucao(2)">Ver resolução</button>
-<div class="resolucao" id="res2">
-<b>Resolução:</b><br><br>
-Total de bolas = 5 vermelhas + 3 azuis = 8<br>
-Probabilidade de retirar vermelha = 5/8<br><br>
-Resposta correta: <strong>B</strong>
-</div>
-</div>
+        <p style="text-align:center; color:#64748b;">Analisando chances estatísticas...</p>
+    </div>
 
-<!-- QUESTÃO 3 -->
-<div class="questao">
-<p><b>3.</b> Ao lançar duas moedas, qual é a probabilidade de sair cara em ambas?</p>
-<input type="radio" name="q3" value="a"> 1/2<br>
-<input type="radio" name="q3" value="b"> 1/3<br>
-<input type="radio" name="q3" value="c"> 1/4<br>
-<input type="radio" name="q3" value="d"> 1/6<br>
-<br>
-<button onclick="corrigir(3,'c')">Responder</button>
-<p id="resultado3"></p>
-<button onclick="verResolucao(3)">Ver resolução</button>
-<div class="resolucao" id="res3">
-<b>Resolução:</b><br><br>
-Cada moeda tem 2 resultados (cara ou coroa).<br>
-Probabilidade de cara na primeira moeda = 1/2<br>
-Probabilidade de cara na segunda moeda = 1/2<br>
-Probabilidade conjunta = 1/2 × 1/2 = <strong>1/4</strong><br><br>
-Resposta correta: <strong>C</strong>
-</div>
-</div>
+    <a class="voltar" href="matematica.html">⬅ Voltar</a>
 
-<script>
-// Função genérica para corrigir qualquer questão
-function corrigir(qNum, correta){
-    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-    if(!selecionada){
-        alert("Escolha uma alternativa!");
-        return;
-    }
-
-    let acertou = selecionada.value === correta;
-
-    // salvar respostas da página
-    let respostas = JSON.parse(localStorage.getItem("respostasProbabilidade")) || {};
-    respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-    localStorage.setItem("respostasProbabilidade", JSON.stringify(respostas));
-
-    // atualizar progresso do usuário logado
-    let logado = localStorage.getItem("logado");
-    if(logado){
-        let usuario = JSON.parse(localStorage.getItem(logado));
-        usuario.respondidas = (usuario.respondidas || 0) + 1;
-        if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-        localStorage.setItem(logado, JSON.stringify(usuario));
-    }
-
-    // mostrar resultado
-    document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
-}
-
-// mostrar resolução
-function verResolucao(qNum){
-    document.getElementById(`res${qNum}`).style.display = "block";
-}
-
-// carregar respostas salvas
-function carregarRespostas(){
-    let respostas = JSON.parse(localStorage.getItem("respostasProbabilidade"));
-    if(!respostas) return;
-    for(let q in respostas){
-        let info = respostas[q];
-        if(info.selecionada){
-            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-            if(input) input.checked = true;
+    <script>
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: matematica e assunto: probabilidade
+        const filtradas = banco.filter(q => q.materia === "matematica" && q.assunto === "probabilidade");
+        const formulaHtml = document.querySelector(".prob-formula").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = formulaHtml + "<p style='text-align:center; color:#94a3b8;'>Espaço amostral vazio. Adicione questões de probabilidade!</p>";
+            return;
         }
-        if(info.acertou !== undefined){
-            let numero = q.replace("q","");
-            document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+
+        container.innerHTML = formulaHtml; 
+
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Calcular Chance</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                
+                <div id="res-${q.id}" class="resolucao-box">
+                    <b style="color:#a855f7;">Raciocínio Lógico:</b><br><br>
+                    ${q.resolucao || "Identifique os casos favoráveis e divida pelo total de possibilidades."}
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("Faça sua aposta (escolha uma alternativa)!");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+        resBox.style.display = "block";
+
+        if (acertou) {
+            feedback.innerText = "✅ Correto! As chances estavam a seu favor.";
+            feedback.style.color = "#a855f7";
+        } else {
+            feedback.innerText = `❌ Incorreto. O resultado provável era (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        // Sistema de Progresso Mundo CAVEST
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
+            }
         }
     }
-}
 
-window.onload = carregarRespostas;
-</script>
+    window.onload = carregarQuestoes;
+    </script>
 
 </body>
 </html>

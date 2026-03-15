@@ -6,7 +6,7 @@
 
     <style>
         body {
-            font-family: Arial;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #0f172a;
             color: white;
             padding: 40px;
@@ -14,24 +14,47 @@
 
         h1 {
             text-align: center;
+            color: #22c55e; /* Green */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #container-questoes {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .texto-apoio {
+            background: #1e293b;
+            padding: 20px;
+            border-left: 5px solid #22c55e;
+            margin-bottom: 20px;
+            font-style: italic;
+            line-height: 1.6;
+            color: #e2e8f0;
+            border-radius: 0 10px 10px 0;
         }
 
         .questao {
             background: #1e293b;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 12px;
             margin-bottom: 30px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
-        .texto-apoio {
-            background: #0f172a;
-            padding: 15px;
-            border-left: 4px solid #22c55e;
-            margin-bottom: 15px;
-            font-style: italic;
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        label:hover {
+            background: #064e3b; /* Emerald-900 */
         }
 
         button {
@@ -40,22 +63,25 @@
             padding: 10px 20px;
             border-radius: 6px;
             color: white;
-            font-size: 15px;
+            font-weight: bold;
             cursor: pointer;
             margin-top: 10px;
-            margin-right: 5px;
+            transition: 0.3s;
         }
 
         button:hover {
-            background: #16a34a;
+            background: #4ade80;
+            transform: scale(1.02);
         }
 
-        .resolucao {
+        .resolucao-box {
             display: none;
             margin-top: 15px;
-            background: #334155;
+            background: #0f172a;
             padding: 15px;
             border-radius: 8px;
+            border: 1px solid #22c55e;
+            line-height: 1.6;
         }
 
         .voltar {
@@ -70,119 +96,107 @@
 
 <body>
 
-    <h1>Português - Interpretação de Texto 📖</h1>
+    <h1>Linguagens - Interpretação e Análise 📖</h1>
 
-    <div class="questao">
-        <div class="texto-apoio">
-            "A vida é a arte do encontro, embora haja tanto desencontro pela vida." (Vinícius de Moraes)
-        </div>
-        <p><b>1.</b> Qual é a ideia central contida no trecho acima?</p>
-        <input type="radio" name="q1" value="a"> A vida é feita apenas de momentos tristes.<br>
-        <input type="radio" name="q1" value="b"> O desencontro é o objetivo principal da existência.<br>
-        <input type="radio" name="q1" value="c"> Apesar das dificuldades e afastamentos, o foco da vida são as conexões humanas.<br>
-        <input type="radio" name="q1" value="d"> A arte não deve se misturar com os problemas da vida real.<br>
-        <br>
-        <button onclick="corrigir(1,'c')">Responder</button>
-        <p id="resultado1"></p>
-        <button onclick="verResolucao(1)">Ver resolução</button>
-        
-        <div class="resolucao" id="res1">
-            <b>Resolução:</b><br><br>
-            O autor utiliza a oposição entre "encontro" e "desencontro" para mostrar que, embora os problemas existam, a "arte" ou o valor da vida está na união e no contato.<br><br>
-            Resposta correta: <strong>C</strong>
-        </div>
+    <div id="container-questoes">
+        <p style="text-align:center; color:#64748b;">Decifrando sentidos e contextos...</p>
     </div>
 
-    <div class="questao">
-        <p><b>2.</b> O que define o uso da <strong>linguagem conotativa</strong> em um texto?</p>
-        <input type="radio" name="q2" value="a"> O uso das palavras com sentido literal, como no dicionário.<br>
-        <input type="radio" name="q2" value="b"> O uso das palavras em sentido figurado e simbólico.<br>
-        <input type="radio" name="q2" value="c"> A utilização exclusiva de termos científicos e técnicos.<br>
-        <input type="radio" name="q2" value="d"> Um texto que não possui pontuação.<br>
-        <br>
-        <button onclick="corrigir(2,'b')">Responder</button>
-        <p id="resultado2"></p>
-        <button onclick="verResolucao(2)">Ver resolução</button>
-        
-        <div class="resolucao" id="res2">
-            <b>Resolução:</b><br><br>
-            Conotação é o sentido subjetivo, criativo ou emocional de uma palavra (ex: "ele tem um coração de pedra"). O sentido literal é a denotação.<br><br>
-            Resposta correta: <strong>B</strong>
-        </div>
-    </div>
+    <a class="voltar" href="portugues.html">⬅ Voltar</a>
 
-    <div class="questao">
-        <div class="texto-apoio">
-            "Não basta saber ler que 'Eva viu a uva'. É preciso compreender qual a posição que Eva ocupa no seu contexto social, quem trabalha para produzir a uva e quem lucra com esse trabalho." (Adaptado de Paulo Freire)
-        </div>
-        <p><b>3.</b> Segundo o texto, a verdadeira alfabetização envolve:</p>
-        <input type="radio" name="q3" value="a"> Apenas a decodificação de letras e sílabas simples.<br>
-        <input type="radio" name="q3" value="b"> O cultivo de uvas em larga escala.<br>
-        <input type="radio" name="q3" value="c"> A capacidade de ler rápido qualquer frase.<br>
-        <input type="radio" name="q3" value="d"> Uma visão crítica sobre a realidade e a sociedade onde se vive.<br>
-        <br>
-        <button onclick="corrigir(3,'d')">Responder</button>
-        <p id="resultado3"></p>
-        <button onclick="verResolucao(3)">Ver resolução</button>
-        
-        <div class="resolucao" id="res3">
-            <b>Resolução:</b><br><br>
-            O autor defende que a leitura vai além das palavras; trata-se de entender
-            </div>
-            
-            <script>
-// Função genérica para corrigir qualquer questão
-function corrigir(qNum, correta){
-    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-    if(!selecionada){
-        alert("Escolha uma alternativa!");
-        return;
-    }
-
-    let acertou = selecionada.value === correta;
-
-    // salvar respostas da página
-    let respostas = JSON.parse(localStorage.getItem("respostasTrigonometria")) || {};
-    respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-    localStorage.setItem("respostasTrigonometria", JSON.stringify(respostas));
-
-    // atualizar progresso do usuário logado
-    let logado = localStorage.getItem("logado");
-    if(logado){
-        let usuario = JSON.parse(localStorage.getItem(logado));
-        usuario.respondidas = (usuario.respondidas || 0) + 1;
-        if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-        localStorage.setItem(logado, JSON.stringify(usuario));
-    }
-
-    // mostrar resultado
-    document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
-}
-
-// mostrar resolução
-function verResolucao(qNum){
-    document.getElementById(`res${qNum}`).style.display = "block";
-}
-
-// carregar respostas salvas
-function carregarRespostas(){
-    let respostas = JSON.parse(localStorage.getItem("respostasTrigonometria"));
-    if(!respostas) return;
-    for(let q in respostas){
-        let info = respostas[q];
-        if(info.selecionada){
-            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-            if(input) input.checked = true;
+    <script>
+    // Banco de questões local para este módulo (pode ser integrado ao seu banco global)
+    const questoesInterpretacao = [
+        {
+            id: 'it1',
+            texto: '"A vida é a arte do encontro, embora haja tanto desencontro pela vida." (Vinícius de Moraes)',
+            pergunta: 'Qual é a ideia central contida no trecho acima?',
+            a: 'A vida é feita apenas de momentos tristes.',
+            b: 'O desencontro é o objetivo principal da existência.',
+            c: 'Apesar das dificuldades, o foco da vida são as conexões humanas.',
+            d: 'A arte não deve se misturar com os problemas da vida real.',
+            correta: 'c',
+            resolucao: 'O autor utiliza a antítese entre "encontro" e "desencontro" para ressaltar que a essência da vida reside na união, superando os obstáculos cotidianos.'
+        },
+        {
+            id: 'it2',
+            texto: '',
+            pergunta: 'O que define o uso da linguagem conotativa em um texto?',
+            a: 'O uso das palavras com sentido literal, como no dicionário.',
+            b: 'O uso das palavras em sentido figurado e simbólico.',
+            c: 'A utilização exclusiva de termos científicos e técnicos.',
+            d: 'Um texto focado em dados estatísticos.',
+            correta: 'b',
+            resolucao: 'Conotação é o sentido figurado, dependente do contexto e da emoção, oposto à Denotação (sentido "D" de dicionário).'
         }
-        if(info.acertou !== undefined){
-            let numero = q.replace("q","");
-            document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+    ];
+
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        container.innerHTML = ""; 
+
+        questoesInterpretacao.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            div.innerHTML = `
+                ${q.texto ? `<div class="texto-apoio">${q.texto}</div>` : ''}
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Confirmar Leitura</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                
+                <div id="res-${q.id}" class="resolucao-box">
+                    <b style="color:#22c55e;">Análise do Texto:</b><br><br>
+                    ${q.resolucao}
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("Analise as opções antes de responder!");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+        resBox.style.display = "block";
+
+        // Salvar progresso
+        let respostas = JSON.parse(localStorage.getItem("respostasInterpretacao")) || {};
+        respostas[id] = { selecionada: selecionada.value, acertou: acertou };
+        localStorage.setItem("respostasInterpretacao", JSON.stringify(respostas));
+
+        if (acertou) {
+            feedback.innerText = "✅ Excelente interpretação!";
+            feedback.style.color = "#22c55e";
+        } else {
+            feedback.innerText = `❌ Incorreto. A intenção do autor era a opção (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        // Atualizar perfil do usuário
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            usuario.respondidas = (usuario.respondidas || 0) + 1;
+            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+            localStorage.setItem(logado, JSON.stringify(usuario));
         }
     }
-}
 
-window.onload = carregarRespostas;
-</script>
+    window.onload = carregarQuestoes;
+    </script>
 
 </body>
 </html>

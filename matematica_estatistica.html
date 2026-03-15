@@ -1,181 +1,213 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>CAVEST - Estatística</title>
+    <meta charset="UTF-8">
+    <title>CAVEST - Estatística</title>
 
-<style>
-body{
-font-family:Arial;
-background:#0f172a;
-color:white;
-padding:40px;
-}
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
 
-h1{
-text-align:center;
-}
+        h1 {
+            text-align: center;
+            color: #22d3ee; /* Cyan */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-.questao{
-background:#1e293b;
-padding:20px;
-border-radius:10px;
-margin-bottom:30px;
-}
+        #container-questoes {
+            max-width: 850px;
+            margin: auto;
+        }
 
-button{
-background:#22c55e;
-border:none;
-padding:10px 20px;
-border-radius:6px;
-color:white;
-font-size:15px;
-cursor:pointer;
-margin-top:10px;
-}
+        .stats-summary {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 5px solid #22d3ee;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
 
-button:hover{
-background:#16a34a;
-}
+        .concept-card {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85em;
+            text-align: center;
+        }
 
-.resolucao{
-display:none;
-margin-top:15px;
-background:#334155;
-padding:15px;
-border-radius:8px;
-}
-</style>
+        .concept-card b { color: #22d3ee; display: block; margin-bottom: 5px; }
+
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-bottom: 3px solid #22d3ee;
+        }
+
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        label:hover {
+            background: #164e63; /* Cyan-900 */
+        }
+
+        button {
+            background: #22d3ee;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: #0f172a;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #67e8f9;
+            transform: scale(1.02);
+        }
+
+        .resolucao-box {
+            display: none;
+            margin-top: 15px;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #22d3ee;
+            line-height: 1.6;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Matemática - Estatística</h1>
+    <h1>Matemática - Análise de Dados 📊</h1>
 
-<div class="questao">
-<p><b>1.</b> Qual é a média dos números 4, 8, 10 e 14?</p>
+    <div id="container-questoes">
+        <div class="stats-summary">
+            <div class="concept-card">
+                <b>Média (x̄)</b>
+                Soma de todos os valores dividida pela quantidade.
+            </div>
+            <div class="concept-card">
+                <b>Mediana (Md)</b>
+                Valor central do rol (lista em ordem).
+            </div>
+            <div class="concept-card">
+                <b>Moda (Mo)</b>
+                Valor que ocorre com maior frequência.
+            </div>
+        </div>
 
-<input type="radio" name="q1" value="a"> 8<br>
-<input type="radio" name="q1" value="b"> 9<br>
-<input type="radio" name="q1" value="c"> 10<br>
-<input type="radio" name="q1" value="d"> 12<br>
+        <p style="text-align:center; color:#64748b;">Processando amostras de dados...</p>
+    </div>
 
-<br>
+    <a class="voltar" href="matematica.html">⬅ Voltar</a>
 
-<button onclick="corrigir(1,'b')">Responder</button>
-<p id="resultado1"></p>
-<button onclick="verResolucao(1)">Ver resolução</button>
+    <script>
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: matematica e assunto: estatistica
+        const filtradas = banco.filter(q => q.materia === "matematica" && q.assunto === "estatistica");
 
-<div class="resolucao" id="res1">
-<b>Resolução:</b><br><br>
-Média = (4 + 8 + 10 + 14) / 4 = 36 / 4 = <strong>9</strong>
-<br><br>Resposta correta: <strong>B</strong>
-</div>
-</div>
-
-<div class="questao">
-<p><b>2.</b> Qual é a mediana do conjunto {3, 7, 9, 12, 15}?</p>
-
-<input type="radio" name="q2" value="a"> 7<br>
-<input type="radio" name="q2" value="b"> 9<br>
-<input type="radio" name="q2" value="c"> 12<br>
-<input type="radio" name="q2" value="d"> 15<br>
-
-<br>
-
-<button onclick="corrigir(2,'b')">Responder</button>
-<p id="resultado2"></p>
-<button onclick="verResolucao(2)">Ver resolução</button>
-
-<div class="resolucao" id="res2">
-<b>Resolução:</b><br><br>
-A mediana é o valor central quando os números estão em ordem.  
-Conjunto ordenado: 3, 7, 9, 12, 15 → mediana = <strong>9</strong>
-<br><br>Resposta correta: <strong>B</strong>
-</div>
-</div>
-
-<div class="questao">
-<p><b>3.</b> Qual é a moda do conjunto {2, 4, 4, 5, 6, 4, 7}?</p>
-
-<input type="radio" name="q3" value="a"> 2<br>
-<input type="radio" name="q3" value="b"> 4<br>
-<input type="radio" name="q3" value="c"> 5<br>
-<input type="radio" name="q3" value="d"> 6<br>
-
-<br>
-
-<button onclick="corrigir(3,'b')">Responder</button>
-<p id="resultado3"></p>
-<button onclick="verResolucao(3)">Ver resolução</button>
-
-<div class="resolucao" id="res3">
-<b>Resolução:</b><br><br>
-A moda é o valor que mais se repete no conjunto.  
-Aqui, o número <strong>4</strong> aparece 3 vezes.
-<br><br>Resposta correta: <strong>B</strong>
-</div>
-</div>
-
-<script>
-// corrigir questão
-function corrigir(qNum, correta){
-    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-    if(!selecionada){
-        alert("Escolha uma alternativa!");
-        return;
-    }
-
-    let acertou = selecionada.value === correta;
-
-    // salvar respostas da página
-    let respostas = JSON.parse(localStorage.getItem("respostasEstatistica")) || {};
-    respostas[`q${qNum}`] = {
-        selecionada: selecionada.value,
-        acertou: acertou
-    };
-    localStorage.setItem("respostasEstatistica", JSON.stringify(respostas));
-
-    // atualizar progresso do usuário logado
-    let logado = localStorage.getItem("logado");
-    if(logado){
-        let usuario = JSON.parse(localStorage.getItem(logado));
-        usuario.respondidas = (usuario.respondidas || 0) + 1;
-        if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-        localStorage.setItem(logado, JSON.stringify(usuario));
-    }
-
-    // mostrar resultado
-    document.getElementById(`resultado${qNum}`).innerHTML =
-        acertou ? "✅ Correto!" : "❌ Incorreto!";
-}
-
-// mostrar resolução
-function verResolucao(qNum){
-    document.getElementById(`res${qNum}`).style.display="block";
-}
-
-// carregar respostas salvas
-function carregarRespostas(){
-    let respostas = JSON.parse(localStorage.getItem("respostasEstatistica"));
-    if(!respostas) return;
-
-    for(let q in respostas){
-        let info = respostas[q];
-        if(info.selecionada){
-            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-            if(input) input.checked = true;
+        const summaryHtml = document.querySelector(".stats-summary").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = summaryHtml + "<p style='text-align:center; color:#94a3b8;'>Banco de dados vazio. Adicione questões de estatística!</p>";
+            return;
         }
-        if(info.acertou !== undefined){
-            let numero = q.replace("q","");
-            document.getElementById(`resultado${numero}`).innerHTML =
-                info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+
+        container.innerHTML = summaryHtml; 
+
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Calcular Resultado</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                
+                <div id="res-${q.id}" class="resolucao-box">
+                    <b style="color:#22d3ee;">Memória de Cálculo:</b><br>
+                    ${q.resolucao || "Verifique os conceitos de média, moda ou mediana aplicados aqui."}
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("Selecione um dado da amostra!");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+        resBox.style.display = "block";
+
+        if (acertou) {
+            feedback.innerText = "✅ Correto! Tendência central identificada.";
+            feedback.style.color = "#22d3ee";
+        } else {
+            feedback.innerText = `❌ Incorreto. O valor esperado era (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        // Integração Mundo CAVEST
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
+            }
         }
     }
-}
 
-window.onload = carregarRespostas;
-</script>
+    window.onload = carregarQuestoes;
+    </script>
 
 </body>
 </html>

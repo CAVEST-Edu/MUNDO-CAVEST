@@ -1,210 +1,210 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>CAVEST - Estrutura Atômica</title>
+    <meta charset="UTF-8">
+    <title>CAVEST - Estrutura Atômica</title>
 
-<style>
-body{
-    font-family:Arial;
-    background:#0f172a;
-    color:white;
-    padding:40px;
-}
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
 
-h1{
-    text-align:center;
-}
+        h1 {
+            text-align: center;
+            color: #10b981; /* Emerald */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+        }
 
-.questao{
-    background:#1e293b;
-    padding:20px;
-    border-radius:10px;
-    margin-bottom:30px;
-}
+        #container-questoes {
+            max-width: 850px;
+            margin: auto;
+        }
 
-button{
-    background:#22c55e;
-    border:none;
-    padding:10px 20px;
-    border-radius:6px;
-    color:white;
-    font-size:15px;
-    cursor:pointer;
-    margin-top:10px;
-}
+        /* Painel de Partículas Mundo CAVEST */
+        .atom-info-panel {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-bottom: 4px solid #10b981;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
 
-button:hover{
-    background:#16a34a;
-}
+        .particle-card {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
 
-.resolucao{
-    display:none;
-    margin-top:15px;
-    background:#334155;
-    padding:15px;
-    border-radius:8px;
-}
+        .particle-card b { display: block; margin-bottom: 5px; }
+        .p-proton { color: #f87171; } /* Red for positive */
+        .p-neutron { color: #94a3b8; } /* Gray for neutral */
+        .p-electron { color: #60a5fa; } /* Blue for negative */
 
-.voltar {
-    display: inline-block;
-    text-decoration: none;
-    color: white;
-    background: #38bdf8;
-    padding: 10px 30px;
-    border-radius: 6px;
-    margin-top: 30px;
-}
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-left: 5px solid #10b981;
+        }
 
-.voltar:hover {
-    background: #0ea5e9;
-}
-</style>
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        label:hover {
+            background: #064e3b; /* Emerald-900 */
+        }
+
+        button {
+            background: #10b981;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #34d399;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .resolucao-box {
+            display: none;
+            margin-top: 15px;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #10b981;
+            line-height: 1.6;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .voltar:hover { color: #10b981; }
+    </style>
 </head>
 
 <body>
 
-<h1>Química - Estrutura Atômica</h1>
+    <h1>Química - Estrutura Atômica ⚛️</h1>
 
-<!-- QUESTÃO 1 -->
-<div class="questao">
-<p><b>1.</b> Qual partícula subatômica possui carga negativa?</p>
-<input type="radio" name="q1" value="a"> Próton<br>
-<input type="radio" name="q1" value="b"> Nêutron<br>
-<input type="radio" name="q1" value="c"> Elétron<br>
-<input type="radio" name="q1" value="d"> Núcleo<br>
-<br>
-<button onclick="corrigir(1,'c')">Responder</button>
-<p id="resultado1"></p>
-<button onclick="verResolucao(1)">Ver resolução</button>
-<div class="resolucao" id="res1">
-<b>Resolução:</b><br><br>
-A partícula subatômica com carga negativa é o <strong>elétron</strong>, que orbita ao redor do núcleo atômico.<br><br>
-Resposta correta: <strong>C</strong>
-</div>
-</div>
+    <div id="container-questoes">
+        <div class="atom-info-panel">
+            <div class="particle-card"><b class="p-proton">Prótons (+)</b>Núcleo | Massa 1</div>
+            <div class="particle-card"><b class="p-neutron">Nêutrons (0)</b>Núcleo | Massa 1</div>
+            <div class="particle-card"><b class="p-electron">Elétrons (-)</b>Eletrosfera | Massa ~0</div>
+        </div>
 
-<!-- QUESTÃO 2 -->
-<div class="questao">
-<p><b>2.</b> Qual é a carga de um próton?</p>
-<input type="radio" name="q2" value="a"> Negativa<br>
-<input type="radio" name="q2" value="b"> Positiva<br>
-<input type="radio" name="q2" value="c"> Neutra<br>
-<input type="radio" name="q2" value="d"> Variável<br>
-<br>
-<button onclick="corrigir(2,'b')">Responder</button>
-<p id="resultado2"></p>
-<button onclick="verResolucao(2)">Ver resolução</button>
-<div class="resolucao" id="res2">
-<b>Resolução:</b><br><br>
-O <strong>próton</strong> possui carga elétrica <strong>positiva</strong> e está localizado no núcleo do átomo.<br><br>
-Resposta correta: <strong>B</strong>
-</div>
-</div>
+        <p style="text-align:center; color:#64748b; margin-bottom: 20px;">Explorando o coração da matéria...</p>
+    </div>
 
-<!-- QUESTÃO 3 -->
-<div class="questao">
-<p><b>3.</b> Qual partícula subatômica não possui carga elétrica?</p>
-<input type="radio" name="q3" value="a"> Elétron<br>
-<input type="radio" name="q3" value="b"> Nêutron<br>
-<input type="radio" name="q3" value="c"> Próton<br>
-<input type="radio" name="q3" value="d"> Íon<br>
-<br>
-<button onclick="corrigir(3,'b')">Responder</button>
-<p id="resultado3"></p>
-<button onclick="verResolucao(3)">Ver resolução</button>
-<div class="resolucao" id="res3">
-<b>Resolução:</b><br><br>
-O <strong>nêutron</strong> não possui carga elétrica e também está localizado no núcleo do átomo.<br><br>
-Resposta correta: <strong>B</strong>
-</div>
-</div>
+    <a class="voltar" href="quimica.html">⬅ Voltar</a>
 
-<!-- Botão Voltar -->
-<div style="text-align: center;">
-    <a href="dashboard.html" class="voltar">← Voltar ao Dashboard</a>
-</div>
-
-<script>
-// Função genérica para corrigir qualquer questão
-function corrigir(qNum, correta){
-    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-    if(!selecionada){
-        alert("Escolha uma alternativa!");
-        return;
-    }
-
-    // Verificar se já respondeu (opcional - evitar dupla contagem)
-    let respostas = JSON.parse(localStorage.getItem("respostasEstruturaAtomica")) || {};
-    if(respostas[`q${qNum}`]) {
-        if(!confirm("Você já respondeu esta questão. Deseja responder novamente?")) {
+    <script>
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: quimica e assunto: atomistica (ou estrutura atomica)
+        const filtradas = banco.filter(q => q.materia === "quimica" && (q.assunto === "atomistica" || q.assunto === "estrutura atomica"));
+        const panelHtml = document.querySelector(".atom-info-panel").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = panelHtml + "<p style='text-align:center; color:#94a3b8;'>Núcleo vazio. Adicione questões de estrutura atômica ao seu banco.</p>";
             return;
         }
+
+        container.innerHTML = panelHtml; 
+
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Sondar Átomo</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                
+                <div id="res-${q.id}" class="resolucao-box">
+                    <b style="color:#10b981;">Análise Microscópica:</b><br><br>
+                    ${q.resolucao || "Lembre-se da distribuição das partículas e de suas respectivas cargas elétricas."}
+                </div>
+            `;
+            container.appendChild(div);
+        });
     }
 
-    let acertou = selecionada.value === correta;
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
 
-    // salvar respostas da página
-    respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-    localStorage.setItem("respostasEstruturaAtomica", JSON.stringify(respostas));
+        if (!selecionada) {
+            alert("Identifique uma partícula antes de responder!");
+            return;
+        }
 
-    // atualizar progresso do usuário logado
-    let logado = localStorage.getItem("logado");
-    if(logado){
-        let usuario = JSON.parse(localStorage.getItem(logado));
-        
-        // Inicializar contadores se não existirem
-        if(!usuario.respondidas) usuario.respondidas = 0;
-        if(!usuario.acertos) usuario.acertos = 0;
-        
-        // Verificar se esta questão já foi respondida antes para não contar duas vezes
-        let respostasAntigas = JSON.parse(localStorage.getItem("respostasEstruturaAtomica")) || {};
-        if(!respostasAntigas[`q${qNum}`]) {
-            usuario.respondidas += 1;
-            if(acertou) usuario.acertos += 1;
+        const acertou = selecionada.value === correta;
+        resBox.style.display = "block";
+
+        if (acertou) {
+            feedback.innerText = "✅ Correto! Estabilidade atômica alcançada.";
+            feedback.style.color = "#10b981";
         } else {
-            // Se já respondeu, ajustar contagem (remover contagem anterior e adicionar nova)
-            if(respostasAntigas[`q${qNum}`].acertou && !acertou) {
-                usuario.acertos -= 1; // perdeu o acerto
-            } else if(!respostasAntigas[`q${qNum}`].acertou && acertou) {
-                usuario.acertos += 1; // ganhou um acerto
+            feedback.innerText = `❌ Incorreto. A configuração correta era a (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        // Sistema de Progresso Mundo CAVEST
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
             }
-            // Se respondeu de novo, não incrementa respondidas
-        }
-        
-        localStorage.setItem(logado, JSON.stringify(usuario));
-    }
-
-    // mostrar resultado
-    document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
-}
-
-// mostrar resolução
-function verResolucao(qNum){
-    document.getElementById(`res${qNum}`).style.display = "block";
-}
-
-// carregar respostas salvas
-function carregarRespostas(){
-    let respostas = JSON.parse(localStorage.getItem("respostasEstruturaAtomica"));
-    if(!respostas) return;
-    
-    for(let q in respostas){
-        let info = respostas[q];
-        if(info.selecionada){
-            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-            if(input) input.checked = true;
-        }
-        if(info.acertou !== undefined){
-            let numero = q.replace("q","");
-            document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
         }
     }
-}
 
-// Carregar respostas quando a página abrir
-window.onload = carregarRespostas;
-</script>
+    window.onload = carregarQuestoes;
+    </script>
 
 </body>
 </html>

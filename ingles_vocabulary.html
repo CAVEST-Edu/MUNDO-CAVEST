@@ -6,7 +6,7 @@
 
     <style>
         body {
-            font-family: Arial;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #0f172a;
             color: white;
             padding: 40px;
@@ -14,40 +14,88 @@
 
         h1 {
             text-align: center;
+            color: #a78bfa; /* Soft Purple */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #container-questoes {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .vocab-header {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-bottom: 4px solid #a78bfa;
+        }
+
+        .false-friends-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background: #4c1d95;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            color: #ddd6fe;
         }
 
         .questao {
             background: #1e293b;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 12px;
             margin-bottom: 30px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        label:hover {
+            background: #5b21b6;
+            transform: translateX(5px);
         }
 
         button {
-            background: #22c55e;
+            background: #a78bfa;
             border: none;
             padding: 10px 20px;
             border-radius: 6px;
-            color: white;
-            font-size: 15px;
+            color: #0f172a;
+            font-weight: bold;
             cursor: pointer;
             margin-top: 10px;
-            margin-right: 5px;
+            transition: 0.3s;
         }
 
         button:hover {
-            background: #16a34a;
+            background: #c4b5fd;
+            box-shadow: 0 0 15px rgba(167, 139, 250, 0.4);
         }
 
-        .resolucao {
+        .resolucao-box {
             display: none;
             margin-top: 15px;
-            background: #334155;
+            background: #0f172a;
             padding: 15px;
             border-radius: 8px;
+            border-left: 3px solid #a78bfa;
+            font-size: 0.9em;
         }
 
         .voltar {
@@ -62,111 +110,99 @@
 
 <body>
 
-    <h1>English - Vocabulary & Idioms 🧠💬</h1>
+    <h1>English - Beyond Words 🧠💬</h1>
 
-    <div class="questao">
-        <p><b>1.</b> In English, the word <strong>"Actually"</strong> is a false cognate (falso amigo). What does it mean?</p>
-        <input type="radio" name="q1" value="a"> Atualmente (present moment)<br>
-        <input type="radio" name="q1" value="b"> Na verdade (in fact/really)<br>
-        <input type="radio" name="q1" value="c"> Agilmente (quickly)<br>
-        <input type="radio" name="q1" value="d"> Frequentemente (often)<br>
-        <br>
-        <button onclick="corrigir(1,'b')">Responder</button>
-        <p id="resultado1"></p>
-        <button onclick="verResolucao(1)">Ver resolução</button>
-        
-        <div class="resolucao" id="res1">
-            <b>Resolução:</b><br><br>
-            <strong>"Actually"</strong> não significa "atualmente" (que em inglês seria *currently*). Significa <strong>"na verdade"</strong> ou "de fato". É um dos falsos cognatos que mais caem em provas!<br><br>
-            Resposta correta: <strong>B</strong>
+    <div id="container-questoes">
+        <div class="vocab-header">
+            <h3 style="margin-top:0;">🚫 Watch Out! False Friends</h3>
+            <div class="false-friends-list">
+                <span class="tag"><b>Actually</b> = Na verdade</span>
+                <span class="tag"><b>Parents</b> = Pais</span>
+                <span class="tag"><b>Library</b> = Biblioteca</span>
+                <span class="tag"><b>Pretend</b> = Fingir</span>
+            </div>
         </div>
+
+        <p style="text-align:center; color:#64748b;">Desvendando expressões e significados ocultos...</p>
     </div>
 
-    <div class="questao">
-        <p><b>2.</b> What is the meaning of the idiom: <em>"A piece of cake"</em>?</p>
-        <input type="radio" name="q2" value="a"> Something very delicious.<br>
-        <input type="radio" name="q2" value="b"> Something very expensive.<br>
-        <input type="radio" name="q2" value="c"> Something very easy.<br>
-        <input type="radio" name="q2" value="d"> Something related to a birthday party.<br>
-        <br>
-        <button onclick="corrigir(2,'c')">Responder</button>
-        <p id="resultado2"></p>
-        <button onclick="verResolucao(2)">Ver resolução</button>
-        
-        <div class="resolucao" id="res2">
-            <b>Resolução:</b><br><br>
-            Quando algo é <strong>"a piece of cake"</strong>, significa que é muito fácil de fazer. O equivalente em português seria "mamão com açúcar" ou "moleza".<br><br>
-            Resposta correta: <strong>C</strong>
-        </div>
-    </div>
-
-    <div class="questao">
-        <p><b>3.</b> If someone says they are feeling <em>"under the weather"</em>, how are they feeling?</p>
-        <input type="radio" name="q3" value="a"> Happy and excited.<br>
-        <input type="radio" name="q3" value="b"> Sick or not very well.<br>
-        <input type="radio" name="q3" value="c"> Confused about the climate.<br>
-        <input type="radio" name="q3" value="d"> Very rich.<br>
-        <br>
-        <button onclick="corrigir(3,'b')">Responder</button>
-        <p id="resultado3"></p>
-        <button onclick="verResolucao(3)">Ver resolução</button>
-        
-        <div class="resolucao" id="res3">
-            <b>Resolução:</b><br><br>
-            A expressão <strong>"under the weather"</strong> é usada quando alguém está se sentindo indisposto, levemente doente ou "borocoxô".<br><br>
-            Resposta correta: <strong>B</strong>
-        </div>
-    </div>
-
-    <a class="voltar" href="ingles.html">⬅ Voltar para Inglês</a>
+    <a class="voltar" href="ingles.html">⬅ Voltar</a>
 
     <script>
-    function corrigir(qNum, correta){
-        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-        if(!selecionada){
-            alert("Escolha uma alternativa!");
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        const filtradas = banco.filter(q => q.materia === "ingles" && q.assunto === "vocabulario");
+        const headerHtml = document.querySelector(".vocab-header").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = headerHtml + "<p style='text-align:center; color:#94a3b8;'>Vocabulary bank is currently empty.</p>";
             return;
         }
 
-        let acertou = selecionada.value === correta;
+        container.innerHTML = headerHtml; 
 
-        // CHAVE ÚNICA: respostasInglesVocab
-        let respostas = JSON.parse(localStorage.getItem("respostasInglesVocab")) || {};
-        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-        localStorage.setItem("respostasInglesVocab", JSON.stringify(respostas));
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
 
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Translate Intent</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                
+                <div id="res-${q.id}" class="resolucao-box">
+                    <b style="color:#a78bfa;">Semantic Insight:</b><br><br>
+                    ${q.resolucao || "Analyze the context to find the idiomatic meaning."}
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("Pick a meaning first!");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+        resBox.style.display = "block";
+
+        if (acertou) {
+            feedback.innerText = "✅ Correct! You're thinking like a native.";
+            feedback.style.color = "#a78bfa";
+        } else {
+            feedback.innerText = `❌ Wrong. The true meaning was (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        // Progresso Mundo CAVEST
         let logado = localStorage.getItem("logado");
         if(logado){
             let usuario = JSON.parse(localStorage.getItem(logado));
-            usuario.respondidas = (usuario.respondidas || 0) + 1;
-            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-            localStorage.setItem(logado, JSON.stringify(usuario));
-        }
-
-        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correct!" : "❌ Incorrect!";
-    }
-
-    function verResolucao(qNum){
-        document.getElementById(`res${qNum}`).style.display = "block";
-    }
-
-    function carregarRespostas(){
-        let respostas = JSON.parse(localStorage.getItem("respostasInglesVocab"));
-        if(!respostas) return;
-        for(let q in respostas){
-            let info = respostas[q];
-            if(info.selecionada){
-                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-                if(input) input.checked = true;
-            }
-            if(info.acertou !== undefined){
-                let numero = q.replace("q","");
-                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correct!" : "❌ Incorrect!";
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
             }
         }
     }
 
-    window.onload = carregarRespostas;
+    window.onload = carregarQuestoes;
     </script>
 
 </body>

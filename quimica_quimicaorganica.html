@@ -1,210 +1,209 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>CAVEST - Química Orgânica</title>
+    <meta charset="UTF-8">
+    <title>CAVEST - Química Orgânica</title>
 
-<style>
-body{
-    font-family:Arial;
-    background:#0f172a;
-    color:white;
-    padding:40px;
-}
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
 
-h1{
-    text-align:center;
-}
+        h1 {
+            text-align: center;
+            color: #84cc16; /* Lime Green */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(132, 204, 22, 0.2);
+        }
 
-.questao{
-    background:#1e293b;
-    padding:20px;
-    border-radius:10px;
-    margin-bottom:30px;
-}
+        #container-questoes {
+            max-width: 850px;
+            margin: auto;
+        }
 
-button{
-    background:#22c55e;
-    border:none;
-    padding:10px 20px;
-    border-radius:6px;
-    color:white;
-    font-size:15px;
-    cursor:pointer;
-    margin-top:10px;
-}
+        /* Painel do Carbono Mundo CAVEST */
+        .organic-header {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-top: 5px solid #84cc16;
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+        }
 
-button:hover{
-    background:#16a34a;
-}
+        .carbon-rule {
+            flex: 1;
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.85em;
+            border: 1px solid #334155;
+        }
 
-.resolucao{
-    display:none;
-    margin-top:15px;
-    background:#334155;
-    padding:15px;
-    border-radius:8px;
-}
+        .carbon-rule b { color: #84cc16; display: block; margin-bottom: 5px; }
 
-.voltar {
-    display: inline-block;
-    text-decoration: none;
-    color: white;
-    background: #38bdf8;
-    padding: 10px 30px;
-    border-radius: 6px;
-    margin-top: 30px;
-}
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-left: 5px solid #84cc16;
+        }
 
-.voltar:hover {
-    background: #0ea5e9;
-}
-</style>
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        label:hover {
+            background: #365314; /* Lime-900 */
+        }
+
+        button {
+            background: #84cc16;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: #0f172a;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #a3e635;
+            transform: translateY(-2px);
+        }
+
+        .resolucao-box {
+            display: none;
+            margin-top: 15px;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #84cc16;
+            line-height: 1.6;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+
+        .voltar:hover { color: #84cc16; }
+    </style>
 </head>
 
 <body>
 
-<h1>Química - Química Orgânica</h1>
+    <h1>Química - Química Orgânica 🌿</h1>
 
-<!-- QUESTÃO 1 -->
-<div class="questao">
-<p><b>1.</b> Qual é o principal elemento presente em todos os compostos orgânicos?</p>
-<input type="radio" name="q1" value="a"> Oxigênio<br>
-<input type="radio" name="q1" value="b"> Carbono<br>
-<input type="radio" name="q1" value="c"> Nitrogênio<br>
-<input type="radio" name="q1" value="d"> Hidrogênio<br>
-<br>
-<button onclick="corrigir(1,'b')">Responder</button>
-<p id="resultado1"></p>
-<button onclick="verResolucao(1)">Ver resolução</button>
-<div class="resolucao" id="res1">
-<b>Resolução:</b><br><br>
-O <strong>carbono</strong> é o elemento fundamental em todos os compostos orgânicos, formando a base das moléculas orgânicas.<br><br>
-Resposta correta: <strong>B</strong>
-</div>
-</div>
+    <div id="container-questoes">
+        <div class="organic-header">
+            <div class="carbon-rule"><b>Tetravalência</b>O Carbono faz exatamente 4 ligações.</div>
+            <div class="carbon-rule"><b>Encadeamento</b>Capacidade única de formar cadeias longas.</div>
+            <div class="carbon-rule"><b>Ligações</b>Simples, duplas ou triplas (σ e π).</div>
+        </div>
 
-<!-- QUESTÃO 2 -->
-<div class="questao">
-<p><b>2.</b> Qual grupo funcional está presente nos álcoois?</p>
-<input type="radio" name="q2" value="a"> -OH<br>
-<input type="radio" name="q2" value="b"> -COOH<br>
-<input type="radio" name="q2" value="c"> -NH₂<br>
-<input type="radio" name="q2" value="d"> -CHO<br>
-<br>
-<button onclick="corrigir(2,'a')">Responder</button>
-<p id="resultado2"></p>
-<button onclick="verResolucao(2)">Ver resolução</button>
-<div class="resolucao" id="res2">
-<b>Resolução:</b><br><br>
-O grupo funcional dos <strong>álcoois</strong> é o <strong>hidroxila (-OH)</strong>, que confere propriedades polares à molécula.<br><br>
-Resposta correta: <strong>A</strong>
-</div>
-</div>
+        <p style="text-align:center; color:#64748b; margin-bottom: 20px;">Desvendando as moléculas da vida...</p>
+    </div>
 
-<!-- QUESTÃO 3 -->
-<div class="questao">
-<p><b>3.</b> Qual tipo de ligação une os átomos de carbono em uma molécula orgânica?</p>
-<input type="radio" name="q3" value="a"> Covalente<br>
-<input type="radio" name="q3" value="b"> Iônica<br>
-<input type="radio" name="q3" value="c"> Metálica<br>
-<input type="radio" name="q3" value="d"> Hidrogênio<br>
-<br>
-<button onclick="corrigir(3,'a')">Responder</button>
-<p id="resultado3"></p>
-<button onclick="verResolucao(3)">Ver resolução</button>
-<div class="resolucao" id="res3">
-<b>Resolução:</b><br><br>
-Nos compostos orgânicos, os átomos de carbono se ligam principalmente por <strong>ligações covalentes</strong>, compartilhando elétrons para formar a molécula.<br><br>
-Resposta correta: <strong>A</strong>
-</div>
-</div>
+     <a class="voltar" href="quimica.html">⬅ Voltar</a>
 
-<!-- Botão Voltar -->
-<div style="text-align: center;">
-    <a href="dashboard.html" class="voltar">← Voltar ao Dashboard</a>
-</div>
-
-<script>
-// Função genérica para corrigir qualquer questão
-function corrigir(qNum, correta){
-    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-    if(!selecionada){
-        alert("Escolha uma alternativa!");
-        return;
-    }
-
-    // Verificar se já respondeu (opcional - evitar dupla contagem)
-    let respostas = JSON.parse(localStorage.getItem("respostasQuimicaOrganica")) || {};
-    if(respostas[`q${qNum}`]) {
-        if(!confirm("Você já respondeu esta questão. Deseja responder novamente?")) {
+    <script>
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: quimica e assunto: organica
+        const filtradas = banco.filter(q => q.materia === "quimica" && (q.assunto === "organica" || q.assunto === "quimica organica"));
+        const headerHtml = document.querySelector(".organic-header").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = headerHtml + "<p style='text-align:center; color:#94a3b8;'>Cadeia carbônica vazia. Adicione questões de orgânica ao banco.</p>";
             return;
         }
+
+        container.innerHTML = headerHtml; 
+
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Analisar Cadeia</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                
+                <div id="res-${q.id}" class="resolucao-box">
+                    <b style="color:#84cc16;">Estudo da Estrutura:</b><br><br>
+                    ${q.resolucao || "Observe os prefixos (nº de carbonos), infixos (tipo de ligação) e sufixos (grupo funcional)."}
+                </div>
+            `;
+            container.appendChild(div);
+        });
     }
 
-    let acertou = selecionada.value === correta;
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
 
-    // salvar respostas da página
-    respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-    localStorage.setItem("respostasQuimicaOrganica", JSON.stringify(respostas));
+        if (!selecionada) {
+            alert("Identifique o grupo funcional antes de responder!");
+            return;
+        }
 
-    // atualizar progresso do usuário logado
-    let logado = localStorage.getItem("logado");
-    if(logado){
-        let usuario = JSON.parse(localStorage.getItem(logado));
-        
-        // Inicializar contadores se não existirem
-        if(!usuario.respondidas) usuario.respondidas = 0;
-        if(!usuario.acertos) usuario.acertos = 0;
-        
-        // Verificar se esta questão já foi respondida antes para não contar duas vezes
-        let respostasAntigas = JSON.parse(localStorage.getItem("respostasQuimicaOrganica")) || {};
-        if(!respostasAntigas[`q${qNum}`]) {
-            usuario.respondidas += 1;
-            if(acertou) usuario.acertos += 1;
+        const acertou = selecionada.value === correta;
+        resBox.style.display = "block";
+
+        if (acertou) {
+            feedback.innerText = "✅ Correto! Nomenclatura e estrutura em harmonia.";
+            feedback.style.color = "#84cc16";
         } else {
-            // Se já respondeu, ajustar contagem (remover contagem anterior e adicionar nova)
-            if(respostasAntigas[`q${qNum}`].acertou && !acertou) {
-                usuario.acertos -= 1; // perdeu o acerto
-            } else if(!respostasAntigas[`q${qNum}`].acertou && acertou) {
-                usuario.acertos += 1; // ganhou um acerto
+            feedback.innerText = `❌ Incorreto. A configuração orgânica correta era a (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        // Sistema de Progresso Mundo CAVEST
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
             }
-            // Se respondeu de novo, não incrementa respondidas
-        }
-        
-        localStorage.setItem(logado, JSON.stringify(usuario));
-    }
-
-    // mostrar resultado
-    document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
-}
-
-// mostrar resolução
-function verResolucao(qNum){
-    document.getElementById(`res${qNum}`).style.display = "block";
-}
-
-// carregar respostas salvas
-function carregarRespostas(){
-    let respostas = JSON.parse(localStorage.getItem("respostasQuimicaOrganica"));
-    if(!respostas) return;
-    
-    for(let q in respostas){
-        let info = respostas[q];
-        if(info.selecionada){
-            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-            if(input) input.checked = true;
-        }
-        if(info.acertou !== undefined){
-            let numero = q.replace("q","");
-            document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
         }
     }
-}
 
-// Carregar respostas quando a página abrir
-window.onload = carregarRespostas;
-</script>
+    window.onload = carregarQuestoes;
+    </script>
 
 </body>
 </html>

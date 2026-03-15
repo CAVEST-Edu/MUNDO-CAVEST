@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado - Mundo CAVEST</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --accent: #38bdf8;
+            --success: #22c55e;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: white;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 { color: var(--accent); margin-top: 40px; letter-spacing: 2px; }
+        p { color: var(--text-muted); margin-bottom: 40px; }
+
+        .grid-modos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .modo-card {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #334155;
+            text-align: center;
+            transition: 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .modo-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            background: #1e3a8a;
+        }
+
+        .modo-card h3 { color: var(--accent); margin-top: 0; }
+        .modo-card span { font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 15px; }
+
+        .btn-start {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-start:hover { opacity: 0.9; }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            background: var(--bg);
+            color: white;
+            border: 1px solid #334155;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .voltar { margin-top: 40px; color: var(--text-muted); text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <h1>🧠 Escolha seu Simulado</h1>
+    <p>Prepare-se para o ENEM com questões reais do banco Mundo CAVEST.</p>
+
+    <div class="grid-modos">
+        <div class="modo-card" onclick="iniciarSimulado('rapido')">
+            <div>
+                <h3>⚡ Simulado Rápido</h3>
+                <span>10 Questões Aleatórias</span>
+                <p>Ideal para uma revisão rápida entre uma aula e outra.</p>
+            </div>
+            <button class="btn-start">COMEÇAR AGORA</button>
+        </div>
+
+        <div class="modo-card" onclick="iniciarSimulado('maratona')">
+            <div>
+                <h3>🏆 Modo Maratona</h3>
+                <span>45 Questões Aleatórias</span>
+                <p>Treine sua resistência física e mental para o dia da prova.</p>
+            </div>
+            <button class="btn-start">DESAFIAR-SE</button>
+        </div>
+
+        <div class="modo-card">
+            <div>
+                <h3>🎯 Foco Específico</h3>
+                <span>Quantidade variável</span>
+                <p>Escolha uma disciplina para treinar seus pontos fracos.</p>
+                <select id="filtroMateria">
+                    <option value="fisica">Física</option>
+                    <option value="matematica">Matemática</option>
+                    <option value="historia">História</option>
+                    <option value="biologia">Biologia</option>
+                    <option value="quimica">Química</option>
+                    <option value="portugues">Português</option>
+                </select>
+            </div>
+            <button class="btn-start" onclick="iniciarSimulado('materia')">FILTRAR E COMEÇAR</button>
+        </div>
+    </div>
+
+    <a href="index.html" class="voltar">⬅ Voltar para o Início</a>
+
+    <script>
+        function iniciarSimulado(tipo) {
+            const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+            
+            if (banco.length === 0) {
+                alert("⚠️ O banco de questões está vazio! Peça ao professor para cadastrar questões primeiro.");
+                return;
+            }
+
+            let materia = "";
+            if (tipo === 'materia') {
+                materia = document.getElementById("filtroMateria").value;
+                const questoesMateria = banco.filter(q => q.materia === materia);
+                
+                if (questoesMateria.length === 0) {
+                    alert("Ainda não existem questões cadastradas para esta matéria.");
+                    return;
+                }
+            }
+
+            // Salva as configurações da prova para a próxima página ler
+            const config = {
+                tipo: tipo,
+                materiaEscolhida: materia,
+                data: new Date().getTime()
+            };
+            
+            localStorage.setItem("configSimulado", JSON.stringify(config));
+            
+            // Redireciona para a página da prova (vamos criar na próxima etapa)
+            window.location.href = "prova.html";
+        }
+    </script>
+</body>
+</html>

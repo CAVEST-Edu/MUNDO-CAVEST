@@ -2,11 +2,11 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CAVEST - Regência</title>
+    <title>CAVEST - Regência Verbal e Nominal</title>
 
     <style>
         body {
-            font-family: Arial;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #0f172a;
             color: white;
             padding: 40px;
@@ -14,40 +14,86 @@
 
         h1 {
             text-align: center;
+            color: #818cf8; /* Indigo */
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
+
+        #container-questoes {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        /* Guia Rápido de Conectores Mundo CAVEST */
+        .regencia-guide {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-top: 5px solid #818cf8;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            font-size: 0.85em;
+        }
+
+        .guide-box {
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+
+        .guide-box b { color: #818cf8; display: block; margin-bottom: 5px; }
 
         .questao {
             background: #1e293b;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 12px;
             margin-bottom: 30px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-right: 5px solid #818cf8;
+        }
+
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        label:hover {
+            background: #312e81; /* Indigo-900 */
         }
 
         button {
-            background: #22c55e;
+            background: #818cf8;
             border: none;
             padding: 10px 20px;
             border-radius: 6px;
             color: white;
-            font-size: 15px;
+            font-weight: bold;
             cursor: pointer;
             margin-top: 10px;
-            margin-right: 5px;
+            transition: 0.3s;
         }
 
         button:hover {
-            background: #16a34a;
+            background: #a5b4fc;
+            transform: translateY(-2px);
         }
 
-        .resolucao {
+        .resolucao-box {
             display: none;
             margin-top: 15px;
-            background: #334155;
+            background: #0f172a;
             padding: 15px;
             border-radius: 8px;
+            border: 1px solid #818cf8;
+            line-height: 1.6;
         }
 
         .voltar {
@@ -62,114 +108,103 @@
 
 <body>
 
-    <h1>Português - Regência 🔗</h1>
+    <h1>Português - Regência e Conectores 🔗</h1>
 
-    <div class="questao">
-        <p><b>1.</b> Assinale a alternativa que respeita a norma culta quanto à regência do verbo <strong>Preferir</strong>:</p>
-        <input type="radio" name="q1" value="a"> Eu prefiro mais chocolate do que baunilha.<br>
-        <input type="radio" name="q1" value="b"> Eu prefiro chocolate antes de baunilha.<br>
-        <input type="radio" name="q1" value="c"> Eu prefiro chocolate a baunilha.<br>
-        <input type="radio" name="q1" value="d"> Eu prefiro mil vezes chocolate do que baunilha.<br>
-        <br>
-        <button onclick="corrigir(1,'c')">Responder</button>
-        <p id="resultado1"></p>
-        <button onclick="verResolucao(1)">Ver resolução</button>
-        
-        <div class="resolucao" id="res1">
-            <b>Resolução:</b><br><br>
-            O verbo <strong>Preferir</strong> é transitivo direto e indireto. Quem prefere, prefere algo <strong>A</strong> outra coisa. O uso de "do que" ou "mais" junto ao verbo preferir é considerado incorreto na norma padrão.<br><br>
-            Resposta correta: <strong>C</strong>
+    <div id="container-questoes">
+        <div class="regencia-guide">
+            <div class="guide-box">
+                <b>Regência Verbal</b>
+                Preferir A (não "do que").<br>
+                Assistir AO filme (ver).
+            </div>
+            <div class="guide-box">
+                <b>Regência Nominal</b>
+                Fiel A.<br>
+                Ansioso POR/PARA.
+            </div>
         </div>
+
+        <p style="text-align:center; color:#64748b;">Ajustando os elos da norma culta...</p>
     </div>
 
-    <div class="questao">
-        <p><b>2.</b> Na frase <em>"O candidato <strong>aspirava ao</strong> cargo de diretor"</em>, o uso da preposição está correto porque:</p>
-        <input type="radio" name="q2" value="a"> O verbo aspirar, no sentido de "cheirar", exige preposição.<br>
-        <input type="radio" name="q2" value="b"> O verbo aspirar, no sentido de "desejar/objetivar", exige a preposição "a".<br>
-        <input type="radio" name="q2" value="c"> Todo verbo iniciado pela letra A exige preposição.<br>
-        <input type="radio" name="q2" value="d"> A frase está incorreta, pois aspirar nunca aceita preposição.<br>
-        <br>
-        <button onclick="corrigir(2,'b')">Responder</button>
-        <p id="resultado2"></p>
-        <button onclick="verResolucao(2)">Ver resolução</button>
-        
-        <div class="resolucao" id="res2">
-            <b>Resolução:</b><br><br>
-            O verbo <strong>Aspirar</strong> muda de sentido conforme a regência: <br>
-            1. Sentido de sorver/cheirar: Transitivo Direto (sem preposição).<br>
-            2. Sentido de pretender/desejar: Transitivo Indireto (exige a preposição <strong>A</strong>).<br><br>
-            Resposta correta: <strong>B</strong>
-        </div>
-    </div>
-
-    <div class="questao">
-        <p><b>3.</b> Escolha a opção onde a regência nominal está correta:</p>
-        <input type="radio" name="q3" value="a"> Ele é muito acostumado com o frio.<br>
-        <input type="radio" name="q3" value="b"> Tenho horror a filmes de suspense.<br>
-        <input type="radio" name="q3" value="c"> Ela é fiel com seus princípios.<br>
-        <input type="radio" name="q3" value="d"> Estamos ansiosos por os resultados.<br>
-        <br>
-        <button onclick="corrigir(3,'b')">Responder</button>
-        <p id="resultado3"></p>
-        <button onclick="verResolucao(3)">Ver resolução</button>
-        
-        <div class="resolucao" id="res3">
-            <b>Resolução:</b><br><br>
-            A regência nominal estuda quais preposições os nomes (substantivos, adjetivos) exigem. Quem tem horror, tem horror <strong>A</strong> alguma coisa. <br>
-            *Nota: Fiel exige a preposição "A" (Fiel aos princípios).<br><br>
-            Resposta correta: <strong>B</strong>
-        </div>
-    </div>
-
-    <a class="voltar" href="index.html">⬅ Voltar</a>
+    <a class="voltar" href="portugues.html">⬅ Voltar</a>
 
     <script>
-    function corrigir(qNum, correta){
-        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-        if(!selecionada){
-            alert("Escolha uma alternativa!");
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: portugues e assunto: regencia
+        const filtradas = banco.filter(q => q.materia === "portugues" && q.assunto === "regencia");
+        const guideHtml = document.querySelector(".regencia-guide").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = guideHtml + "<p style='text-align:center; color:#94a3b8;'>Os conectores estão em ordem. Nenhuma questão de regência encontrada.</p>";
             return;
         }
 
-        let acertou = selecionada.value === correta;
+        container.innerHTML = guideHtml; 
 
-        // CHAVE ÚNICA: respostasRegencia
-        let respostas = JSON.parse(localStorage.getItem("respostasRegencia")) || {};
-        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-        localStorage.setItem("respostasRegencia", JSON.stringify(respostas));
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
 
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Verificar Conexão</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                
+                <div id="res-${q.id}" class="resolucao-box">
+                    <b style="color:#818cf8;">Parecer Gramatical:</b><br><br>
+                    ${q.resolucao || "Analise se o termo regente exige ou não preposição e qual a preposição correta."}
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("Selecione um elo para análise!");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+        resBox.style.display = "block";
+
+        if (acertou) {
+            feedback.innerText = "✅ Correto! Regência aplicada com precisão.";
+            feedback.style.color = "#818cf8";
+        } else {
+            feedback.innerText = `❌ Incorreto. A regência padrão seria a opção (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        // Sistema de Progresso Mundo CAVEST
         let logado = localStorage.getItem("logado");
         if(logado){
             let usuario = JSON.parse(localStorage.getItem(logado));
-            usuario.respondidas = (usuario.respondidas || 0) + 1;
-            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-            localStorage.setItem(logado, JSON.stringify(usuario));
-        }
-
-        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
-    }
-
-    function verResolucao(qNum){
-        document.getElementById(`res${qNum}`).style.display = "block";
-    }
-
-    function carregarRespostas(){
-        let respostas = JSON.parse(localStorage.getItem("respostasRegencia"));
-        if(!respostas) return;
-        for(let q in respostas){
-            let info = respostas[q];
-            if(info.selecionada){
-                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-                if(input) input.checked = true;
-            }
-            if(info.acertou !== undefined){
-                let numero = q.replace("q","");
-                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
             }
         }
     }
 
-    window.onload = carregarRespostas;
+    window.onload = carregarQuestoes;
     </script>
 
 </body>

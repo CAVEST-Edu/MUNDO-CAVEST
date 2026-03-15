@@ -6,7 +6,7 @@
 
     <style>
         body {
-            font-family: Arial;
+            font-family: Arial, sans-serif;
             background: #0f172a;
             color: white;
             padding: 40px;
@@ -14,40 +14,88 @@
 
         h1 {
             text-align: center;
+            color: #22d3ee; /* Cyan Future */
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
 
-        .questao {
+        #container-questoes {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .future-panel {
             background: #1e293b;
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 30px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            border-top: 5px solid #22d3ee;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .future-type {
+            flex: 1;
+            padding: 10px;
+        }
+
+        .future-type b {
+            color: #22d3ee;
+            font-size: 1.2em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #0891b2; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        label:hover {
+            background: #164e63;
         }
 
         button {
-            background: #22c55e;
+            background: #06b6d4;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 25px;
             border-radius: 6px;
-            color: white;
+            color: #0f172a;
             font-size: 15px;
             cursor: pointer;
             margin-top: 10px;
-            margin-right: 5px;
+            font-weight: bold;
+            transition: 0.2s;
         }
 
         button:hover {
-            background: #16a34a;
+            background: #22d3ee;
+            transform: scale(1.05);
         }
 
-        .resolucao {
-            display: none;
+        .resolucao-box {
             margin-top: 15px;
-            background: #334155;
+            background: #0f172a;
             padding: 15px;
             border-radius: 8px;
+            border: 1px dashed #22d3ee;
+            font-size: 0.95em;
         }
 
         .voltar {
@@ -62,111 +110,105 @@
 
 <body>
 
-    <h1>English - Future Tenses 🚀</h1>
+    <h1>English - Future Frontier 🚀</h1>
 
-    <div class="questao">
-        <p><b>1.</b> Which sentence expresses a <strong>planned action</strong> for the future?</p>
-        <input type="radio" name="q1" value="a"> I think it will rain tomorrow.<br>
-        <input type="radio" name="q1" value="b"> I'm going to travel to London next month.<br>
-        <input type="radio" name="q1" value="c"> I will help you with those bags.<br>
-        <input type="radio" name="q1" value="d"> I'll probably stay home tonight.<br>
-        <br>
-        <button onclick="corrigir(1,'b')">Responder</button>
-        <p id="resultado1"></p>
-        <button onclick="verResolucao(1)">Ver resolução</button>
-        
-        <div class="resolucao" id="res1">
-            <b>Resolução:</b><br><br>
-            O <strong>Going to</strong> é usado para planos e intenções já decididos previamente. O "Will" é usado mais para previsões incertas ou decisões tomadas na hora.<br><br>
-            Resposta correta: <strong>B</strong>
+    <div id="container-questoes">
+        <div class="future-panel">
+            <div class="future-type">
+                <b>WILL</b>
+                <p>Predictions (Incertezas)<br>Instant Decisions<br>Promises</p>
+            </div>
+            <div style="border-left: 1px solid #334155;"></div>
+            <div class="future-type">
+                <b>GOING TO</b>
+                <p>Fixed Plans<br>Intentions<br>Present Evidence</p>
+            </div>
         </div>
+
+        <p style="text-align:center; color:#94a3b8; font-style: italic;">Calculando trajetórias temporais...</p>
     </div>
 
-    <div class="questao">
-        <p><b>2.</b> What is the correct negative form of: <em>"They will study tonight"</em>?</p>
-        <input type="radio" name="q2" value="a"> They will not to study tonight.<br>
-        <input type="radio" name="q2" value="b"> They don't will study tonight.<br>
-        <input type="radio" name="q2" value="c"> They won't study tonight.<br>
-        <input type="radio" name="q2" value="d"> They won't to study tonight.<br>
-        <br>
-        <button onclick="corrigir(2,'c')">Responder</button>
-        <p id="resultado2"></p>
-        <button onclick="verResolucao(2)">Ver resolução</button>
-        
-        <div class="resolucao" id="res2">
-            <b>Resolução:</b><br><br>
-            A contração de <strong>will + not</strong> é <strong>won't</strong>. Após o won't, o verbo principal permanece na sua forma base sem o "to".<br><br>
-            Resposta correta: <strong>C</strong>
-        </div>
-    </div>
-
-    <div class="questao">
-        <p><b>3.</b> Look at those dark clouds! It _________ (rain).</p>
-        <input type="radio" name="q3" value="a"> will rain<br>
-        <input type="radio" name="q3" value="b"> is going to rain<br>
-        <input type="radio" name="q3" value="c"> rains<br>
-        <input type="radio" name="q3" value="d"> will raining<br>
-        <br>
-        <button onclick="corrigir(3,'b')">Responder</button>
-        <p id="resultado3"></p>
-        <button onclick="verResolucao(3)">Ver resolução</button>
-        
-        <div class="resolucao" id="res3">
-            <b>Resolução:</b><br><br>
-            Quando temos uma <strong>evidência presente</strong> (as nuvens escuras) de que algo vai acontecer em breve, usamos o <strong>be going to</strong> em vez do "will".<br><br>
-            Resposta correta: <strong>B</strong>
-        </div>
-    </div>
-
-    <a class="voltar" href="ingles.html">⬅ Voltar para Inglês</a>
+    <a class="voltar" href="ingles.html">⬅ Voltar</a>
 
     <script>
-    function corrigir(qNum, correta){
-        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-        if(!selecionada){
-            alert("Escolha uma alternativa!");
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: ingles e assunto: future
+        const filtradas = banco.filter(q => q.materia === "ingles" && q.assunto === "future");
+
+        const panelHtml = document.querySelector(".future-panel").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = panelHtml + "<p style='text-align:center; color:#94a3b8;'>The future is empty. Add questions to the bank!</p>";
             return;
         }
 
-        let acertou = selecionada.value === correta;
+        container.innerHTML = panelHtml; 
 
-        // CHAVE ÚNICA: respostasInglesFuture
-        let respostas = JSON.parse(localStorage.getItem("respostasInglesFuture")) || {};
-        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-        localStorage.setItem("respostasInglesFuture", JSON.stringify(respostas));
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            let resolucaoHtml = q.resolucao ? `
+                <div id="res-${q.id}" style="display:none;" class="resolucao-box">
+                    <p style="color:#22d3ee; font-weight:bold; margin-bottom:5px;">🔍 Timeline Analysis:</p>
+                    <p style="color:#cbd5e1;">${q.resolucao}</p>
+                </div>` : "";
+
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Launch Answer</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                ${resolucaoHtml}
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("Please select your destination (answer)!");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+
+        if (acertou) {
+            feedback.innerText = "✅ Target reached! Correct future identified.";
+            feedback.style.color = "#22d3ee";
+        } else {
+            feedback.innerText = `❌ Off course. The correct timeline was (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        if (resBox) resBox.style.display = "block";
 
         let logado = localStorage.getItem("logado");
         if(logado){
             let usuario = JSON.parse(localStorage.getItem(logado));
-            usuario.respondidas = (usuario.respondidas || 0) + 1;
-            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-            localStorage.setItem(logado, JSON.stringify(usuario));
-        }
-
-        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correct!" : "❌ Incorrect!";
-    }
-
-    function verResolucao(qNum){
-        document.getElementById(`res${qNum}`).style.display = "block";
-    }
-
-    function carregarRespostas(){
-        let respostas = JSON.parse(localStorage.getItem("respostasInglesFuture"));
-        if(!respostas) return;
-        for(let q in respostas){
-            let info = respostas[q];
-            if(info.selecionada){
-                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-                if(input) input.checked = true;
-            }
-            if(info.acertou !== undefined){
-                let numero = q.replace("q","");
-                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correct!" : "❌ Incorrect!";
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
             }
         }
     }
 
-    window.onload = carregarRespostas;
+    window.onload = carregarQuestoes;
     </script>
 
 </body>

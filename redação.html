@@ -17,6 +17,20 @@
             margin: auto;
         }
 
+        .tema-box {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 5px solid #38bdf8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tema-info h2 { font-size: 14px; color: #38bdf8; text-transform: uppercase; margin: 0; }
+        .tema-info p { font-size: 18px; font-weight: bold; margin: 5px 0 0 0; }
+
         textarea {
             width: 100%; height: 250px; padding: 15px;
             border-radius: 8px; border: none; font-size: 16px;
@@ -30,11 +44,14 @@
             font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s;
         }
 
+        #btnSortear { background: #38bdf8; color: #0f172a; font-size: 14px; padding: 8px 15px; }
+        #btnSortear:hover { background: #7dd3fc; }
+
         #btnCorrigir { background: #22c55e; color: white; }
         #btnCorrigir:hover { background: #16a34a; }
 
         #btnPDF { 
-            background: #ef4444; color: white; display: none; /* Escondido no início */
+            background: #ef4444; color: white; display: none;
         }
         #btnPDF:hover { background: #dc2626; }
 
@@ -44,9 +61,28 @@
             display: none; color: #f1f5f9;
         }
 
-        /* Estilos do conteúdo da correção */
         #resultado h3 { color: #22c55e; border-bottom: 1px solid #334155; padding-bottom: 5px; }
         #resultado strong { color: #4ade80; }
+
+        /* Banner de XP */
+        .xp-banner {
+            background: rgba(234, 179, 8, 0.15);
+            border: 1px solid #eab308;
+            color: #eab308;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+            font-weight: bold;
+            text-align: center;
+            animation: bounceIn 0.5s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            70% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
 
         .voltar { display: inline-block; text-decoration: none; color: #94a3b8; margin-top: 30px; }
     </style>
@@ -55,7 +91,16 @@
 <body>
 
     <h1>📝 Corretor de Redação ENEM</h1>
-    <p><b>Tema da semana:</b> A importância da educação ambiental no Brasil</p>
+    
+    <div class="tema-box">
+        <div class="tema-info">
+            <h2>Tema Proposto:</h2>
+            <p id="temaAtual">A importância da educação ambiental no Brasil</p>
+        </div>
+        <button id="btnSortear" onclick="gerarTema()">🎲 Sortear Tema</button>
+    </div>
+
+    <div id="xpGanhos" class="xp-banner">✨ +500 XP por praticar redação!</div>
 
     <textarea id="redacao" placeholder="Cole sua redação aqui..."></textarea>
 
@@ -69,42 +114,80 @@
     <a href="index.html" class="voltar">⬅ Voltar</a>
 
     <script>
+        const temasEnem = [
+            "Os impactos da inteligência artificial na educação brasileira",
+            "A persistência da violência contra a mulher na sociedade",
+            "Caminhos para combater a intolerância religiosa no Brasil",
+            "Desafios para a valorização de comunidades e povos tradicionais",
+            "Invisibilidade e registro civil: garantia de acesso à cidadania",
+            "A manipulação do comportamento do usuário pelo controle de dados",
+            "Desafios para a formação educacional de surdos no Brasil",
+            "Efeitos da escassez de água e a gestão de recursos hídricos",
+            "O estigma associado às doenças mentais na sociedade brasileira",
+            "A democratização do acesso ao cinema no Brasil"
+        ];
+
+        function gerarTema() {
+            const index = Math.floor(Math.random() * temasEnem.length);
+            document.getElementById("temaAtual").innerText = temasEnem[index];
+            document.getElementById("resultado").style.display = "none";
+            document.getElementById("btnPDF").style.display = "none";
+            document.getElementById("xpGanhos").style.display = "none";
+        }
+
         async function corrigirRedacao() {
             let texto = document.getElementById("redacao").value;
+            let tema = document.getElementById("temaAtual").innerText;
             let divResultado = document.getElementById("resultado");
             let btnC = document.getElementById("btnCorrigir");
             let btnP = document.getElementById("btnPDF");
+            let xpBanner = document.getElementById("xpGanhos");
 
             if (texto.length < 100) {
-                alert("Redação muito curta!");
+                alert("Sua redação precisa de pelo menos 100 caracteres para ser analisada!");
                 return;
             }
 
             btnC.innerText = "Analisando...";
             btnC.disabled = true;
             btnP.style.display = "none";
+            xpBanner.style.display = "none";
             
             divResultado.style.display = "block";
-            divResultado.innerHTML = "<em>Gerando correção detalhada...</em>";
+            divResultado.innerHTML = "<em>Gerando correção baseada no tema: " + tema + "...</em>";
 
             try {
                 let resposta = await fetch("http://localhost:3000/corrigir", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ redacao: texto })
+                    body: JSON.stringify({ 
+                        redacao: texto,
+                        tema: tema 
+                    })
                 });
 
                 let dados = await resposta.json();
                 divResultado.innerHTML = marked.parse(dados.resposta);
-                
-                // Mostra o botão de PDF após a correção
                 btnP.style.display = "inline-block";
+                
+                // --- ADICIONAR XP AO FINALIZAR ---
+                adicionarXP(500);
+                xpBanner.style.display = "block";
 
             } catch (erro) {
-                divResultado.innerHTML = "❌ Erro ao conectar com o servidor.";
+                divResultado.innerHTML = "❌ Erro ao conectar com o servidor. Verifique se a sua API está rodando.";
             } finally {
                 btnC.innerText = "Corrigir com IA";
                 btnC.disabled = false;
+            }
+        }
+
+        function adicionarXP(quantidade) {
+            const nomeLogado = localStorage.getItem("logado");
+            if (nomeLogado) {
+                let usuario = JSON.parse(localStorage.getItem(nomeLogado));
+                usuario.xp = (usuario.xp || 0) + quantidade;
+                localStorage.setItem(nomeLogado, JSON.stringify(usuario));
             }
         }
 
@@ -112,20 +195,18 @@
             const elemento = document.getElementById('resultado');
             const options = {
                 margin: 10,
-                filename: 'Correcao_Redacao_CAVEST.pdf',
+                filename: 'Correcao_CAVEST_Redacao.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, logging: false, backgroundColor: '#ffffff' }, // Fundo branco no PDF
+                html2canvas: { scale: 2, logging: false, backgroundColor: '#ffffff' },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            // Temporariamente muda a cor do texto para preto para o PDF ficar legível
             const corOriginal = elemento.style.color;
             const bgOriginal = elemento.style.background;
             elemento.style.color = "black";
             elemento.style.background = "white";
 
             html2pdf().set(options).from(elemento).save().then(() => {
-                // Volta as cores originais do site após gerar o PDF
                 elemento.style.color = corOriginal;
                 elemento.style.background = bgOriginal;
             });

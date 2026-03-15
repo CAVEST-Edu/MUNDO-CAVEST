@@ -1,240 +1,203 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>CAVEST - Relevo</title>
+    <meta charset="UTF-8">
+    <title>CAVEST - Relevo Terrestre</title>
 
-<style>
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
 
-body{
-font-family:Arial;
-background:#0f172a;
-color:white;
-padding:40px;
-}
+        h1 {
+            text-align: center;
+            color: #fb923c; /* Laranja Geológico */
+            margin-bottom: 40px;
+        }
 
-h1{
-text-align:center;
-}
+        #container-questoes {
+            max-width: 800px;
+            margin: auto;
+        }
 
-.questao{
-background:#1e293b;
-padding:20px;
-border-radius:10px;
-margin-bottom:30px;
-}
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #fb923c;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
 
-button{
-background:#22c55e;
-border:none;
-padding:10px 20px;
-border-radius:6px;
-color:white;
-font-size:15px;
-cursor:pointer;
-margin-top:10px;
-}
+        .relief-box {
+            background: #431407; /* Marrom profundo */
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid #f97316;
+            font-size: 0.95em;
+            color: #ffedd5;
+        }
 
-button:hover{
-background:#16a34a;
-}
+        .img-questao {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: block;
+        }
 
-.resolucao{
-display:none;
-margin-top:15px;
-background:#334155;
-padding:15px;
-border-radius:8px;
-}
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-</style>
+        label:hover {
+            background: #475569;
+        }
 
+        button {
+            background: #f97316;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #ea580c;
+        }
+
+        .resolucao-box {
+            margin-top: 15px;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #fb923c;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
 
-<h1>Geografia - Relevo</h1>
-
-<!-- QUESTÃO 1 -->
-
-<div class="questao">
-
-<p><b>1.</b> Qual tipo de relevo apresenta áreas mais altas e relativamente planas, geralmente acima de 300 metros?</p>
-
-<input type="radio" name="q1" value="a"> Planícies<br>
-<input type="radio" name="q1" value="b"> Planaltos<br>
-<input type="radio" name="q1" value="c"> Depressões<br>
-<input type="radio" name="q1" value="d"> Serras e Montanhas<br>
-
-<br>
-
-<button onclick="corrigir(1,'b')">Responder</button>
-
-<p id="resultado1"></p>
-
-<button onclick="verResolucao(1)">Ver resolução</button>
-
-<div class="resolucao" id="res1">
-
-<b>Resolução:</b><br><br>
-
-Os <strong>planaltos</strong> são áreas mais altas e relativamente planas, com altitudes geralmente acima de 300 metros.
-
-Resposta correta: <strong>B</strong>
-
-</div>
-
-</div>
-
-<!-- QUESTÃO 2 -->
-
-<div class="questao">
-
-<p><b>2.</b> Qual tipo de relevo é caracterizado por áreas baixas, planas e próximas a rios e oceanos?</p>
-
-<input type="radio" name="q2" value="a"> Serras e Montanhas<br>
-<input type="radio" name="q2" value="b"> Depressões<br>
-<input type="radio" name="q2" value="c"> Planícies<br>
-<input type="radio" name="q2" value="d"> Planaltos<br>
-
-<br>
-
-<button onclick="corrigir(2,'c')">Responder</button>
-
-<p id="resultado2"></p>
-
-<button onclick="verResolucao(2)">Ver resolução</button>
-
-<div class="resolucao" id="res2">
-
-<b>Resolução:</b><br><br>
-
-As <strong>planícies</strong> são áreas baixas e quase planas, frequentemente próximas de rios e oceanos.
-
-Resposta correta: <strong>C</strong>
-
-</div>
-
-</div>
-
-<!-- QUESTÃO 3 -->
-
-<div class="questao">
-
-<p><b>3.</b> Quais são as elevações acentuadas, geralmente acima de 600 metros?</p>
-
-<input type="radio" name="q3" value="a"> Planaltos<br>
-<input type="radio" name="q3" value="b"> Depressões<br>
-<input type="radio" name="q3" value="c"> Planícies<br>
-<input type="radio" name="q3" value="d"> Serras e Montanhas<br>
-
-<br>
-
-<button onclick="corrigir(3,'d')">Responder</button>
-
-<p id="resultado3"></p>
-
-<button onclick="verResolucao(3)">Ver resolução</button>
-
-<div class="resolucao" id="res3">
-
-<b>Resolução:</b><br><br>
-
-As <strong>serras e montanhas</strong> são elevações acentuadas, geralmente acima de 600 metros.
-
-Resposta correta: <strong>D</strong>
-
-</div>
-
-</div>
-
-<script>
-
-// corrigir questão
-function corrigir(qNum, correta){
-
-let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-
-if(!selecionada){
-alert("Escolha uma alternativa");
-return;
-}
-
-let acertou = selecionada.value === correta;
-
-// salvar respostas da página
-let respostas = JSON.parse(localStorage.getItem("respostasRelevo")) || {};
-
-respostas[`q${qNum}`] = {
-selecionada: selecionada.value,
-acertou: acertou
-};
-
-localStorage.setItem("respostasRelevo", JSON.stringify(respostas));
-
-// atualizar progresso do usuário
-let logado = localStorage.getItem("logado");
-
-if(logado){
-
-let usuario = JSON.parse(localStorage.getItem(logado));
-
-usuario.respondidas = (usuario.respondidas || 0) + 1;
-
-if(acertou){
-usuario.acertos = (usuario.acertos || 0) + 1;
-}
-
-localStorage.setItem(logado, JSON.stringify(usuario));
-
-}
-
-// mostrar resultado
-document.getElementById(`resultado${qNum}`).innerHTML =
-acertou ? "✅ Correto!" : "❌ Incorreto!";
-
-}
-
-// mostrar resolução
-function verResolucao(qNum){
-document.getElementById(`res${qNum}`).style.display="block";
-}
-
-// carregar respostas salvas
-function carregarRespostas(){
-
-let respostas = JSON.parse(localStorage.getItem("respostasRelevo"));
-
-if(!respostas) return;
-
-for(let q in respostas){
-
-let info = respostas[q];
-
-if(info.selecionada){
-
-let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-
-if(input) input.checked = true;
-
-}
-
-if(info.acertou !== undefined){
-
-let numero = q.replace("q","");
-
-document.getElementById(`resultado${numero}`).innerHTML =
-info.acertou ? "✅ Correto!" : "❌ Incorreto!";
-
-}
-
-}
-
-}
-
-window.onload = carregarRespostas;
-
-</script>
+    <h1>Geografia - Relevo e Estrutura ⛰️</h1>
+
+    <div id="container-questoes">
+        <div class="relief-box">
+            <h3 style="margin-top:0; color:#fdba74;">🌍 Morfologia da Terra</h3>
+            <b>Planaltos:</b> Predomina o processo de erosão. Áreas elevadas e irregulares.<br>
+            <b>Planícies:</b> Predomina o processo de sedimentação. Áreas planas perto de rios/mares.<br>
+            <b>Depressões:</b> Áreas inclinadas e mais baixas que o entorno (Relativas) ou abaixo do nível do mar (Absolutas).<br>
+            <b>Escudos Cristalinos:</b> Rochas antigas e resistentes, ricas em minerais metálicos.<br>
+            <b>Bacias Sedimentares:</b> Áreas de acúmulo de sedimentos, onde encontramos combustíveis fósseis.
+        </div>
+
+        <p style="text-align:center; color:#94a3b8;">Escavando camadas de conhecimento...</p>
+    </div>
+
+    <a class="voltar" href="geografia.html">⬅ Voltar</a>
+
+    <script>
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: geografia e assunto: relevo
+        const filtradas = banco.filter(q => q.materia === "geografia" && q.assunto === "relevo");
+
+        const infoHtml = document.querySelector(".relief-box").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = infoHtml + "<p style='text-align:center; color:#94a3b8;'>Terreno plano. Nenhuma questão de Relevo encontrada no banco.</p>";
+            return;
+        }
+
+        container.innerHTML = infoHtml; 
+
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            let imgHtml = q.imagem ? `<img src="${q.imagem}" class="img-questao">` : "";
+            let resolucaoHtml = q.resolucao ? `
+                <div id="res-${q.id}" style="display:none;" class="resolucao-box">
+                    <p style="color:#fdba74; font-weight:bold; margin-bottom:5px;">🔍 Análise Geomorfológica:</p>
+                    <p style="font-size:14px; color:#cbd5e1;">${q.resolucao}</p>
+                </div>` : "";
+
+            div.innerHTML = `
+                ${imgHtml}
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Responder</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                ${resolucaoHtml}
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById(`feedback-${id}`);
+        const resBox = document.getElementById(`res-${id}`);
+
+        if (!selecionada) {
+            alert("Não fique no vale da dúvida! Escolha uma alternativa.");
+            return;
+        }
+
+        const acertou = selecionada.value === correta;
+
+        if (acertou) {
+            feedback.innerText = "✅ Correto! Você atingiu o pico do conhecimento.";
+            feedback.style.color = "#fb923c";
+        } else {
+            feedback.innerText = `❌ Houve um deslizamento. A resposta correta era (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        if (resBox) resBox.style.display = "block";
+
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
+            }
+        }
+    }
+
+    window.onload = carregarQuestoes;
+    </script>
 
 </body>
 </html>

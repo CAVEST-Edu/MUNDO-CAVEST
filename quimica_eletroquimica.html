@@ -1,210 +1,220 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>CAVEST - Eletroquímica</title>
+    <meta charset="UTF-8">
+    <title>CAVEST - Eletroquímica</title>
 
-<style>
-body{
-    font-family:Arial;
-    background:#0f172a;
-    color:white;
-    padding:40px;
-}
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
 
-h1{
-    text-align:center;
-}
+        h1 {
+            text-align: center;
+            color: #fbbf24; /* Amber/Electric Yellow */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
+        }
 
-.questao{
-    background:#1e293b;
-    padding:20px;
-    border-radius:10px;
-    margin-bottom:30px;
-}
+        #container-questoes {
+            max-width: 850px;
+            margin: auto;
+        }
 
-button{
-    background:#22c55e;
-    border:none;
-    padding:10px 20px;
-    border-radius:6px;
-    color:white;
-    font-size:15px;
-    cursor:pointer;
-    margin-top:10px;
-}
+        /* Guia de Fluxo de Elétrons Mundo CAVEST */
+        .electro-guide {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-top: 5px solid #fbbf24;
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+        }
 
-button:hover{
-    background:#16a34a;
-}
+        .node-card {
+            flex: 1;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #334155;
+        }
 
-.resolucao{
-    display:none;
-    margin-top:15px;
-    background:#334155;
-    padding:15px;
-    border-radius:8px;
-}
+        .node-card b { color: #fbbf24; display: block; font-size: 1.2em; }
+        .node-card span { font-size: 0.8em; color: #94a3b8; }
 
-.voltar {
-    display: inline-block;
-    text-decoration: none;
-    color: white;
-    background: #38bdf8;
-    padding: 10px 30px;
-    border-radius: 6px;
-    margin-top: 30px;
-}
+        .questao {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-right: 5px solid #fbbf24;
+        }
 
-.voltar:hover {
-    background: #0ea5e9;
-}
-</style>
+        label {
+            display: block;
+            background: #334155;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        label:hover {
+            background: #451a03; /* Dark Amber */
+        }
+
+        button {
+            background: #fbbf24;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: #0f172a;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #f59e0b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(251, 191, 36, 0.3);
+        }
+
+        .resolucao-box {
+            display: none;
+            margin-top: 15px;
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #fbbf24;
+            line-height: 1.6;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .voltar:hover { color: #fbbf24; }
+    </style>
 </head>
 
 <body>
 
-<h1>Química - Eletroquímica</h1>
+    <h1>Química - Eletroquímica ⚡</h1>
 
-<!-- QUESTÃO 1 -->
-<div class="questao">
-<p><b>1.</b> O que estuda a eletroquímica?</p>
-<input type="radio" name="q1" value="a"> A velocidade das reações químicas<br>
-<input type="radio" name="q1" value="b"> As reações químicas que envolvem transferência de elétrons<br>
-<input type="radio" name="q1" value="c"> A formação de ligações covalentes<br>
-<input type="radio" name="q1" value="d"> A termodinâmica das reações<br>
-<br>
-<button onclick="corrigir(1,'b')">Responder</button>
-<p id="resultado1"></p>
-<button onclick="verResolucao(1)">Ver resolução</button>
-<div class="resolucao" id="res1">
-<b>Resolução:</b><br><br>
-A <strong>eletroquímica</strong> estuda as reações químicas que envolvem transferência de elétrons, como em pilhas, baterias e eletrólise.<br><br>
-Resposta correta: <strong>B</strong>
-</div>
-</div>
+    <div id="container-questoes">
+        <div class="electro-guide">
+            <div class="node-card">
+                <b>C R</b>
+                <span>Cátodo = Redução<br>(Ganha elétrons)</span>
+            </div>
+            <div class="node-card">
+                <b>A O</b>
+                <span>Ânodo = Oxidação<br>(Perde elétrons)</span>
+            </div>
+            <div class="node-card">
+                <b>ΔE > 0</b>
+                <span>Pilha (Espontâneo)<br>Gera Energia</span>
+            </div>
+        </div>
 
-<!-- QUESTÃO 2 -->
-<div class="questao">
-<p><b>2.</b> Em uma pilha eletroquímica, qual polo é o responsável pela oxidação?</p>
-<input type="radio" name="q2" value="a"> Ânodo<br>
-<input type="radio" name="q2" value="b"> Cátodo<br>
-<input type="radio" name="q2" value="c"> Eletrodo de referência<br>
-<input type="radio" name="q2" value="d"> Eletrólito<br>
-<br>
-<button onclick="corrigir(2,'a')">Responder</button>
-<p id="resultado2"></p>
-<button onclick="verResolucao(2)">Ver resolução</button>
-<div class="resolucao" id="res2">
-<b>Resolução:</b><br><br>
-No <strong>ânodo</strong> ocorre a oxidação, ou seja, a perda de elétrons. O <strong>cátodo</strong> é onde ocorre a redução.<br><br>
-Resposta correta: <strong>A</strong>
-</div>
-</div>
+        <p style="text-align:center; color:#64748b; margin-bottom: 20px;">Mapeando a jornada dos elétrons...</p>
+    </div>
 
-<!-- QUESTÃO 3 -->
-<div class="questao">
-<p><b>3.</b> Qual é o processo em que uma corrente elétrica provoca uma reação química?</p>
-<input type="radio" name="q3" value="a"> Pilha<br>
-<input type="radio" name="q3" value="b"> Eletrólise<br>
-<input type="radio" name="q3" value="c"> Oxidação<br>
-<input type="radio" name="q3" value="d"> Reação endotérmica<br>
-<br>
-<button onclick="corrigir(3,'b')">Responder</button>
-<p id="resultado3"></p>
-<button onclick="verResolucao(3)">Ver resolução</button>
-<div class="resolucao" id="res3">
-<b>Resolução:</b><br><br>
-A <strong>eletrólise</strong> é o processo em que uma corrente elétrica provoca a decomposição de substâncias químicas, como a água em H₂ e O₂.<br><br>
-Resposta correta: <strong>B</strong>
-</div>
-</div>
+     <a class="voltar" href="quimica.html">⬅ Voltar</a>
 
-<!-- Botão Voltar -->
-<div style="text-align: center;">
-    <a href="dashboard.html" class="voltar">← Voltar ao Dashboard</a>
-</div>
-
-<script>
-// Função genérica para corrigir qualquer questão
-function corrigir(qNum, correta){
-    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
-    if(!selecionada){
-        alert("Escolha uma alternativa!");
-        return;
-    }
-
-    // Verificar se já respondeu (opcional - evitar dupla contagem)
-    let respostas = JSON.parse(localStorage.getItem("respostasEletroquimica")) || {};
-    if(respostas[`q${qNum}`]) {
-        if(!confirm("Você já respondeu esta questão. Deseja responder novamente?")) {
+    <script>
+    function carregarQuestoes() {
+        const container = document.getElementById("container-questoes");
+        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
+        
+        // Filtra por materia: quimica e assunto: eletroquimica
+        const filtradas = banco.filter(q => q.materia === "quimica" && q.assunto === "eletroquimica");
+        const guideHtml = document.querySelector(".electro-guide").outerHTML;
+        
+        if (filtradas.length === 0) {
+            container.innerHTML = guideHtml + "<p style='text-align:center; color:#94a3b8;'>Circuito aberto. Nenhuma questão de eletroquímica encontrada.</p>";
             return;
         }
+
+        container.innerHTML = guideHtml; 
+
+        filtradas.forEach((q, index) => {
+            const div = document.createElement("div");
+            div.className = "questao";
+
+            div.innerHTML = `
+                <p><b>${index + 1}.</b> ${q.pergunta}</p>
+                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
+                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
+                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
+                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
+                
+                <button onclick="verificar('${q.id}', '${q.correta}')">Fechar Circuito</button>
+                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
+                
+                <div id="res-${q.id}" class="resolucao-box">
+                    <b style="color:#fbbf24;">Potencial de Reação:</b><br><br>
+                    ${q.resolucao || "Lembre-se: elétrons fluem do ânodo para o cátodo. Verifique quem oxida e quem reduz."}
+                </div>
+            `;
+            container.appendChild(div);
+        });
     }
 
-    let acertou = selecionada.value === correta;
+    function verificar(id, correta) {
+        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
+        const feedback = document.getElementById("feedback-" + id);
+        const resBox = document.getElementById("res-" + id);
 
-    // salvar respostas da página
-    respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
-    localStorage.setItem("respostasEletroquimica", JSON.stringify(respostas));
+        if (!selecionada) {
+            alert("Selecione uma alternativa para gerar corrente!");
+            return;
+        }
 
-    // atualizar progresso do usuário logado
-    let logado = localStorage.getItem("logado");
-    if(logado){
-        let usuario = JSON.parse(localStorage.getItem(logado));
-        
-        // Inicializar contadores se não existirem
-        if(!usuario.respondidas) usuario.respondidas = 0;
-        if(!usuario.acertos) usuario.acertos = 0;
-        
-        // Verificar se esta questão já foi respondida antes para não contar duas vezes
-        let respostasAntigas = JSON.parse(localStorage.getItem("respostasEletroquimica")) || {};
-        if(!respostasAntigas[`q${qNum}`]) {
-            usuario.respondidas += 1;
-            if(acertou) usuario.acertos += 1;
+        const acertou = selecionada.value === correta;
+        resBox.style.display = "block";
+
+        if (acertou) {
+            feedback.innerText = "✅ Correto! Fluxo de elétrons estabilizado.";
+            feedback.style.color = "#fbbf24";
         } else {
-            // Se já respondeu, ajustar contagem (remover contagem anterior e adicionar nova)
-            if(respostasAntigas[`q${qNum}`].acertou && !acertou) {
-                usuario.acertos -= 1; // perdeu o acerto
-            } else if(!respostasAntigas[`q${qNum}`].acertou && acertou) {
-                usuario.acertos += 1; // ganhou um acerto
+            feedback.innerText = `❌ Incorreto. A polaridade correta era (${correta.toUpperCase()})`;
+            feedback.style.color = "#f87171";
+        }
+
+        // Integração Mundo CAVEST Progresso
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
+            
+            if(!usuario.questoesResolvidas.includes(id)){
+                usuario.respondidas = (usuario.respondidas || 0) + 1;
+                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+                usuario.questoesResolvidas.push(id);
+                localStorage.setItem(logado, JSON.stringify(usuario));
             }
-            // Se respondeu de novo, não incrementa respondidas
-        }
-        
-        localStorage.setItem(logado, JSON.stringify(usuario));
-    }
-
-    // mostrar resultado
-    document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
-}
-
-// mostrar resolução
-function verResolucao(qNum){
-    document.getElementById(`res${qNum}`).style.display = "block";
-}
-
-// carregar respostas salvas
-function carregarRespostas(){
-    let respostas = JSON.parse(localStorage.getItem("respostasEletroquimica"));
-    if(!respostas) return;
-    
-    for(let q in respostas){
-        let info = respostas[q];
-        if(info.selecionada){
-            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
-            if(input) input.checked = true;
-        }
-        if(info.acertou !== undefined){
-            let numero = q.replace("q","");
-            document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
         }
     }
-}
 
-// Carregar respostas quando a página abrir
-window.onload = carregarRespostas;
-</script>
+    window.onload = carregarQuestoes;
+    </script>
 
 </body>
 </html>

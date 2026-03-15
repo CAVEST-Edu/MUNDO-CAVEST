@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Materiais de Matemática - Mundo CAVEST</title>
+    
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$']] }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 { 
+            color: #818cf8; /* Roxo/Indigo */
+            margin-bottom: 30px; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        /* Estilo dos Cards de Material - Temática Matemática */
+        .card-material {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #818cf8;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .card-material:hover {
+            background: #312e81; /* Indigo escuro */
+            transform: translateY(-5px);
+            border-left: 4px solid #a5b4fc;
+        }
+
+        .card-material a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .tag {
+            font-size: 12px;
+            background: #818cf8;
+            color: #0f172a;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .voltar {
+            margin-top: 40px;
+            display: inline-block;
+            color: #94a3b8;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .voltar:hover {
+            color: #818cf8;
+        }
+        
+        .aviso-vazio {
+            grid-column: 1 / -1;
+            color: #64748b;
+            font-style: italic;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🔢 Materiais de Matemática</h1>
+
+    <div class="container" id="listaMateriais">
+        <div class="card-material">
+            <span class="tag">Oficial</span>
+            <a href="LINK_DO_PDF_FUNCOES" target="_blank">Apostila: Funções de 1º e 2º Grau</a>
+        </div>
+
+        <div class="card-material">
+            <span class="tag">Oficial</span>
+            <a href="LINK_DO_PDF_GEOMETRIA" target="_blank">Formulário Completo de Geometria Plana</a>
+        </div>
+    </div>
+
+    <a href="materiais.html" class="voltar">⬅ Voltar para Matérias</a>
+
+    <script>
+        function carregarMateriaisDinamicos() {
+            const container = document.getElementById("listaMateriais");
+            const banco = JSON.parse(localStorage.getItem("bancoMateriais")) || [];
+            
+            // FILTRO: materia === "matematica"
+            const materiaisFiltrados = banco.filter(item => item.materia === "matematica");
+
+            if (materiaisFiltrados.length === 0) {
+                const temMensagem = document.querySelector(".aviso-vazio");
+                if (!temMensagem) {
+                    container.innerHTML += `<p class="aviso-vazio">O conjunto de materiais extras está vazio ($\emptyset$).</p>`;
+                }
+                // Processa o MathJax mesmo se estiver vazio para formatar o aviso acima
+                if (window.MathJax) window.MathJax.typeset();
+                return;
+            }
+
+            materiaisFiltrados.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "card-material";
+                div.innerHTML = `
+                    <span class="tag" style="background: #ec4899; color: white;">Extra</span>
+                    <a href="${item.link}" target="_blank">${item.nome}</a>
+                `;
+                container.appendChild(div);
+            });
+
+            // Re-renderiza as fórmulas após carregar os materiais do banco
+            if (window.MathJax) {
+                window.MathJax.typesetPromise();
+            }
+        }
+
+        window.onload = carregarMateriaisDinamicos;
+    </script>
+
+</body>
+</html>
