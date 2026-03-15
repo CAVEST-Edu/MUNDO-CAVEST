@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>CAVEST - Cinemática</title>
+
+<style>
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+padding:40px;
+}
+
+h1{
+text-align:center;
+}
+
+.questao{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+}
+
+button{
+background:#22c55e;
+border:none;
+padding:10px 20px;
+border-radius:6px;
+color:white;
+font-size:16px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+.resolucao{
+display:none;
+margin-top:15px;
+background:#334155;
+padding:15px;
+border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Física - Cinemática</h1>
+
+<div class="questao">
+
+<p><b>1.</b> Um carro percorre 100 km em 2 horas. Qual sua velocidade média?</p>
+
+<input type="radio" name="q1" value="a"> 30 km/h<br>
+<input type="radio" name="q1" value="b"> 50 km/h<br>
+<input type="radio" name="q1" value="c"> 60 km/h<br>
+<input type="radio" name="q1" value="d"> 80 km/h<br>
+
+<br>
+
+<button onclick="corrigir(1,'b')">Responder</button>
+
+<p id="resultado1"></p>
+
+<button onclick="verResolucao(1)">Ver resolução</button>
+
+<div class="resolucao" id="res1">
+
+<b>Resolução:</b><br><br>
+
+Velocidade média é dada por:<br>
+V = ΔS / ΔT<br><br>
+
+ΔS = 100 km<br>
+ΔT = 2 h<br><br>
+
+V = 100 / 2 = 50 km/h<br><br>
+
+Alternativa correta: <strong>B</strong>.
+
+</div>
+
+</div>
+
+<script>
+
+// corrigir questão
+function corrigir(qNum, respostaCorreta){
+
+let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+
+if(!selecionada){
+alert("Escolha uma alternativa");
+return;
+}
+
+let acertou = selecionada.value === respostaCorreta;
+
+// salvar resposta da página
+let respostas = JSON.parse(localStorage.getItem("respostasCinematica")) || {};
+
+respostas[`q${qNum}`] = {
+selecionada: selecionada.value,
+acertou: acertou
+};
+
+localStorage.setItem("respostasCinematica", JSON.stringify(respostas));
+
+// atualizar progresso do usuário
+let logado = localStorage.getItem("logado");
+
+if(logado){
+
+let usuario = JSON.parse(localStorage.getItem(logado));
+
+usuario.respondidas = (usuario.respondidas || 0) + 1;
+
+if(acertou){
+usuario.acertos = (usuario.acertos || 0) + 1;
+}
+
+localStorage.setItem(logado, JSON.stringify(usuario));
+
+}
+
+// mostrar resultado
+document.getElementById(`resultado${qNum}`).innerHTML =
+acertou ? "✅ Correto!" : "❌ Incorreto!";
+
+}
+
+// mostrar resolução
+function verResolucao(qNum){
+document.getElementById(`res${qNum}`).style.display = "block";
+}
+
+// carregar respostas salvas
+function carregarRespostas(){
+
+let respostas = JSON.parse(localStorage.getItem("respostasCinematica"));
+
+if(!respostas) return;
+
+for(let q in respostas){
+
+let info = respostas[q];
+
+if(info.selecionada){
+
+let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+
+if(input) input.checked = true;
+
+}
+
+if(info.acertou !== undefined){
+
+let numero = q.replace("q","");
+
+document.getElementById(`resultado${numero}`).innerHTML =
+info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+
+}
+
+}
+
+}
+
+window.onload = carregarRespostas;
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CAVEST - Artículos y Contracciones</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .questao {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .nota {
+            background: #334155;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            color: #fbbf24;
+        }
+
+        button {
+            background: #22c55e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .resolucao {
+            display: none;
+            margin-top: 15px;
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Español - Artículos y Contracciones 🧩</h1>
+
+    <div class="questao">
+        <div class="nota">
+            <b>Dica de Ouro:</b> No espanhol, o artigo neutro <b>LO</b> nunca acompanha substantivos masculinos (usa-se <b>EL</b>). O <b>LO</b> é usado antes de adjetivos ou advérbios.
+        </div>
+        
+        <p><b>1.</b> Elija la opción que completa correctamente la frase: <br><em>"___ niño fue ___ parque con el perro ___ vecino."</em></p>
+        <input type="radio" name="q1" value="a"> El - al - del<br>
+        <input type="radio" name="q1" value="b"> Lo - a el - de el<br>
+        <input type="radio" name="q1" value="c"> El - a el - del<br>
+        <input type="radio" name="q1" value="d"> Lo - al - de el<br>
+        <br>
+        <button onclick="corrigir(1,'a')">Responder</button>
+        <p id="resultado1"></p>
+        <button onclick="verResolucao(1)">Ver resolución</button>
+        
+        <div class="resolucao" id="res1">
+            <b>Resolución:</b><br><br>
+            1. <b>El</b> é o artigo masculino singular (O menino).<br>
+            2. <b>Al</b> é a contração de <i>a + el</i> (ao parque).<br>
+            3. <b>Del</b> é a contração de <i>de + el</i> (do vizinho).<br><br>
+            Resposta correta: <strong>A</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>2.</b> ¿Cuál es el uso correcto del artículo neutro <strong>"LO"</strong>?</p>
+        <input type="radio" name="q2" value="a"> Lo coche de mi hermano es rojo.<br>
+        <input type="radio" name="q2" value="b"> Lo mejor de la fiesta fue la música.<br>
+        <input type="radio" name="q2" value="c"> Lo señor Juan es muy amable.<br>
+        <input type="radio" name="q2" value="d"> Me gusta mucho lo sol.<br>
+        <br>
+        <button onclick="corrigir(2,'b')">Responder</button>
+        <p id="resultado2"></p>
+        <button onclick="verResolucao(2)">Ver resolución</button>
+        
+        <div class="resolucao" id="res2">
+            <b>Resolución:</b><br><br>
+            O artigo <b>LO</b> é neutro e substantiva adjetivos. "Lo mejor" (O melhor) está correto. Para substantivos masculinos como <i>coche, señor</i> ou <i>sol</i>, usamos sempre <b>EL</b>.<br><br>
+            Resposta correta: <strong>B</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>3.</b> Indica la frase que NO tiene errores de contracción:</p>
+        <input type="radio" name="q3" value="a"> Ella vive en el centro de la ciudad.<br>
+        <input type="radio" name="q3" value="b"> El libro está nel cajón.<br>
+        <input type="radio" name="q3" value="c"> Mañana vamos a la casa de la tía.<br>
+        <input type="radio" name="q3" value="d"> Las opciones A y C están correctas.<br>
+        <br>
+        <button onclick="corrigir(3,'d')">Responder</button>
+        <p id="resultado3"></p>
+        <button onclick="verResolucao(3)">Ver resolución</button>
+        
+        <div class="resolucao" id="res3">
+            <b>Resolución:</b><br><br>
+            Em espanhol dizemos <b>"en el"</b> (no) e <b>"a la"</b> (à). A forma "nel" não existe (é do italiano ou portuñol). Tanto a frase A quanto a C respeitam a gramática.<br><br>
+            Resposta correta: <strong>D</strong>
+        </div>
+    </div>
+
+    <a class="voltar" href="espanhol.html">⬅ Voltar</a>
+
+    <script>
+    function corrigir(qNum, correta){
+        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+        if(!selecionada){
+            alert("¡Elige una opción!");
+            return;
+        }
+
+        let acertou = selecionada.value === correta;
+
+        let respostas = JSON.parse(localStorage.getItem("respostasEspanholArticulos")) || {};
+        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
+        localStorage.setItem("respostasEspanholArticulos", JSON.stringify(respostas));
+
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            usuario.respondidas = (usuario.respondidas || 0) + 1;
+            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+            localStorage.setItem(logado, JSON.stringify(usuario));
+        }
+
+        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ ¡Correcto!" : "❌ ¡Incorrecto!";
+    }
+
+    function verResolucao(qNum){
+        document.getElementById(`res${qNum}`).style.display = "block";
+    }
+
+    function carregarRespostas(){
+        let respostas = JSON.parse(localStorage.getItem("respostasEspanholArticulos"));
+        if(!respostas) return;
+        for(let q in respostas){
+            let info = respostas[q];
+            if(info.selecionada){
+                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+                if(input) input.checked = true;
+            }
+            if(info.acertou !== undefined){
+                let numero = q.replace("q","");
+                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ ¡Correcto!" : "❌ ¡Incorrecto!";
+            }
+        }
+    }
+
+    window.onload = carregarRespostas;
+    </script>
+
+</body>
+</html>

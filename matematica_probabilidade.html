@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>CAVEST - Probabilidade</title>
+
+<style>
+body{
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+    padding:40px;
+}
+
+h1{
+    text-align:center;
+}
+
+.questao{
+    background:#1e293b;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:30px;
+}
+
+button{
+    background:#22c55e;
+    border:none;
+    padding:10px 20px;
+    border-radius:6px;
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#16a34a;
+}
+
+.resolucao{
+    display:none;
+    margin-top:15px;
+    background:#334155;
+    padding:15px;
+    border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Matemática - Probabilidade</h1>
+
+<!-- QUESTÃO 1 -->
+<div class="questao">
+<p><b>1.</b> Qual é a probabilidade de lançar um dado e obter um número par?</p>
+<input type="radio" name="q1" value="a"> 1/6<br>
+<input type="radio" name="q1" value="b"> 1/2<br>
+<input type="radio" name="q1" value="c"> 1/3<br>
+<input type="radio" name="q1" value="d"> 1/4<br>
+<br>
+<button onclick="corrigir(1,'b')">Responder</button>
+<p id="resultado1"></p>
+<button onclick="verResolucao(1)">Ver resolução</button>
+<div class="resolucao" id="res1">
+<b>Resolução:</b><br><br>
+Um dado possui os números 1, 2, 3, 4, 5 e 6. Os números pares são 2, 4 e 6 → 3 resultados favoráveis em 6 possíveis.<br>
+Probabilidade = 3/6 = <strong>1/2</strong>.<br><br>
+Resposta correta: <strong>B</strong>
+</div>
+</div>
+
+<!-- QUESTÃO 2 -->
+<div class="questao">
+<p><b>2.</b> Uma urna contém 5 bolas vermelhas e 3 bolas azuis. Qual a probabilidade de retirar uma bola vermelha?</p>
+<input type="radio" name="q2" value="a"> 3/8<br>
+<input type="radio" name="q2" value="b"> 5/8<br>
+<input type="radio" name="q2" value="c"> 1/2<br>
+<input type="radio" name="q2" value="d"> 2/5<br>
+<br>
+<button onclick="corrigir(2,'b')">Responder</button>
+<p id="resultado2"></p>
+<button onclick="verResolucao(2)">Ver resolução</button>
+<div class="resolucao" id="res2">
+<b>Resolução:</b><br><br>
+Total de bolas = 5 vermelhas + 3 azuis = 8<br>
+Probabilidade de retirar vermelha = 5/8<br><br>
+Resposta correta: <strong>B</strong>
+</div>
+</div>
+
+<!-- QUESTÃO 3 -->
+<div class="questao">
+<p><b>3.</b> Ao lançar duas moedas, qual é a probabilidade de sair cara em ambas?</p>
+<input type="radio" name="q3" value="a"> 1/2<br>
+<input type="radio" name="q3" value="b"> 1/3<br>
+<input type="radio" name="q3" value="c"> 1/4<br>
+<input type="radio" name="q3" value="d"> 1/6<br>
+<br>
+<button onclick="corrigir(3,'c')">Responder</button>
+<p id="resultado3"></p>
+<button onclick="verResolucao(3)">Ver resolução</button>
+<div class="resolucao" id="res3">
+<b>Resolução:</b><br><br>
+Cada moeda tem 2 resultados (cara ou coroa).<br>
+Probabilidade de cara na primeira moeda = 1/2<br>
+Probabilidade de cara na segunda moeda = 1/2<br>
+Probabilidade conjunta = 1/2 × 1/2 = <strong>1/4</strong><br><br>
+Resposta correta: <strong>C</strong>
+</div>
+</div>
+
+<script>
+// Função genérica para corrigir qualquer questão
+function corrigir(qNum, correta){
+    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+    if(!selecionada){
+        alert("Escolha uma alternativa!");
+        return;
+    }
+
+    let acertou = selecionada.value === correta;
+
+    // salvar respostas da página
+    let respostas = JSON.parse(localStorage.getItem("respostasProbabilidade")) || {};
+    respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
+    localStorage.setItem("respostasProbabilidade", JSON.stringify(respostas));
+
+    // atualizar progresso do usuário logado
+    let logado = localStorage.getItem("logado");
+    if(logado){
+        let usuario = JSON.parse(localStorage.getItem(logado));
+        usuario.respondidas = (usuario.respondidas || 0) + 1;
+        if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+        localStorage.setItem(logado, JSON.stringify(usuario));
+    }
+
+    // mostrar resultado
+    document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
+}
+
+// mostrar resolução
+function verResolucao(qNum){
+    document.getElementById(`res${qNum}`).style.display = "block";
+}
+
+// carregar respostas salvas
+function carregarRespostas(){
+    let respostas = JSON.parse(localStorage.getItem("respostasProbabilidade"));
+    if(!respostas) return;
+    for(let q in respostas){
+        let info = respostas[q];
+        if(info.selecionada){
+            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+            if(input) input.checked = true;
+        }
+        if(info.acertou !== undefined){
+            let numero = q.replace("q","");
+            document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+        }
+    }
+}
+
+window.onload = carregarRespostas;
+</script>
+
+</body>
+</html>

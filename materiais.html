@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Materiais - Mundo CAVEST</title>
+    <style>
+        body { font-family: Arial; background: #0f172a; color: white; text-align: center; }
+        h1 { margin-top: 40px; }
+        #areaProfessor {
+            display: none; background: #1e3a8a; max-width: 600px;
+            margin: 20px auto; padding: 20px; border-radius: 15px; border: 2px dashed #38bdf8;
+        }
+        #areaProfessor input, #areaProfessor select, #areaProfessor button {
+            padding: 10px; margin: 5px; border-radius: 5px; border: none;
+        }
+        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 900px; margin: auto; padding: 40px; }
+        .card { background: #1e293b; padding: 30px; border-radius: 10px; transition: 0.3s; }
+        .card:hover { background: #334155; transform: scale(1.05); }
+        a { text-decoration: none; color: white; font-size: 18px; font-weight: bold; }
+        .voltar { margin-top: 20px; display: inline-block; color: #94a3b8; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <h1>Materiais</h1>
+
+    <div id="areaProfessor">
+        <h3>👨‍🏫 Painel do Professor</h3>
+        <input type="text" id="nomeArquivo" placeholder="Nome do Assunto (Ex: Óptica)">
+        <select id="categoriaMateria">
+            <option value="fisica">Física</option>
+            <option value="historia">História</option>
+            <option value="biologia">Biologia</option>
+            <option value="geografia">Geografia</option>
+            <option value="matematica">Matemática</option>
+            <option value="quimica">Química</option>
+            <option value="portugues">Português</option>
+        </select>
+        <input type="text" id="linkArquivo" placeholder="Link do Material">
+        <button style="background:#22c55e; color:white; cursor:pointer;" onclick="adicionarMaterial()">Enviar Material</button>
+    </div>
+
+    <div class="container">
+        <div class="card"><a href="materiais_fisica.html">Física</a></div>
+        <div class="card"><a href="materiais_historia.html">História</a></div>
+        <div class="card"><a href="materiais_biologia.html">Biologia</a></div>
+        <div class="card"><a href="materiais_geografia.html">Geografia</a></div>
+        <div class="card"><a href="materiais_matematica.html">Matemática</a></div>
+        <div class="card"><a href="materiais_quimica.html">Química</a></div>
+        <div class="card"><a href="materiais_portugues.html">Português</a></div>
+    </div>
+
+    <a class="voltar" href="index.html">⬅ Voltar</a>
+
+    <script>
+        const usuario = JSON.parse(localStorage.getItem("usuarioAtual")) || { cargo: "aluno" };
+        if (usuario.cargo === "professor") {
+            document.getElementById("areaProfessor").style.display = "block";
+        }
+
+        function adicionarMaterial() {
+            const nome = document.getElementById("nomeArquivo").value;
+            const link = document.getElementById("linkArquivo").value;
+            const materia = document.getElementById("categoriaMateria").value;
+
+            if (!nome || !link) { alert("Preencha tudo!"); return; }
+
+            const novoMaterial = { nome, link, materia };
+            let bancoMateriais = JSON.parse(localStorage.getItem("bancoMateriais")) || [];
+            bancoMateriais.push(novoMaterial);
+            localStorage.setItem("bancoMateriais", JSON.stringify(bancoMateriais));
+
+            alert("Material enviado para a pasta de " + materia + "!");
+            document.getElementById("nomeArquivo").value = "";
+            document.getElementById("linkArquivo").value = "";
+        }
+    </script>
+</body>
+</html>

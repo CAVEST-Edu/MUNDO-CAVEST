@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>CAVEST - Pronouns & Articles</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .questao {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            background: #22c55e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .resolucao {
+            display: none;
+            margin-top: 15px;
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>English - Pronouns & Articles 👤🆔</h1>
+
+    <div class="questao">
+        <p><b>1.</b> Complete a frase com os artigos corretos: <br><em>"I saw ___ old man eating ___ banana in ___ park."</em></p>
+        <input type="radio" name="q1" value="a"> a - an - the<br>
+        <input type="radio" name="q1" value="b"> an - a - the<br>
+        <input type="radio" name="q1" value="c"> an - an - a<br>
+        <input type="radio" name="q1" value="d"> the - a - an<br>
+        <br>
+        <button onclick="corrigir(1,'b')">Responder</button>
+        <p id="resultado1"></p>
+        <button onclick="verResolucao(1)">Ver resolução</button>
+        
+        <div class="resolucao" id="res1">
+            <b>Resolução:</b><br><br>
+            1. Usamos <strong>AN</strong> antes de sons de vogal (An old man).<br>
+            2. Usamos <strong>A</strong> antes de sons de consoante (A banana).<br>
+            3. Usamos <strong>THE</strong> para algo específico (The park).<br><br>
+            Resposta correta: <strong>B</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>2.</b> Qual pronome completa corretamente a frase: <br><em>"That car belongs to my parents. It is _______."</em></p>
+        <input type="radio" name="q2" value="a"> their<br>
+        <input type="radio" name="q2" value="b"> theirs<br>
+        <input type="radio" name="q2" value="c"> them<br>
+        <input type="radio" name="q2" value="d"> they<br>
+        <br>
+        <button onclick="corrigir(2,'b')">Responder</button>
+        <p id="resultado2"></p>
+        <button onclick="verResolucao(2)">Ver resolução</button>
+        
+        <div class="resolucao" id="res2">
+            <b>Resolução:</b><br><br>
+            Usamos pronomes possessivos (<strong>Theirs</strong>) quando não mencionamos o substantivo logo após o pronome. Se a frase fosse "It is their car", usaríamos "their", mas como termina no pronome, o correto é "theirs".<br><br>
+            Resposta correta: <strong>B</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>3.</b> Na frase <em>"Mary loves her brother and she helps <strong>him</strong> every day"</em>, o termo em destaque é:</p>
+        <input type="radio" name="q3" value="a"> Um pronome sujeito (Subject Pronoun).<br>
+        <input type="radio" name="q3" value="b"> Um pronome objeto (Object Pronoun).<br>
+        <input type="radio" name="q3" value="c"> Um adjetivo possessivo.<br>
+        <input type="radio" name="q3" value="d"> Um artigo definido.<br>
+        <br>
+        <button onclick="corrigir(3,'b')">Responder</button>
+        <p id="resultado3"></p>
+        <button onclick="verResolucao(3)">Ver resolução</button>
+        
+        <div class="resolucao" id="res3">
+            <b>Resolução:</b><br><br>
+            <strong>Him</strong> é um <strong>Object Pronoun</strong>. Ele recebe a ação do verbo (helps). Usamos "he" para quem faz a ação e "him" para quem recebe.<br><br>
+            Resposta correta: <strong>B</strong>
+        </div>
+    </div>
+
+    <a class="voltar" href="ingles.html">⬅ Voltar para Inglês</a>
+
+    <script>
+    function corrigir(qNum, correta){
+        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+        if(!selecionada){
+            alert("Escolha uma alternativa!");
+            return;
+        }
+
+        let acertou = selecionada.value === correta;
+
+        let respostas = JSON.parse(localStorage.getItem("respostasInglesPronouns")) || {};
+        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
+        localStorage.setItem("respostasInglesPronouns", JSON.stringify(respostas));
+
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            usuario.respondidas = (usuario.respondidas || 0) + 1;
+            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+            localStorage.setItem(logado, JSON.stringify(usuario));
+        }
+
+        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correct!" : "❌ Incorrect!";
+    }
+
+    function verResolucao(qNum){
+        document.getElementById(`res${qNum}`).style.display = "block";
+    }
+
+    function carregarRespostas(){
+        let respostas = JSON.parse(localStorage.getItem("respostasInglesPronouns"));
+        if(!respostas) return;
+        for(let q in respostas){
+            let info = respostas[q];
+            if(info.selecionada){
+                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+                if(input) input.checked = true;
+            }
+            if(info.acertou !== undefined){
+                let numero = q.replace("q","");
+                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correct!" : "❌ Incorrect!";
+            }
+        }
+    }
+
+    window.onload = carregarRespostas;
+    </script>
+
+</body>
+</html>

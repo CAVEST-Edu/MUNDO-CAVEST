@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CAVEST - Pretéritos</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .questao {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .info-box {
+            background: #1e3a8a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3b82f6;
+        }
+
+        button {
+            background: #22c55e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .resolucao {
+            display: none;
+            margin-top: 15px;
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Español - Pretéritos (Pasados) 🕰️</h1>
+
+    <div class="questao">
+        <div class="info-box">
+            <b>Pretérito Indefinido:</b> Acciones terminadas en un tiempo específico.<br>
+            (Ej: Ayer <b>fui</b> al cine).<br><br>
+            <b>Pretérito Imperfecto:</b> Rutinas, descripciones o acciones no terminadas.<br>
+            (Ej: Cuando <b>era</b> niño, <b>jugaba</b> mucho).
+        </div>
+
+        <p><b>1.</b> Completa la frase usando el <strong>Pretérito Indefinido</strong> (acción puntual): <br><em>"La semana pasada, nosotros ________ (comer) en un restaurante muy bueno."</em></p>
+        <input type="radio" name="q1" value="a"> comíamos<br>
+        <input type="radio" name="q1" value="b"> comieron<br>
+        <input type="radio" name="q1" value="c"> comimos<br>
+        <input type="radio" name="q1" value="d"> comeremos<br>
+        <br>
+        <button onclick="corrigir(1,'c')">Responder</button>
+        <p id="resultado1"></p>
+        <button onclick="verResolucao(1)">Ver resolución</button>
+        
+        <div class="resolucao" id="res1">
+            <b>Resolución:</b><br><br>
+            Para el sujeto "Nosotros" en <b>Pretérito Indefinido</b>, la terminación de los verbos en -ER es <b>-imos</b>. "Comíamos" sería imperfecto (hábito).<br><br>
+            Resposta correta: <strong>C</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>2.</b> El verbo <strong>IR</strong> es muy irregular en el pasado. ¿Cómo se dice <em>"Eu fui"</em> y <em>"Eu ia"</em> correctamente?</p>
+        <input type="radio" name="q2" value="a"> Yo fui / Yo iba<br>
+        <input type="radio" name="q2" value="b"> Yo vo / Yo ida<br>
+        <input type="radio" name="q2" value="c"> Yo fuy / Yo iba<br>
+        <input type="radio" name="q2" value="d"> Yo fuimos / Yo iban<br>
+        <br>
+        <button onclick="corrigir(2,'a')">Responder</button>
+        <p id="resultado2"></p>
+        <button onclick="verResolucao(2)">Ver resolución</button>
+        
+        <div class="resolucao" id="res2">
+            <b>Resolución:</b><br><br>
+            - Indefinido (puntual): <b>Fui</b>.<br>
+            - Imperfecto (hábito/descripción): <b>Iba</b>.<br>
+            Es uno de los verbos más usados en los textos del ENEM.<br><br>
+            Resposta correta: <strong>A</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>3.</b> Indica la frase que expresa una <strong>acción habitual</strong> en el pasado:</p>
+        <input type="radio" name="q3" value="a"> El año pasado viajé a Madrid.<br>
+        <input type="radio" name="q3" value="b"> Ayer estudié mucho para el examen.<br>
+        <input type="radio" name="q3" value="c"> Todos los veranos <b>íbamos</b> a la playa.<br>
+        <input type="radio" name="q3" value="d"> Mi hermano nació en 1995.<br>
+        <br>
+        <button onclick="corrigir(3,'c')">Responder</button>
+        <p id="resultado3"></p>
+        <button onclick="verResolucao(3)">Ver resolución</button>
+        
+        <div class="resolucao" id="res3">
+            <b>Resolución:</b><br><br>
+            La palabra "Todos los veranos" indica una rutina. En este caso, debemos usar el <b>Pretérito Imperfecto</b> (íbamos). Las otras opciones son acciones que ocurrieron una sola vez (Indefinido).<br><br>
+            Resposta correta: <strong>C</strong>
+        </div>
+    </div>
+
+    <a class="voltar" href="espanhol.html">⬅ Voltar</a>
+
+    <script>
+    function corrigir(qNum, correta){
+        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+        if(!selecionada){
+            alert("¡Elige una opción!");
+            return;
+        }
+
+        let acertou = selecionada.value === correta;
+
+        let respostas = JSON.parse(localStorage.getItem("respostasEspanholPasados")) || {};
+        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
+        localStorage.setItem("respostasEspanholPasados", JSON.stringify(respostas));
+
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            usuario.respondidas = (usuario.respondidas || 0) + 1;
+            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+            localStorage.setItem(logado, JSON.stringify(usuario));
+        }
+
+        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ ¡Correcto!" : "❌ ¡Incorrecto!";
+    }
+
+    function verResolucao(qNum){
+        document.getElementById(`res${qNum}`).style.display = "block";
+    }
+
+    function carregarRespostas(){
+        let respostas = JSON.parse(localStorage.getItem("respostasEspanholPasados"));
+        if(!respostas) return;
+        for(let q in respostas){
+            let info = respostas[q];
+            if(info.selecionada){
+                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+                if(input) input.checked = true;
+            }
+            if(info.acertou !== undefined){
+                let numero = q.replace("q","");
+                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ ¡Correcto!" : "❌ ¡Incorrecto!";
+            }
+        }
+    }
+
+    window.onload = carregarRespostas;
+    </script>
+
+</body>
+</html>

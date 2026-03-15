@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>MUNDO CAVEST - Plataforma ENEM</title>
+
+<style>
+/* --- ESTILOS GERAIS --- */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+} 
+
+body{
+    background:#0f172a;
+    color:white;
+}
+
+/* --- BARRA SUPERIOR (HEADER) --- */
+header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px 40px;
+    background:#020617;
+    box-shadow:0 4px 10px rgba(0,0,0,0.4);
+}
+
+.menu-btn{
+    font-size:28px;
+    cursor:pointer;
+    color:white;
+    margin-right:20px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logo img {
+    height: 100px;
+    filter: contrast(110%) brightness(110%);
+    mix-blend-mode: screen; 
+}
+
+.titulo{
+    font-size:20px;
+    font-weight:bold;
+    color:#38bdf8;
+}
+
+.menu a{
+    color:#94a3b8;
+    text-decoration:none;
+    margin-left:10px;
+    font-size:16px;
+}
+
+.menu a:hover{
+    color:white;
+}
+
+/* --- MENU LATERAL --- */
+.menu-lateral{
+    position:fixed;
+    left:-250px;
+    top:0;
+    width:250px;
+    height:100%;
+    background:#111827;
+    padding-top:60px;
+    transition:0.3s;
+    z-index: 1000;
+}
+
+.menu-lateral a{
+    display:block;
+    color:white;
+    padding:15px 25px;
+    text-decoration:none;
+    font-size:18px;
+}
+
+.menu-lateral a:hover{
+    background:#1f2937;
+}
+
+/* --- ÁREA HERO (SAUDAÇÃO) --- */
+.hero{
+    text-align:center;
+    padding:60px 20px 30px 20px;
+}
+
+.hero h1{
+    font-size:42px;
+    margin-bottom:10px;
+    color: white;
+}
+
+.hero p{
+    color:#94a3b8;
+    font-size:18px;
+}
+
+/* --- SEÇÃO DE NOVIDADES (MATERIAIS RECENTES) --- */
+.novidades-container {
+    max-width: 1200px;
+    margin: 0 auto 30px auto;
+    padding: 0 40px;
+    text-align: left;
+}
+
+.novidades-titulo {
+    font-size: 18px;
+    color: #38bdf8;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.grid-novidades {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+}
+
+.item-novidade {
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #22c55e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-novidade a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.item-novidade span {
+    font-size: 11px;
+    background: #334155;
+    padding: 3px 8px;
+    border-radius: 5px;
+    color: #94a3b8;
+    text-transform: uppercase;
+}
+
+/* --- GRID DAS MATÉRIAS --- */
+.container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:30px;
+    padding:40px;
+    max-width:1200px;
+    margin:auto;
+}
+
+.card{
+    background:#1e293b;
+    padding:40px;
+    border-radius:15px;
+    text-align:center;
+    transition:0.3s;
+    box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    background:#334155;
+}
+
+.card a{
+    text-decoration:none;
+    color:white;
+    font-size:20px;
+    font-weight:bold;
+}
+
+/* --- RODAPÉ --- */
+footer{
+    text-align:center;
+    padding:30px;
+    color:#64748b;
+    font-size:14px;
+    margin-top:40px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="menu-btn" onclick="abrirMenu()">☰</div>
+    <div class="logo">
+        <img src="logo_cavest.png">
+        <div class="titulo"></div>
+    </div>
+    <div class="menu">
+        <a href="login.html">Login</a> |
+        <a href="registro.html">Registrar</a> |
+        <a href="dashboard.html">Meu Progresso</a>
+    </div>
+</header>
+
+<div id="menuLateral" class="menu-lateral">
+    <a href="index.html" onclick="abrirMenu()">⬅ Voltar</a>
+    <a href="provas_enem.html">📝 Provas antigas do ENEM</a>
+    <a href="simulados.html">📊 Simulados</a>
+    <a href="sobre.html">ℹ Sobre</a>
+</div>
+
+<div class="hero">
+    <h1 id="boasVindasTitulo">Estude para o ENEM</h1>
+    <p id="boasVindasSubtitulo">Escolha uma matéria para começar a praticar</p>
+</div>
+
+<div class="novidades-container" id="secaoNovidades" style="display: none;">
+    <div class="novidades-titulo">✨ Materiais Recentes</div>
+    <div class="grid-novidades" id="listaNovidades">
+        </div>
+</div>
+
+<div class="container">
+    <div class="card"><a href="fisica.html">⚛️ Física</a></div>
+    <div class="card"><a href="matematica.html">📐 Matemática</a></div>
+    <div class="card"><a href="historia.html">📜 História</a></div>
+    <div class="card"><a href="geografia.html">🌎 Geografia</a></div>
+    <div class="card"><a href="biologia.html">🧬 Biologia</a></div>
+    <div class="card"><a href="quimica.html">⚗️ Química</a></div>
+    <div class="card"><a href="portugues.html">📖 Português</a></div>
+    <div class="card"><a href="redação.html">📝 Redação</a></div>
+    <div class="card"><a href="ingles.html">📖 Inglês</a></div>
+    <div class="card"><a href="espanhol.html">📖 Espanhol</a></div>
+    <div class="card"><a href="materiais.html">📚 Materiais</a></div>
+    <div class="card"><a href="aloes.html">📷 Aulões(WIP)</a></div>
+</div>
+
+<footer>
+    © 2026 CAVEST - Um passo para a universidade
+</footer>
+
+<script>
+// Função para abrir e fechar o menu lateral
+function abrirMenu(){
+    let menu = document.getElementById("menuLateral")
+    menu.style.left = (menu.style.left == "0px") ? "-250px" : "0px";
+}
+
+// Função para saudar o usuário logado
+function saudarUsuario() {
+    const nomeLogado = localStorage.getItem("logado");
+    const titulo = document.getElementById("boasVindasTitulo");
+    const subtitulo = document.getElementById("boasVindasSubtitulo");
+
+    if (nomeLogado) {
+        const dadosUsuario = JSON.parse(localStorage.getItem(nomeLogado));
+        if (dadosUsuario) {
+            const respondidas = dadosUsuario.respondidas || 0;
+            titulo.innerText = `Olá, ${nomeLogado}! 👋`;
+            subtitulo.innerText = respondidas > 0 
+                ? `Você já resolveu ${respondidas} questões. Qual matéria vamos encarar hoje?` 
+                : "Que tal começar o seu primeiro exercício hoje?";
+        }
+    }
+}
+
+// Função para carregar materiais recentes enviados por professores
+function carregarNovidades() {
+    const lista = document.getElementById("listaNovidades");
+    const secao = document.getElementById("secaoNovidades");
+    const materiais = JSON.parse(localStorage.getItem("bancoMateriais")) || [];
+
+    if (materiais.length > 0) {
+        secao.style.display = "block";
+        // Pega os últimos 3 materiais (invertendo a lista)
+        const ultimosMateriais = [...materiais].reverse().slice(0, 3);
+
+        ultimosMateriais.forEach(item => {
+            const div = document.createElement("div");
+            div.className = "item-novidade";
+            div.innerHTML = `
+                <a href="${item.link}" target="_blank">📄 ${item.nome}</a>
+                <span>${item.materia}</span>
+            `;
+            lista.appendChild(div);
+        });
+    }
+}
+
+// Executa as funções ao carregar a página
+window.onload = function() {
+    saudarUsuario();
+    carregarNovidades();
+};
+</script>
+
+</body>
+</html>

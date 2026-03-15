@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>CAVEST - Classes de Palavras</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .questao {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            background: #22c55e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .resolucao {
+            display: none;
+            margin-top: 15px;
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Português - Classes de Palavras 🏷️</h1>
+
+    <div class="questao">
+        <p><b>1.</b> Na frase <em>"Ele falava <strong>bastante</strong> alto durante a aula"</em>, a palavra em destaque pertence a qual classe gramatical?</p>
+        <input type="radio" name="q1" value="a"> Adjetivo<br>
+        <input type="radio" name="q1" value="b"> Pronome<br>
+        <input type="radio" name="q1" value="c"> Advérbio<br>
+        <input type="radio" name="q1" value="d"> Substantivo<br>
+        <br>
+        <button onclick="corrigir(1,'c')">Responder</button>
+        <p id="resultado1"></p>
+        <button onclick="verResolucao(1)">Ver resolução</button>
+        
+        <div class="resolucao" id="res1">
+            <b>Resolução:</b><br><br>
+            A palavra "bastante" está modificando o adjetivo "alto", intensificando-o. Palavras que modificam adjetivos, verbos ou outros advérbios são classificadas como <strong>Advérbios</strong>.<br><br>
+            Resposta correta: <strong>C</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>2.</b> Qual das palavras abaixo é uma <strong>conjunção adversativa</strong> (que indica oposição)?</p>
+        <input type="radio" name="q2" value="a"> E<br>
+        <input type="radio" name="q2" value="b"> Portanto<br>
+        <input type="radio" name="q2" value="c"> Porque<br>
+        <input type="radio" name="q2" value="d"> Contudo<br>
+        <br>
+        <button onclick="corrigir(2,'d')">Responder</button>
+        <p id="resultado2"></p>
+        <button onclick="verResolucao(2)">Ver resolução</button>
+        
+        <div class="resolucao" id="res2">
+            <b>Resolução:</b><br><br>
+            As conjunções adversativas ligam orações com ideias opostas. Exemplos: mas, porém, todavia, <strong>contudo</strong>, entretanto.<br><br>
+            Resposta correta: <strong>D</strong>
+        </div>
+    </div>

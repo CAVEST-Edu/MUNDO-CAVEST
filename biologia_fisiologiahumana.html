@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>CAVEST - Fisiologia Humana</title>
+
+<style>
+body{font-family:Arial;background:#0f172a;color:white;padding:40px;}
+h1{text-align:center;}
+.questao{background:#1e293b;padding:20px;border-radius:10px;margin-bottom:30px;}
+button{background:#22c55e;border:none;padding:10px 20px;border-radius:6px;color:white;font-size:15px;cursor:pointer;margin-top:10px;}
+button:hover{background:#16a34a;}
+.resolucao{display:none;margin-top:15px;background:#334155;padding:15px;border-radius:8px;}
+.voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+</style>
+</head>
+<body>
+
+<h1>Biologia - Fisiologia Humana</h1>
+
+<!-- QUESTÃO 1 -->
+<div class="questao">
+<p><b>1.</b> Qual é a principal função do sistema circulatório?</p>
+<input type="radio" name="q1" value="a"> Produzir hormônios<br>
+<input type="radio" name="q1" value="b"> Transportar sangue, nutrientes e oxigênio pelo corpo<br>
+<input type="radio" name="q1" value="c"> Processar alimentos<br>
+<input type="radio" name="q1" value="d"> Filtrar resíduos do sangue<br>
+<br>
+<button onclick="corrigir(1,'b')">Responder</button>
+<p id="resultado1"></p>
+<button onclick="verResolucao(1)">Ver resolução</button>
+<div class="resolucao" id="res1">
+<b>Resolução:</b><br><br>
+O <strong>sistema circulatório</strong> transporta sangue, oxigênio e nutrientes para todas as células do corpo.  
+<br><br>Resposta correta: <strong>B</strong>
+</div>
+</div>
+
+<!-- QUESTÃO 2 -->
+<div class="questao">
+<p><b>2.</b> Qual órgão é responsável pela filtração do sangue e produção de urina?</p>
+<input type="radio" name="q2" value="a"> Fígado<br>
+<input type="radio" name="q2" value="b"> Pulmão<br>
+<input type="radio" name="q2" value="c"> Rim<br>
+<input type="radio" name="q2" value="d"> Estômago<br>
+<br>
+<button onclick="corrigir(2,'c')">Responder</button>
+<p id="resultado2"></p>
+<button onclick="verResolucao(2)">Ver resolução</button>
+<div class="resolucao" id="res2">
+<b>Resolução:</b><br><br>
+Os <strong>rins</strong> filtram o sangue, removendo resíduos e formando a urina.  
+<br><br>Resposta correta: <strong>C</strong>
+</div>
+</div>
+
+<a class="voltar" href="biologia.html">⬅ Voltar para Biologia</a>
+
+<!-- QUESTÃO 3 -->
+<div class="questao">
+<p><b>3.</b> Qual é a função dos pulmões no sistema respiratório?</p>
+<input type="radio" name="q3" value="a"> Produzir glóbulos vermelhos<br>
+<input type="radio" name="q3" value="b"> Absorver oxigênio e eliminar dióxido de carbono<br>
+<input type="radio" name="q3" value="c"> Filtrar toxinas do sangue<br>
+<input type="radio" name="q3" value="d"> Regular a pressão arterial<br>
+<br>
+<button onclick="corrigir(3,'b')">Responder</button>
+<p id="resultado3"></p>
+<button onclick="verResolucao(3)">Ver resolução</button>
+<div class="resolucao" id="res3">
+<b>Resolução:</b><br><br>
+Os <strong>pulmões</strong> são responsáveis pela troca gasosa: absorvem oxigênio e eliminam dióxido de carbono.  
+<br><br>Resposta correta: <strong>B</strong>
+</div>
+</div>
+
+<script>
+// Função genérica para corrigir e salvar respostas
+function corrigir(qNum, respostaCorreta){
+    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+    if(!selecionada){ alert("Escolha uma alternativa!"); return; }
+
+    let acertou = selecionada.value === respostaCorreta;
+
+    // Salvar resposta no localStorage
+    let respostas = JSON.parse(localStorage.getItem("respostasFisiologia")) || {};
+    respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
+    localStorage.setItem("respostasFisiologia", JSON.stringify(respostas));
+
+    // Atualizar progresso do usuário logado
+    let logado = localStorage.getItem("logado");
+    if(logado){
+        let usuario = JSON.parse(localStorage.getItem(logado));
+        usuario.respondidas = (usuario.respondidas || 0) + 1;
+        if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+        localStorage.setItem(logado, JSON.stringify(usuario));
+    }
+
+    // Mostrar resultado
+    document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
+}
+
+// Mostrar resolução
+function verResolucao(qNum){ document.getElementById(`res${qNum}`).style.display = "block"; }
+
+// Carregar respostas salvas
+function carregarRespostas(){
+    let respostas = JSON.parse(localStorage.getItem("respostasFisiologia"));
+    if(!respostas) return;
+
+    for(let q in respostas){
+        let info = respostas[q];
+        if(info.selecionada){
+            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+            if(input) input.checked = true;
+        }
+        if(info.acertou !== undefined){
+            let qNum = q.replace("q","");
+            document.getElementById(`resultado${qNum}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+        }
+    }
+}
+
+window.onload = carregarRespostas;
+</script>
+
+</body>
+</html>

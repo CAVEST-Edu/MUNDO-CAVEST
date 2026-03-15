@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>CAVEST - Recursos Naturais</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+padding:40px;
+}
+
+h1{
+text-align:center;
+}
+
+.questao{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+margin-bottom:30px;
+}
+
+button{
+background:#22c55e;
+border:none;
+padding:10px 20px;
+border-radius:6px;
+color:white;
+font-size:15px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+.resolucao{
+display:none;
+margin-top:15px;
+background:#334155;
+padding:15px;
+border-radius:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Geografia - Recursos Naturais</h1>
+
+<!-- QUESTÃO 1 -->
+
+<div class="questao">
+
+<p><b>1.</b> Qual é considerado o principal recurso natural energético do Brasil?</p>
+
+<input type="radio" name="q1" value="a"> Petróleo<br>
+<input type="radio" name="q1" value="b"> Carvão mineral<br>
+<input type="radio" name="q1" value="c"> Energia hidráulica<br>
+<input type="radio" name="q1" value="d"> Gás natural<br>
+
+<br>
+
+<button onclick="corrigir(1,'c')">Responder</button>
+
+<p id="resultado1"></p>
+
+<button onclick="verResolucao(1)">Ver resolução</button>
+
+<div class="resolucao" id="res1">
+
+<b>Resolução:</b><br><br>
+
+O Brasil utiliza principalmente a <strong>energia hidráulica</strong> como recurso energético.
+
+Resposta correta: <strong>C</strong>
+
+</div>
+
+</div>
+
+<!-- QUESTÃO 2 -->
+
+<div class="questao">
+
+<p><b>2.</b> Os recursos minerais do Brasil incluem:</p>
+
+<input type="radio" name="q2" value="a"> Ferro, ouro, bauxita e manganês<br>
+<input type="radio" name="q2" value="b"> Apenas petróleo<br>
+<input type="radio" name="q2" value="c"> Apenas madeira<br>
+<input type="radio" name="q2" value="d"> Água potável apenas<br>
+
+<br>
+
+<button onclick="corrigir(2,'a')">Responder</button>
+
+<p id="resultado2"></p>
+
+<button onclick="verResolucao(2)">Ver resolução</button>
+
+<div class="resolucao" id="res2">
+
+<b>Resolução:</b><br><br>
+
+O Brasil possui diversos <strong>recursos minerais</strong>, incluindo ferro, ouro, bauxita e manganês.
+
+Resposta correta: <strong>A</strong>
+
+</div>
+
+</div>
+
+<!-- QUESTÃO 3 -->
+
+<div class="questao">
+
+<p><b>3.</b> A exploração sustentável dos recursos naturais visa:</p>
+
+<input type="radio" name="q3" value="a"> Explorar sem limites para lucro imediato<br>
+<input type="radio" name="q3" value="b"> Conservar os recursos para as gerações futuras<br>
+<input type="radio" name="q3" value="c"> Evitar o uso de tecnologia<br>
+<input type="radio" name="q3" value="d"> Substituir recursos naturais por artificiais<br>
+
+<br>
+
+<button onclick="corrigir(3,'b')">Responder</button>
+
+<p id="resultado3"></p>
+
+<button onclick="verResolucao(3)">Ver resolução</button>
+
+<div class="resolucao" id="res3">
+
+<b>Resolução:</b><br><br>
+
+A <strong>exploração sustentável</strong> busca utilizar recursos naturais de forma responsável.
+
+Resposta correta: <strong>B</strong>
+
+</div>
+
+</div>
+
+<script>
+
+// corrigir questão
+function corrigir(qNum, correta){
+
+let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+
+if(!selecionada){
+alert("Escolha uma alternativa");
+return;
+}
+
+let acertou = selecionada.value === correta;
+
+// salvar respostas da página
+let respostas = JSON.parse(localStorage.getItem("respostasRecursosNaturais")) || {};
+
+respostas[`q${qNum}`] = {
+selecionada: selecionada.value,
+acertou: acertou
+};
+
+localStorage.setItem("respostasRecursosNaturais", JSON.stringify(respostas));
+
+// atualizar progresso do usuário
+let logado = localStorage.getItem("logado");
+
+if(logado){
+
+let usuario = JSON.parse(localStorage.getItem(logado));
+
+usuario.respondidas = (usuario.respondidas || 0) + 1;
+
+if(acertou){
+usuario.acertos = (usuario.acertos || 0) + 1;
+}
+
+localStorage.setItem(logado, JSON.stringify(usuario));
+
+}
+
+// mostrar resultado
+document.getElementById(`resultado${qNum}`).innerHTML =
+acertou ? "✅ Correto!" : "❌ Incorreto!";
+
+}
+
+// mostrar resolução
+function verResolucao(qNum){
+document.getElementById(`res${qNum}`).style.display="block";
+}
+
+// carregar respostas salvas
+function carregarRespostas(){
+
+let respostas = JSON.parse(localStorage.getItem("respostasRecursosNaturais"));
+
+if(!respostas) return;
+
+for(let q in respostas){
+
+let info = respostas[q];
+
+if(info.selecionada){
+
+let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+
+if(input) input.checked = true;
+
+}
+
+if(info.acertou !== undefined){
+
+let numero = q.replace("q","");
+
+document.getElementById(`resultado${numero}`).innerHTML =
+info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+
+}
+
+}
+
+}
+
+window.onload = carregarRespostas;
+
+</script>
+
+</body>
+</html>

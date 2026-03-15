@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Progresso - CAVEST</title>
+<style>
+body{
+  font-family:Arial;
+  background:#0f172a;
+  color:white;
+  text-align:center;
+  padding:50px;
+}
+.card{
+  background:#1e293b;
+  padding:30px;
+  border-radius:15px;
+  max-width:450px;
+  margin:auto;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+h1{
+  margin-bottom:20px;
+  color: #38bdf8;
+}
+
+/* --- ESTILO DAS MEDALHAS --- */
+.conquistas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.medalha {
+    background: #0f172a;
+    padding: 15px;
+    border-radius: 10px;
+    opacity: 0.2; /* Bloqueada */
+    filter: grayscale(100%);
+    transition: 0.5s;
+    font-size: 11px;
+    border: 1px solid transparent;
+}
+
+.medalha.desbloqueada {
+    opacity: 1;
+    filter: grayscale(0%);
+    border: 1px solid #eab308;
+    box-shadow: 0 0 10px rgba(234, 179, 8, 0.2);
+}
+
+.medalha-icon {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* --- RESTANTE DO ESTILO --- */
+#mensagem-container {
+  margin-top: 25px;
+  padding: 15px;
+  background: #0f172a;
+  border-radius: 10px;
+  border-left: 4px solid #38bdf8;
+}
+
+#mensagem-texto {
+  font-style: italic;
+  font-size: 16px;
+  color: #cbd5e1;
+  line-height: 1.5;
+}
+
+button{
+  margin-top: 25px;
+  padding:10px 20px;
+  background:#ef4444;
+  color: white;
+  border:none;
+  border-radius:5px;
+  cursor:pointer;
+  font-weight: bold;
+}
+button:hover {
+  background: #dc2626;
+}
+
+.voltar {
+    display: inline-block;
+    margin-top: 30px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.voltar:hover {
+    color: #38bdf8;
+}
+
+.label-stats {
+    color: #94a3b8;
+    font-size: 14px;
+    margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+<h1>Meu Progresso</h1>
+
+<div class="card">
+  <p class="label-stats">Questões Respondidas:</p>
+  <h2 id="respondidas">0</h2>
+
+  <p class="label-stats">Acertos:</p>
+  <h2 id="acertos" style="color: #22c55e;">0</h2>
+
+  <p class="label-stats">Porcentagem de Acerto:</p>
+  <h2 id="porcentagem">0%</h2>
+
+  <p class="label-stats">Conquistas:</p>
+  <div class="conquistas">
+    <div id="medalha-1" class="medalha">
+        <span class="medalha-icon">🎯</span>
+        Primeiro Passo
+    </div>
+    <div id="medalha-2" class="medalha">
+        <span class="medalha-icon">🔥</span>
+        Em Chamas
+    </div>
+    <div id="medalha-3" class="medalha">
+        <span class="medalha-icon">🎓</span>
+        Mestre ENEM
+    </div>
+  </div>
+
+  <div id="mensagem-container">
+    <p id="mensagem-texto">Carregando motivação...</p>
+  </div>
+
+  <button onclick="sair()">Sair da Conta</button>
+</div>
+
+<a href="index.html" class="voltar">⬅ Voltar ao Início</a>
+
+<script>
+// Pega usuário logado
+let logado = localStorage.getItem("logado")
+
+if(!logado){
+  alert("Nenhum usuário logado!")
+  window.location.href="login.html"
+}
+
+let usuario = JSON.parse(localStorage.getItem(logado))
+
+let respondidas = usuario.respondidas || 0
+let acertos = usuario.acertos || 0
+
+let porcentagem = 0
+if(respondidas > 0){
+  porcentagem = (acertos/respondidas)*100
+}
+
+// Atualiza os números na tela
+document.getElementById("respondidas").innerText = respondidas
+document.getElementById("acertos").innerText = acertos
+document.getElementById("porcentagem").innerText = porcentagem.toFixed(1)+"%"
+
+// --- LÓGICA DAS MEDALHAS ---
+if (respondidas >= 1) {
+    document.getElementById("medalha-1").classList.add("desbloqueada");
+}
+if (acertos >= 10) {
+    document.getElementById("medalha-2").classList.add("desbloqueada");
+}
+if (porcentagem >= 80 && respondidas >= 20) {
+    document.getElementById("medalha-3").classList.add("desbloqueada");
+}
+
+// --- LÓGICA DA MENSAGEM DE INCENTIVO ---
+const msgTexto = document.getElementById("mensagem-texto");
+const msgContainer = document.getElementById("mensagem-container");
+
+if (respondidas === 0) {
+    msgTexto.innerText = "Olá! Parece que você ainda não começou os exercícios. Que tal resolver algumas questões hoje? O primeiro passo é o mais importante! 🚀";
+} 
+else if (porcentagem >= 80) {
+    msgTexto.innerText = "Incrível! Seu desempenho está altíssimo. Continue assim e a vaga na universidade será consequência do seu esforço! 🌟";
+    msgContainer.style.borderLeftColor = "#22c55e";
+} 
+else if (porcentagem >= 50) {
+    msgTexto.innerText = "Bom trabalho! Você está no caminho certo. Revisar os seus erros pode te ajudar a subir sua média. Vamos pra cima! 💪";
+    msgContainer.style.borderLeftColor = "#eab308";
+} 
+else {
+    msgTexto.innerText = "Não desanime! Errar faz parte do aprendizado. Cada erro é uma chance de entender o que falta para a sua aprovação. Persista! 📚";
+    msgContainer.style.borderLeftColor = "#ef4444";
+}
+
+// Sair
+function sair(){
+  localStorage.removeItem("logado");
+  localStorage.removeItem("usuarioAtual");
+  window.location.href="login.html";
+}
+</script>
+
+</body>
+</html>

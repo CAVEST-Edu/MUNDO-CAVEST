@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>CAVEST - Sintaxe</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .questao {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            background: #22c55e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .resolucao {
+            display: none;
+            margin-top: 15px;
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Português - Sintaxe 🧩</h1>
+
+    <div class="questao">
+        <p><b>1.</b> Na oração <em>"Anunciaram-se as novas medidas econômicas"</em>, qual é o tipo de <strong>sujeito</strong>?</p>
+        <input type="radio" name="q1" value="a"> Sujeito Indeterminado<br>
+        <input type="radio" name="q1" value="b"> Sujeito Simples ("as novas medidas econômicas")<br>
+        <input type="radio" name="q1" value="c"> Sujeito Oculto<br>
+        <input type="radio" name="q1" value="d"> Oração sem Sujeito<br>
+        <br>
+        <button onclick="corrigir(1,'b')">Responder</button>
+        <p id="resultado1"></p>
+        <button onclick="verResolucao(1)">Ver resolução</button>
+        
+        <div class="resolucao" id="res1">
+            <b>Resolução:</b><br><br>
+            O "se" aqui é uma <strong>partícula apassivadora</strong>. A frase equivale a: "As novas medidas econômicas foram anunciadas". Portanto, "as novas medidas econômicas" é o sujeito simples paciente.<br><br>
+            Resposta correta: <strong>B</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>2.</b> Em <em>"O povo necessita <strong>de educação de qualidade</strong>"</em>, o termo em destaque exerce a função sintática de:</p>
+        <input type="radio" name="q2" value="a"> Objeto Direto<br>
+        <input type="radio" name="q2" value="b"> Predicativo do Sujeito<br>
+        <input type="radio" name="q2" value="c"> Objeto Indireto<br>
+        <input type="radio" name="q2" value="d"> Complemento Nominal<br>
+        <br>
+        <button onclick="corrigir(2,'c')">Responder</button>
+        <p id="resultado2"></p>
+        <button onclick="verResolucao(2)">Ver resolução</button>
+        
+        <div class="resolucao" id="res2">
+            <b>Resolução:</b><br><br>
+            O verbo "necessitar" é <strong>Transitivo Indireto</strong> (quem necessita, necessita DE algo). O complemento que vem ligado ao verbo por preposição obrigatória é o <strong>Objeto Indireto</strong>.<br><br>
+            Resposta correta: <strong>C</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>3.</b> Assinale a alternativa em que há um <strong>verbo de ligação</strong>:</p>
+        <input type="radio" name="q3" value="a"> Os alunos estudaram bastante para o teste.<br>
+        <input type="radio" name="q3" value="b"> A professora entrou na sala rapidamente.<br>
+        <input type="radio" name="q3" value="c"> O candidato permaneceu calmo durante a prova.<br>
+        <input type="radio" name="q3" value="d"> O sol nasceu às seis horas.<br>
+        <br>
+        <button onclick="corrigir(3,'c')">Responder</button>
+        <p id="resultado3"></p>
+        <button onclick="verResolucao(3)">Ver resolução</button>
+        
+        <div class="resolucao" id="res3">
+            <b>Resolução:</b><br><br>
+            Verbos de ligação (ser, estar, parecer, <strong>permanecer</strong>, ficar...) indicam estado ou qualidade, ligando o sujeito ao seu predicativo. "Calmo" é o estado do sujeito.<br><br>
+            Resposta correta: <strong>C</strong>
+        </div>
+    </div>
+
+    <a class="voltar" href="index.html">⬅ Voltar</a>
+
+    <script>
+    function corrigir(qNum, correta){
+        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+        if(!selecionada){
+            alert("Escolha uma alternativa!");
+            return;
+        }
+
+        let acertou = selecionada.value === correta;
+
+        // CHAVE ÚNICA: respostasSintaxe
+        let respostas = JSON.parse(localStorage.getItem("respostasSintaxe")) || {};
+        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
+        localStorage.setItem("respostasSintaxe", JSON.stringify(respostas));
+
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            usuario.respondidas = (usuario.respondidas || 0) + 1;
+            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+            localStorage.setItem(logado, JSON.stringify(usuario));
+        }
+
+        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
+    }
+
+    function verResolucao(qNum){
+        document.getElementById(`res${qNum}`).style.display = "block";
+    }
+
+    function carregarRespostas(){
+        let respostas = JSON.parse(localStorage.getItem("respostasSintaxe"));
+        if(!respostas) return;
+        for(let q in respostas){
+            let info = respostas[q];
+            if(info.selecionada){
+                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+                if(input) input.checked = true;
+            }
+            if(info.acertou !== undefined){
+                let numero = q.replace("q","");
+                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+            }
+        }
+    }
+
+    window.onload = carregarRespostas;
+    </script>
+
+</body>
+</html>

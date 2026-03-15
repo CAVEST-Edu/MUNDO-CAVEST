@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>CAVEST - Brasil República</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+padding:40px;
+}
+
+h1{
+text-align:center;
+}
+
+.questao{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+margin-bottom:30px;
+}
+
+button{
+background:#22c55e;
+border:none;
+padding:10px 20px;
+border-radius:6px;
+color:white;
+font-size:15px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+.resolucao{
+display:none;
+margin-top:15px;
+background:#334155;
+padding:15px;
+border-radius:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>História - Brasil República</h1>
+
+<!-- QUESTÃO 1 -->
+
+<div class="questao">
+
+<p><b>1.</b> Em que ano ocorreu a Proclamação da República no Brasil?</p>
+
+<input type="radio" name="q1" value="a"> 1822<br>
+<input type="radio" name="q1" value="b"> 1889<br>
+<input type="radio" name="q1" value="c"> 1891<br>
+<input type="radio" name="q1" value="d"> 1930<br>
+
+<br>
+
+<button onclick="corrigir(1,'b')">Responder</button>
+
+<p id="resultado1"></p>
+
+<button onclick="verResolucao(1)">Ver resolução</button>
+
+<div class="resolucao" id="res1">
+
+<b>Resolução:</b><br><br>
+
+A Proclamação da República ocorreu em <strong>1889</strong>, quando Marechal Deodoro da Fonseca proclamou o fim do Império.
+
+Resposta correta: <strong>B</strong>
+
+</div>
+
+</div>
+
+<!-- QUESTÃO 2 -->
+
+<div class="questao">
+
+<p><b>2.</b> O que marcou o governo de Getúlio Vargas entre 1930 e 1945?</p>
+
+<input type="radio" name="q2" value="a"> Primeira República e coronelismo<br>
+<input type="radio" name="q2" value="b"> Estado Novo e centralização do poder<br>
+<input type="radio" name="q2" value="c"> Proclamação da República<br>
+<input type="radio" name="q2" value="d"> Independência do Brasil<br>
+
+<br>
+
+<button onclick="corrigir(2,'b')">Responder</button>
+
+<p id="resultado2"></p>
+
+<button onclick="verResolucao(2)">Ver resolução</button>
+
+<div class="resolucao" id="res2">
+
+<b>Resolução:</b><br><br>
+
+O governo Vargas ficou marcado pelo <strong>Estado Novo</strong>, com centralização do poder e políticas trabalhistas.
+
+Resposta correta: <strong>B</strong>
+
+</div>
+
+</div>
+
+<!-- QUESTÃO 3 -->
+
+<div class="questao">
+
+<p><b>3.</b> Durante a República Velha (1889-1930), qual foi o principal modelo político predominante?</p>
+
+<input type="radio" name="q3" value="a"> Coronelismo e política do café com leite<br>
+<input type="radio" name="q3" value="b"> Ditadura militar<br>
+<input type="radio" name="q3" value="c"> Monarquia constitucional<br>
+<input type="radio" name="q3" value="d"> Estado Novo<br>
+
+<br>
+
+<button onclick="corrigir(3,'a')">Responder</button>
+
+<p id="resultado3"></p>
+
+<button onclick="verResolucao(3)">Ver resolução</button>
+
+<div class="resolucao" id="res3">
+
+<b>Resolução:</b><br><br>
+
+Na República Velha predominava o <strong>coronelismo</strong> e a política do café com leite.
+
+Resposta correta: <strong>A</strong>
+
+</div>
+
+</div>
+
+<script>
+
+// corrigir questão
+function corrigir(qNum, correta){
+
+let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+
+if(!selecionada){
+alert("Escolha uma alternativa");
+return;
+}
+
+let acertou = selecionada.value === correta;
+
+// salvar respostas da página
+let respostas = JSON.parse(localStorage.getItem("respostasBrasilRepublica")) || {};
+
+respostas[`q${qNum}`] = {
+selecionada: selecionada.value,
+acertou: acertou
+};
+
+localStorage.setItem("respostasBrasilRepublica", JSON.stringify(respostas));
+
+// atualizar progresso do usuário
+let logado = localStorage.getItem("logado");
+
+if(logado){
+
+let usuario = JSON.parse(localStorage.getItem(logado));
+
+usuario.respondidas = (usuario.respondidas || 0) + 1;
+
+if(acertou){
+usuario.acertos = (usuario.acertos || 0) + 1;
+}
+
+localStorage.setItem(logado, JSON.stringify(usuario));
+
+}
+
+// mostrar resultado
+document.getElementById(`resultado${qNum}`).innerHTML =
+acertou ? "✅ Correto!" : "❌ Incorreto!";
+
+}
+
+// mostrar resolução
+function verResolucao(qNum){
+document.getElementById(`res${qNum}`).style.display="block";
+}
+
+// carregar respostas salvas
+function carregarRespostas(){
+
+let respostas = JSON.parse(localStorage.getItem("respostasBrasilRepublica"));
+
+if(!respostas) return;
+
+for(let q in respostas){
+
+let info = respostas[q];
+
+if(info.selecionada){
+
+let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+
+if(input) input.checked = true;
+
+}
+
+if(info.acertou !== undefined){
+
+let numero = q.replace("q","");
+
+document.getElementById(`resultado${numero}`).innerHTML =
+info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+
+}
+
+}
+
+}
+
+window.onload = carregarRespostas;
+
+</script>
+
+</body>
+</html>

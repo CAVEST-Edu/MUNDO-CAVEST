@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CAVEST - Conjunciones</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .questao {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .regla-eufonia {
+            background: #581c87;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #a855f7;
+        }
+
+        button {
+            background: #22c55e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .resolucao {
+            display: none;
+            margin-top: 15px;
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Español - Conjunciones (Eufonía) 🔗</h1>
+
+    <div class="questao">
+        <div class="regla-eufonia">
+            <b>Y -> E:</b> Usamos "E" antes de palavras que começam com o som de <b>i</b> (i- ou hi-). <br>
+            <i>Ex: Padre <b>e</b> hijo.</i><br><br>
+            <b>O -> U:</b> Usamos "U" antes de palavras que começam com o som de <b>o</b> (o- ou ho-). <br>
+            <i>Ex: Siete <b>u</b> ocho.</i>
+        </div>
+
+        <p><b>1.</b> Escolha a opção que completa corretamente a frase: <br><em>"Necesito comprar aguja ___ hilo para coser mi camisa."</em></p>
+        <input type="radio" name="q1" value="a"> y<br>
+        <input type="radio" name="q1" value="b"> e<br>
+        <input type="radio" name="q1" value="c"> o<br>
+        <input type="radio" name="q1" value="d"> u<br>
+        <br>
+        <button onclick="corrigir(1,'b')">Responder</button>
+        <p id="resultado1"></p>
+        <button onclick="verResolucao(1)">Ver resolución</button>
+        
+        <div class="resolucao" id="res1">
+            <b>Resolución:</b><br><br>
+            A palavra "hilo" começa com o som de <b>i</b>. Para evitar o som repetitivo "y hilo", mudamos a conjunção para <b>E</b>.<br><br>
+            Resposta correta: <strong>B</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>2.</b> ¿Cuál de las frases abajo cumple la regla de la conjunción <strong>"U"</strong>?</p>
+        <input type="radio" name="q2" value="a"> ¿Quieres té o café?<br>
+        <input type="radio" name="q2" value="b"> No sé si viajaré en agosto o octubre.<br>
+        <input type="radio" name="q2" value="c"> Debes elegir entre uno <b>u</b> otro.<br>
+        <input type="radio" name="q2" value="d"> Juan o Pedro vendrán hoy.<br>
+        <br>
+        <button onclick="corrigir(2,'c')">Responder</button>
+        <p id="resultado2"></p>
+        <button onclick="verResolucao(2)">Ver resolución</button>
+        
+        <div class="resolucao" id="res2">
+            <b>Resolución:</b><br><br>
+            A palavra "otro" começa com <b>O</b>. Para não dizer "uno o otro", usamos <b>U</b> (uno u otro).<br><br>
+            Resposta correta: <strong>C</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>3.</b> <strong>Atenção:</strong> Se a palavra começar com <b>"hie"</b> (ditongo), a regra do "E" NÃO se aplica. Marque a alternativa correta:</p>
+        <input type="radio" name="q3" value="a"> El edificio es de madera e hierro.<br>
+        <input type="radio" name="q3" value="b"> El edificio es de madera y hierro.<br>
+        <input type="radio" name="q3" value="c"> El edificio es de madera u hierro.<br>
+        <input type="radio" name="q3" value="d"> Ninguna de las anteriores.<br>
+        <br>
+        <button onclick="corrigir(3,'b')">Responder</button>
+        <p id="resultado3"></p>
+        <button onclick="verResolucao(3)">Ver resolución</button>
+        
+        <div class="resolucao" id="res3">
+            <b>Resolución:</b><br><br>
+            Esta é uma "pegadinha" clássica! Antes de ditongos como <b>hie-</b> ou <b>ia-</b>, mantemos o <b>Y</b> original. Portanto, o correto é "madera y hierro".<br><br>
+            Resposta correta: <strong>B</strong>
+        </div>
+    </div>
+
+    <a class="voltar" href="espanhol.html">⬅ Voltar</a>
+
+    <script>
+    function corrigir(qNum, correta){
+        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+        if(!selecionada){
+            alert("¡Elige una opción!");
+            return;
+        }
+
+        let acertou = selecionada.value === correta;
+
+        let respostas = JSON.parse(localStorage.getItem("respostasEspanholConjunciones")) || {};
+        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
+        localStorage.setItem("respostasEspanholConjunciones", JSON.stringify(respostas));
+
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            usuario.respondidas = (usuario.respondidas || 0) + 1;
+            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+            localStorage.setItem(logado, JSON.stringify(usuario));
+        }
+
+        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ ¡Correcto!" : "❌ ¡Incorrecto!";
+    }
+
+    function verResolucao(qNum){
+        document.getElementById(`res${qNum}`).style.display = "block";
+    }
+
+    function carregarRespostas(){
+        let respostas = JSON.parse(localStorage.getItem("respostasEspanholConjunciones"));
+        if(!respostas) return;
+        for(let q in respostas){
+            let info = respostas[q];
+            if(info.selecionada){
+                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+                if(input) input.checked = true;
+            }
+            if(info.acertou !== undefined){
+                let numero = q.replace("q","");
+                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ ¡Correcto!" : "❌ ¡Incorrecto!";
+            }
+        }
+    }
+
+    window.onload = carregarRespostas;
+    </script>
+
+</body>
+</html>

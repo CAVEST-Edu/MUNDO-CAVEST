@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>CAVEST - Modal Verbs</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .questao {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            background: #22c55e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .resolucao {
+            display: none;
+            margin-top: 15px;
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>English - Modal Verbs 💡</h1>
+
+    <div class="questao">
+        <p><b>1.</b> Which modal verb is used to give a <strong>piece of advice</strong> (conselho)?</p>
+        <input type="radio" name="q1" value="a"> must<br>
+        <input type="radio" name="q1" value="b"> can<br>
+        <input type="radio" name="q1" value="c"> should<br>
+        <input type="radio" name="q1" value="d"> might<br>
+        <br>
+        <button onclick="corrigir(1,'c')">Responder</button>
+        <p id="resultado1"></p>
+        <button onclick="verResolucao(1)">Ver resolução</button>
+        
+        <div class="resolucao" id="res1">
+            <b>Resolução:</b><br><br>
+            O modal <strong>should</strong> é utilizado para dar sugestões ou conselhos (Ex: You should study more).<br><br>
+            Resposta correta: <strong>C</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>2.</b> Choose the sentence that expresses <strong>prohibition</strong>:</p>
+        <input type="radio" name="q2" value="a"> You don't have to smoke here.<br>
+        <input type="radio" name="q2" value="b"> You mustn't smoke here.<br>
+        <input type="radio" name="q2" value="c"> You couldn't smoke here.<br>
+        <input type="radio" name="q2" value="d"> You shouldn't smoke here.<br>
+        <br>
+        <button onclick="corrigir(2,'b')">Responder</button>
+        <p id="resultado2"></p>
+        <button onclick="verResolucao(2)">Ver resolução</button>
+        
+        <div class="resolucao" id="res2">
+            <b>Resolução:</b><br><br>
+            Enquanto "must" indica obrigação, a sua forma negativa <strong>mustn't</strong> (must not) indica uma proibição rigorosa.<br><br>
+            Resposta correta: <strong>B</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>3.</b> In the sentence <em>"May I go to the bathroom?"</em>, the modal verb expresses:</p>
+        <input type="radio" name="q3" value="a"> Ability (Habilidade)<br>
+        <input type="radio" name="q3" value="b"> Obligation (Obrigação)<br>
+        <input type="radio" name="q3" value="c"> Permission (Permissão formal)<br>
+        <input type="radio" name="q3" value="d"> Advice (Conselho)<br>
+        <br>
+        <button onclick="corrigir(3,'c')">Responder</button>
+        <p id="resultado3"></p>
+        <button onclick="verResolucao(3)">Ver resolução</button>
+        
+        <div class="resolucao" id="res3">
+            <b>Resolução:</b><br><br>
+            O modal <strong>may</strong> é usado para pedir permissão de forma educada e formal. Já o "can" é usado para permissões informais ou habilidade.<br><br>
+            Resposta correta: <strong>C</strong>
+        </div>
+    </div>
+
+    <a class="voltar" href="ingles.html">⬅ Voltar para Inglês</a>
+
+    <script>
+    function corrigir(qNum, correta){
+        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+        if(!selecionada){
+            alert("Escolha uma alternativa!");
+            return;
+        }
+
+        let acertou = selecionada.value === correta;
+
+        // CHAVE ÚNICA: respostasInglesModais
+        let respostas = JSON.parse(localStorage.getItem("respostasInglesModais")) || {};
+        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
+        localStorage.setItem("respostasInglesModais", JSON.stringify(respostas));
+
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            usuario.respondidas = (usuario.respondidas || 0) + 1;
+            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+            localStorage.setItem(logado, JSON.stringify(usuario));
+        }
+
+        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correct!" : "❌ Incorrect!";
+    }
+
+    function verResolucao(qNum){
+        document.getElementById(`res${qNum}`).style.display = "block";
+    }
+
+    function carregarRespostas(){
+        let respostas = JSON.parse(localStorage.getItem("respostasInglesModais"));
+        if(!respostas) return;
+        for(let q in respostas){
+            let info = respostas[q];
+            if(info.selecionada){
+                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+                if(input) input.checked = true;
+            }
+            if(info.acertou !== undefined){
+                let numero = q.replace("q","");
+                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correct!" : "❌ Incorrect!";
+            }
+        }
+    }
+
+    window.onload = carregarRespostas;
+    </script>
+
+</body>
+</html>

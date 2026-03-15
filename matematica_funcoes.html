@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>CAVEST - Funções</title>
+
+<style>
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+padding:40px;
+}
+
+h1{
+text-align:center;
+}
+
+.questao{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+margin-bottom:30px;
+}
+
+button{
+background:#22c55e;
+border:none;
+padding:10px 20px;
+border-radius:6px;
+color:white;
+font-size:15px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+.resolucao{
+display:none;
+margin-top:15px;
+background:#334155;
+padding:15px;
+border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Matemática - Funções</h1>
+
+<div class="questao">
+<p><b>1.</b> O que é uma função?</p>
+<input type="radio" name="q1" value="a"> Uma relação que associa cada elemento do domínio a exatamente um elemento do contradomínio<br>
+<input type="radio" name="q1" value="b"> Qualquer equação matemática<br>
+<input type="radio" name="q1" value="c"> Apenas gráficos de linha<br>
+<input type="radio" name="q1" value="d"> Um número específico<br>
+<br>
+<button onclick="corrigir(1,'a')">Responder</button>
+<p id="resultado1"></p>
+<button onclick="verResolucao(1)">Ver resolução</button>
+<div class="resolucao" id="res1">
+<b>Resolução:</b><br><br>
+Uma <strong>função</strong> é uma relação que associa cada elemento do domínio a exatamente um elemento do contradomínio.  
+<br><br>Resposta correta: <strong>A</strong>
+</div>
+</div>
+
+<div class="questao">
+<p><b>2.</b> Qual é o domínio da função f(x) = √(x-2)?</p>
+<input type="radio" name="q2" value="a"> Todos os números reais<br>
+<input type="radio" name="q2" value="b"> x ≥ 2<br>
+<input type="radio" name="q2" value="c"> x ≤ 2<br>
+<input type="radio" name="q2" value="d"> x > 0<br>
+<br>
+<button onclick="corrigir(2,'b')">Responder</button>
+<p id="resultado2"></p>
+<button onclick="verResolucao(2)">Ver resolução</button>
+<div class="resolucao" id="res2">
+<b>Resolução:</b><br><br>
+Para que a função f(x) = √(x-2) seja definida, o valor dentro da raiz deve ser ≥ 0, ou seja: x-2 ≥ 0 → x ≥ 2.  
+<br><br>Resposta correta: <strong>B</strong>
+</div>
+</div>
+
+<div class="questao">
+<p><b>3.</b> Qual das alternativas representa uma função linear?</p>
+<input type="radio" name="q3" value="a"> f(x) = 2x + 5<br>
+<input type="radio" name="q3" value="b"> f(x) = x² + 3<br>
+<input type="radio" name="q3" value="c"> f(x) = √x<br>
+<input type="radio" name="q3" value="d"> f(x) = 1/x<br>
+<br>
+<button onclick="corrigir(3,'a')">Responder</button>
+<p id="resultado3"></p>
+<button onclick="verResolucao(3)">Ver resolução</button>
+<div class="resolucao" id="res3">
+<b>Resolução:</b><br><br>
+Uma <strong>função linear</strong> tem a forma f(x) = mx + b, onde m e b são constantes. Aqui, f(x) = 2x + 5 é linear.
+<br><br>Resposta correta: <strong>A</strong>
+</div>
+</div>
+
+<script>
+// Corrigir questão
+function corrigir(qNum, respostaCorreta){
+    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+    if(!selecionada){
+        alert("Escolha uma alternativa!");
+        return;
+    }
+
+    let acertou = selecionada.value === respostaCorreta;
+
+    // Salvar respostas da página
+    let respostas = JSON.parse(localStorage.getItem("respostasFuncoes")) || {};
+    respostas[`q${qNum}`] = {
+        selecionada: selecionada.value,
+        acertou: acertou
+    };
+    localStorage.setItem("respostasFuncoes", JSON.stringify(respostas));
+
+    // Atualizar progresso do usuário logado
+    let logado = localStorage.getItem("logado");
+    if(logado){
+        let usuario = JSON.parse(localStorage.getItem(logado));
+        usuario.respondidas = (usuario.respondidas || 0) + 1;
+        if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+        localStorage.setItem(logado, JSON.stringify(usuario));
+    }
+
+    // Mostrar resultado
+    document.getElementById(`resultado${qNum}`).innerHTML =
+        acertou ? "✅ Correto!" : "❌ Incorreto!";
+}
+
+// Mostrar resolução
+function verResolucao(qNum){
+    document.getElementById(`res${qNum}`).style.display = "block";
+}
+
+// Carregar respostas salvas
+function carregarRespostas(){
+    let respostas = JSON.parse(localStorage.getItem("respostasFuncoes"));
+    if(!respostas) return;
+
+    for(let q in respostas){
+        let info = respostas[q];
+        if(info.selecionada){
+            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+            if(input) input.checked = true;
+        }
+        if(info.acertou !== undefined){
+            let numero = q.replace("q","");
+            document.getElementById(`resultado${numero}`).innerHTML =
+                info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+        }
+    }
+}
+
+window.onload = carregarRespostas;
+</script>
+
+</body>
+</html>

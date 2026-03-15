@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>CAVEST - Conjunctions & Linkers</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .questao {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            background: #22c55e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .resolucao {
+            display: none;
+            margin-top: 15px;
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>English - Conjunctions & Linkers 🔗</h1>
+
+    <div class="questao">
+        <p><b>1.</b> In the sentence: <em>"She studied very hard; <strong>however</strong>, she didn't pass the exam."</em>, the highlighted linker expresses:</p>
+        <input type="radio" name="q1" value="a"> Addition (Adição)<br>
+        <input type="radio" name="q1" value="b"> Contrast (Contraste)<br>
+        <input type="radio" name="q1" value="c"> Conclusion (Conclusão)<br>
+        <input type="radio" name="q1" value="d"> Reason (Causa)<br>
+        <br>
+        <button onclick="corrigir(1,'b')">Responder</button>
+        <p id="resultado1"></p>
+        <button onclick="verResolucao(1)">Ver resolução</button>
+        
+        <div class="resolucao" id="res1">
+            <b>Resolução:</b><br><br>
+            A palavra <strong>"however"</strong> (no entanto, porém) é um conectivo de contraste ou oposição. Ela liga duas ideias opostas: estudou muito mas não passou.<br><br>
+            Resposta correta: <strong>B</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>2.</b> Choose the correct linker to complete the sentence: <br><em>"I'm staying home _______ it's raining heavily."</em></p>
+        <input type="radio" name="q2" value="a"> but<br>
+        <input type="radio" name="q2" value="b"> although<br>
+        <input type="radio" name="q2" value="c"> because<br>
+        <input type="radio" name="q2" value="d"> so<br>
+        <br>
+        <button onclick="corrigir(2,'c')">Responder</button>
+        <p id="resultado2"></p>
+        <button onclick="verResolucao(2)">Ver resolução</button>
+        
+        <div class="resolucao" id="res2">
+            <b>Resolução:</b><br><br>
+            A frase indica uma razão ou causa para ficar em casa. <strong>"Because"</strong> (porque) é o linker ideal para introduzir uma explicação.<br><br>
+            Resposta correta: <strong>C</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>3.</b> Which of these linkers is used to add more information (<strong>Addition</strong>)?</p>
+        <input type="radio" name="q3" value="a"> Furthermore<br>
+        <input type="radio" name="q3" value="b"> Despite<br>
+        <input type="radio" name="q3" value="c"> Therefore<br>
+        <input type="radio" name="q3" value="d"> Otherwise<br>
+        <br>
+        <button onclick="corrigir(3,'a')">Responder</button>
+        <p id="resultado3"></p>
+        <button onclick="verResolucao(3)">Ver resolução</button>
+        
+        <div class="resolucao" id="res3">
+            <b>Resolução:</b><br><br>
+            <strong>"Furthermore"</strong> (além disso/além do mais) é usado para adicionar informações a um argumento. "Despite" é contraste, "Therefore" é conclusão e "Otherwise" é condição/alternativa.<br><br>
+            Resposta correta: <strong>A</strong>
+        </div>
+    </div>
+
+    <a class="voltar" href="ingles.html">⬅ Voltar para Inglês</a>
+
+    <script>
+    function corrigir(qNum, correta){
+        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+        if(!selecionada){
+            alert("Escolha uma alternativa!");
+            return;
+        }
+
+        let acertou = selecionada.value === correta;
+
+        // CHAVE ÚNICA: respostasInglesLinkers
+        let respostas = JSON.parse(localStorage.getItem("respostasInglesLinkers")) || {};
+        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
+        localStorage.setItem("respostasInglesLinkers", JSON.stringify(respostas));
+
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            usuario.respondidas = (usuario.respondidas || 0) + 1;
+            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+            localStorage.setItem(logado, JSON.stringify(usuario));
+        }
+
+        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correct!" : "❌ Incorrect!";
+    }
+
+    function verResolucao(qNum){
+        document.getElementById(`res${qNum}`).style.display = "block";
+    }
+
+    function carregarRespostas(){
+        let respostas = JSON.parse(localStorage.getItem("respostasInglesLinkers"));
+        if(!respostas) return;
+        for(let q in respostas){
+            let info = respostas[q];
+            if(info.selecionada){
+                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+                if(input) input.checked = true;
+            }
+            if(info.acertou !== undefined){
+                let numero = q.replace("q","");
+                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correct!" : "❌ Incorrect!";
+            }
+        }
+    }
+
+    window.onload = carregarRespostas;
+    </script>
+
+</body>
+</html>

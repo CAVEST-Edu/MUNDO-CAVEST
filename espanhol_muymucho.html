@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CAVEST - Muy y Mucho</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .questao {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .regla-oro {
+            background: #4338ca;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #818cf8;
+        }
+
+        button {
+            background: #22c55e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .resolucao {
+            display: none;
+            margin-top: 15px;
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Español - Uso de Muy y Mucho ⚖️</h1>
+
+    <div class="questao">
+        <div class="regla-oro">
+            <b>Muy:</b> Se usa antes de <b>Adjetivos</b> y <b>Adverbios</b>.<br>
+            (Ej: Muy inteligente, Muy tarde).<br><br>
+            <b>Mucho:</b> Se usa con <b>Sustantivos</b> o después de <b>Verbos</b>.<br>
+            (Ej: Mucho dinero, Trabajo mucho).
+        </div>
+
+        <p><b>1.</b> Completa la frase correctamente: <br><em>"Ella está _______ cansada porque trabajó _______ hoy."</em></p>
+        <input type="radio" name="q1" value="a"> mucho - muy<br>
+        <input type="radio" name="q1" value="b"> muy - mucho<br>
+        <input type="radio" name="q1" value="c"> muy - muy<br>
+        <input type="radio" name="q1" value="d"> mucho - mucho<br>
+        <br>
+        <button onclick="corrigir(1,'b')">Responder</button>
+        <p id="resultado1"></p>
+        <button onclick="verResolucao(1)">Ver resolución</button>
+        
+        <div class="resolucao" id="res1">
+            <b>Resolución:</b><br><br>
+            1. "Cansada" es un adjetivo, por eso usamos <b>Muy</b>.<br>
+            2. "Trabajó" es un verbo, y después de verbos usamos <b>Mucho</b>.<br><br>
+            Resposta correta: <strong>B</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>2.</b> ¿Cuál de las siguientes frases es <strong>INCORRECTA</strong>?</p>
+        <input type="radio" name="q2" value="a"> Hablas muy bien español.<br>
+        <input type="radio" name="q2" value="b"> Tengo mucho hambre.<br>
+        <input type="radio" name="q2" value="c"> El examen fue muy difícil.<br>
+        <input type="radio" name="q2" value="d"> Mi casa es mucho grande.<br>
+        <br>
+        <button onclick="corrigir(2,'d')">Responder</button>
+        <p id="resultado2"></p>
+        <button onclick="verResolucao(2)">Ver resolución</button>
+        
+        <div class="resolucao" id="res2">
+            <b>Resolución:</b><br><br>
+            "Grande" es un adjetivo. Por lo tanto, lo correcto sería decir <b>"Muy grande"</b>. La opción D usa "mucho" de forma incorrecta.<br><br>
+            Resposta correta: <strong>D</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>3.</b> Existen excepciones. Usamos <strong>MUCHO</strong> antes de "mejor", "peor", "mayor" y "menor". Entonces, lo correcto es:</p>
+        <input type="radio" name="q3" value="a"> Mi hermano es muy mayor que yo.<br>
+        <input type="radio" name="q3" value="b"> Este libro es muy mejor que el otro.<br>
+        <input type="radio" name="q3" value="c"> Tu nota es mucho mejor ahora.<br>
+        <input type="radio" name="q3" value="d"> Hoy me siento muy peor.<br>
+        <br>
+        <button onclick="corrigir(3,'c')">Responder</button>
+        <p id="resultado3"></p>
+        <button onclick="verResolucao(3)">Ver resolución</button>
+        
+        <div class="resolucao" id="res3">
+            <b>Resolución:</b><br><br>
+            Aunque "mejor" parece un adjetivo que debería llevar "muy", es una de las 4 excepciones principales. Siempre decimos <b>Mucho mejor, Mucho peor, Mucho mayor y Mucho menor</b>.<br><br>
+            Resposta correta: <strong>C</strong>
+        </div>
+    </div>
+
+    <a class="voltar" href="espanhol.html">⬅ Voltar</a>
+
+    <script>
+    function corrigir(qNum, correta){
+        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+        if(!selecionada){
+            alert("¡Elige una opción!");
+            return;
+        }
+
+        let acertou = selecionada.value === correta;
+
+        let respuestas = JSON.parse(localStorage.getItem("respostasEspanholMuyMucho")) || {};
+        respuestas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
+        localStorage.setItem("respostasEspanholMuyMucho", JSON.stringify(respuestas));
+
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            usuario.respondidas = (usuario.respondidas || 0) + 1;
+            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+            localStorage.setItem(logado, JSON.stringify(usuario));
+        }
+
+        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ ¡Correcto!" : "❌ ¡Incorrecto!";
+    }
+
+    function verResolucao(qNum){
+        document.getElementById(`res${qNum}`).style.display = "block";
+    }
+
+    function carregarRespostas(){
+        let respostas = JSON.parse(localStorage.getItem("respostasEspanholMuyMucho"));
+        if(!respostas) return;
+        for(let q in respostas){
+            let info = respostas[q];
+            if(info.selecionada){
+                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+                if(input) input.checked = true;
+            }
+            if(info.acertou !== undefined){
+                let numero = q.replace("q","");
+                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ ¡Correcto!" : "❌ ¡Incorrecto!";
+            }
+        }
+    }
+
+    window.onload = carregarRespostas;
+    </script>
+
+</body>
+</html>

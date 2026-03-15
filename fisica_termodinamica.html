@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>CAVEST - Termodinâmica</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+padding:40px;
+}
+
+h1{
+text-align:center;
+}
+
+.questao{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+margin-bottom:30px;
+}
+
+button{
+background:#22c55e;
+border:none;
+padding:10px 20px;
+border-radius:6px;
+color:white;
+font-size:15px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+.resolucao{
+display:none;
+margin-top:15px;
+background:#334155;
+padding:15px;
+border-radius:8px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>Física - Termodinâmica</h1>
+
+
+<!-- QUESTÃO 1 -->
+
+<div class="questao">
+
+<p><b>1.</b> Quando dois corpos com temperaturas diferentes entram em contato, o calor flui:</p>
+
+<input type="radio" name="q1" value="a"> do corpo mais frio para o mais quente<br>
+<input type="radio" name="q1" value="b"> do corpo mais quente para o mais frio<br>
+<input type="radio" name="q1" value="c"> apenas se houver mudança de estado<br>
+<input type="radio" name="q1" value="d"> não ocorre transferência de calor<br>
+
+<br>
+
+<button onclick="corrigir(1,'b')">Responder</button>
+
+<p id="resultado1"></p>
+
+<button onclick="verResolucao(1)">Ver resolução</button>
+
+<div class="resolucao" id="res1">
+
+<b>Resolução:</b><br><br>
+
+De acordo com a <strong>Termodinâmica</strong>, o calor sempre flui espontaneamente do corpo de <strong>maior temperatura para o de menor temperatura</strong> até atingir o equilíbrio térmico.<br><br>
+
+Resposta correta: <strong>B</strong>
+
+</div>
+
+</div>
+
+
+
+<!-- QUESTÃO 2 -->
+
+<div class="questao">
+
+<p><b>2.</b> Um corpo recebe 500 J de calor e realiza um trabalho de 200 J. Qual a variação de energia interna?</p>
+
+<input type="radio" name="q2" value="a"> 100 J<br>
+<input type="radio" name="q2" value="b"> 200 J<br>
+<input type="radio" name="q2" value="c"> 300 J<br>
+<input type="radio" name="q2" value="d"> 700 J<br>
+
+<br>
+
+<button onclick="corrigir(2,'c')">Responder</button>
+
+<p id="resultado2"></p>
+
+<button onclick="verResolucao(2)">Ver resolução</button>
+
+<div class="resolucao" id="res2">
+
+<b>Resolução:</b><br><br>
+
+Usamos a <strong>Primeira Lei da Termodinâmica</strong>:<br><br>
+
+ΔU = Q − W<br><br>
+
+ΔU = 500 − 200<br><br>
+
+ΔU = 300 J<br><br>
+
+Resposta correta: <strong>C</strong>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+// corrigir questão
+function corrigir(qNum, correta){
+
+let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+
+if(!selecionada){
+alert("Escolha uma alternativa");
+return;
+}
+
+let acertou = selecionada.value === correta;
+
+// salvar respostas da página
+let respostas = JSON.parse(localStorage.getItem("respostasTermodinamica")) || {};
+
+respostas[`q${qNum}`] = {
+selecionada: selecionada.value,
+acertou: acertou
+};
+
+localStorage.setItem("respostasTermodinamica", JSON.stringify(respostas));
+
+// atualizar progresso do usuário
+let logado = localStorage.getItem("logado");
+
+if(logado){
+
+let usuario = JSON.parse(localStorage.getItem(logado));
+
+usuario.respondidas = (usuario.respondidas || 0) + 1;
+
+if(acertou){
+usuario.acertos = (usuario.acertos || 0) + 1;
+}
+
+localStorage.setItem(logado, JSON.stringify(usuario));
+
+}
+
+// mostrar resultado
+document.getElementById(`resultado${qNum}`).innerHTML =
+acertou ? "✅ Correto!" : "❌ Incorreto!";
+
+}
+
+// mostrar resolução
+function verResolucao(qNum){
+document.getElementById(`res${qNum}`).style.display="block";
+}
+
+// carregar respostas salvas
+function carregarRespostas(){
+
+let respostas = JSON.parse(localStorage.getItem("respostasTermodinamica"));
+
+if(!respostas) return;
+
+for(let q in respostas){
+
+let info = respostas[q];
+
+if(info.selecionada){
+
+let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+
+if(input) input.checked = true;
+
+}
+
+if(info.acertou !== undefined){
+
+let numero = q.replace("q","");
+
+document.getElementById(`resultado${numero}`).innerHTML =
+info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+
+}
+
+}
+
+}
+
+window.onload = carregarRespostas;
+
+</script>
+
+</body>
+</html>

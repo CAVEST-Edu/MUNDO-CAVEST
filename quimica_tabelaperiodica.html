@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>CAVEST - Tabela Periódica</title>
+
+<style>
+body{
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+    padding:40px;
+}
+
+h1{
+    text-align:center;
+}
+
+.questao{
+    background:#1e293b;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:30px;
+}
+
+button{
+    background:#22c55e;
+    border:none;
+    padding:10px 20px;
+    border-radius:6px;
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#16a34a;
+}
+
+.resolucao{
+    display:none;
+    margin-top:15px;
+    background:#334155;
+    padding:15px;
+    border-radius:8px;
+}
+
+.voltar {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    background: #38bdf8;
+    padding: 10px 30px;
+    border-radius: 6px;
+    margin-top: 30px;
+}
+
+.voltar:hover {
+    background: #0ea5e9;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Química - Tabela Periódica</h1>
+
+<!-- QUESTÃO 1 -->
+<div class="questao">
+<p><b>1.</b> Qual propriedade dos elementos aumenta da esquerda para a direita em um período da tabela periódica?</p>
+<input type="radio" name="q1" value="a"> Raio atômico<br>
+<input type="radio" name="q1" value="b"> Eletronegatividade<br>
+<input type="radio" name="q1" value="c"> Número de nêutrons<br>
+<input type="radio" name="q1" value="d"> Massa molar<br>
+<br>
+<button onclick="corrigir(1,'b')">Responder</button>
+<p id="resultado1"></p>
+<button onclick="verResolucao(1)">Ver resolução</button>
+<div class="resolucao" id="res1">
+<b>Resolução:</b><br><br>
+A <strong>eletronegatividade</strong> aumenta da esquerda para a direita em um período, pois os átomos tendem a atrair mais fortemente os elétrons em ligações químicas.<br><br>
+Resposta correta: <strong>B</strong>
+</div>
+</div>
+
+<!-- QUESTÃO 2 -->
+<div class="questao">
+<p><b>2.</b> Qual é a família da tabela periódica que possui todos os gases nobres?</p>
+<input type="radio" name="q2" value="a"> Alcalinos<br>
+<input type="radio" name="q2" value="b"> Halogênios<br>
+<input type="radio" name="q2" value="c"> Gases nobres<br>
+<input type="radio" name="q2" value="d"> Calcogênios<br>
+<br>
+<button onclick="corrigir(2,'c')">Responder</button>
+<p id="resultado2"></p>
+<button onclick="verResolucao(2)">Ver resolução</button>
+<div class="resolucao" id="res2">
+<b>Resolução:</b><br><br>
+A família dos <strong>gases nobres</strong> está localizada na última coluna da tabela periódica, com elementos quimicamente estáveis e pouco reativos.<br><br>
+Resposta correta: <strong>C</strong>
+</div>
+</div>
+
+<!-- QUESTÃO 3 -->
+<div class="questao">
+<p><b>3.</b> O que representa o número atômico de um elemento?</p>
+<input type="radio" name="q3" value="a"> A soma de prótons e nêutrons<br>
+<input type="radio" name="q3" value="b"> O número de elétrons e nêutrons<br>
+<input type="radio" name="q3" value="c"> O número de prótons no núcleo<br>
+<input type="radio" name="q3" value="d"> A massa molar do elemento<br>
+<br>
+<button onclick="corrigir(3,'c')">Responder</button>
+<p id="resultado3"></p>
+<button onclick="verResolucao(3)">Ver resolução</button>
+<div class="resolucao" id="res3">
+<b>Resolução:</b><br><br>
+O <strong>número atômico</strong> representa o número de prótons no núcleo de um átomo, que também determina sua posição na tabela periódica.<br><br>
+Resposta correta: <strong>C</strong>
+</div>
+</div>
+
+<!-- Botão Voltar -->
+<div style="text-align: center;">
+    <a href="dashboard.html" class="voltar">← Voltar ao Dashboard</a>
+</div>
+
+<script>
+// Função genérica para corrigir qualquer questão
+function corrigir(qNum, correta){
+    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+    if(!selecionada){
+        alert("Escolha uma alternativa!");
+        return;
+    }
+
+    // Verificar se já respondeu (opcional - evitar dupla contagem)
+    let respostas = JSON.parse(localStorage.getItem("respostasTabelaPeriodica")) || {};
+    if(respostas[`q${qNum}`]) {
+        if(!confirm("Você já respondeu esta questão. Deseja responder novamente?")) {
+            return;
+        }
+    }
+
+    let acertou = selecionada.value === correta;
+
+    // salvar respostas da página
+    respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
+    localStorage.setItem("respostasTabelaPeriodica", JSON.stringify(respostas));
+
+    // atualizar progresso do usuário logado
+    let logado = localStorage.getItem("logado");
+    if(logado){
+        let usuario = JSON.parse(localStorage.getItem(logado));
+        
+        // Inicializar contadores se não existirem
+        if(!usuario.respondidas) usuario.respondidas = 0;
+        if(!usuario.acertos) usuario.acertos = 0;
+        
+        // Verificar se esta questão já foi respondida antes para não contar duas vezes
+        let respostasAntigas = JSON.parse(localStorage.getItem("respostasTabelaPeriodica")) || {};
+        if(!respostasAntigas[`q${qNum}`]) {
+            usuario.respondidas += 1;
+            if(acertou) usuario.acertos += 1;
+        } else {
+            // Se já respondeu, ajustar contagem (remover contagem anterior e adicionar nova)
+            if(respostasAntigas[`q${qNum}`].acertou && !acertou) {
+                usuario.acertos -= 1; // perdeu o acerto
+            } else if(!respostasAntigas[`q${qNum}`].acertou && acertou) {
+                usuario.acertos += 1; // ganhou um acerto
+            }
+            // Se respondeu de novo, não incrementa respondidas
+        }
+        
+        localStorage.setItem(logado, JSON.stringify(usuario));
+    }
+
+    // mostrar resultado
+    document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!";
+}
+
+// mostrar resolução
+function verResolucao(qNum){
+    document.getElementById(`res${qNum}`).style.display = "block";
+}
+
+// carregar respostas salvas
+function carregarRespostas(){
+    let respostas = JSON.parse(localStorage.getItem("respostasTabelaPeriodica"));
+    if(!respostas) return;
+    
+    for(let q in respostas){
+        let info = respostas[q];
+        if(info.selecionada){
+            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+            if(input) input.checked = true;
+        }
+        if(info.acertou !== undefined){
+            let numero = q.replace("q","");
+            document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+        }
+    }
+}
+
+// Carregar respostas quando a página abrir
+window.onload = carregarRespostas;
+</script>
+
+</body>
+</html>

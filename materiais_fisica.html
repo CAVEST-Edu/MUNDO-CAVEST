@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Materiais de Física - Mundo CAVEST</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 { color: #38bdf8; margin-bottom: 30px; }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        /* Estilo dos Cards de Material */
+        .card-material {
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #38bdf8;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-material:hover {
+            background: #334155;
+            transform: translateY(-5px);
+        }
+
+        .card-material a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .tag {
+            font-size: 12px;
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .voltar {
+            margin-top: 40px;
+            display: inline-block;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+        
+        .aviso-vazio {
+            grid-column: 1 / -1;
+            color: #64748b;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📚 Materiais de Física</h1>
+
+    <div class="container" id="listaMateriais">
+        <div class="card-material">
+            <span class="tag">Oficial</span>
+            <a href="LINK_DO_PDF_AQUI" target="_blank">Apostila de Mecânica Geral</a>
+        </div>
+
+        </div>
+
+    <a href="materiais.html" class="voltar">⬅ Voltar para Matérias</a>
+
+    <script>
+        function carregarMateriaisDinamicos() {
+            const container = document.getElementById("listaMateriais");
+            const banco = JSON.parse(localStorage.getItem("bancoMateriais")) || [];
+            
+            // FILTRO: Aqui você diz qual matéria esta página deve mostrar
+            const materiaisFiltrados = banco.filter(item => item.materia === "fisica");
+
+            if (materiaisFiltrados.length === 0 && container.children.length === 1) {
+                container.innerHTML += `<p class="aviso-vazio">Ainda não há materiais extras postados para esta matéria.</p>`;
+                return;
+            }
+
+            materiaisFiltrados.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "card-material";
+                div.innerHTML = `
+                    <span class="tag" style="background: #22c55e;">Extra</span>
+                    <a href="${item.link}" target="_blank">${item.nome}</a>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Executa assim que a página abre
+        window.onload = carregarMateriaisDinamicos;
+    </script>
+
+</body>
+</html>

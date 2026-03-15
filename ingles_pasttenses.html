@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>CAVEST - Past Tenses</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .questao {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            background: #22c55e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .resolucao {
+            display: none;
+            margin-top: 15px;
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>English - Past Tenses 🕰️</h1>
+
+    <div class="questao">
+        <p><b>1.</b> What is the <strong>Simple Past</strong> form of the irregular verb <strong>"GO"</strong>?</p>
+        <input type="radio" name="q1" value="a"> goed<br>
+        <input type="radio" name="q1" value="b"> goes<br>
+        <input type="radio" name="q1" value="c"> went<br>
+        <input type="radio" name="q1" value="d"> gone<br>
+        <br>
+        <button onclick="corrigir(1,'c')">Responder</button>
+        <p id="resultado1"></p>
+        <button onclick="verResolucao(1)">Ver resolução</button>
+        
+        <div class="resolucao" id="res1">
+            <b>Resolução:</b><br><br>
+            O verbo <strong>"go"</strong> é irregular. No passado simples, ele se transforma em <strong>went</strong>. Não se adiciona "ed" em verbos irregulares.<br><br>
+            Resposta correta: <strong>C</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>2.</b> Choose the correct sentence in the <strong>negative form</strong>:</p>
+        <input type="radio" name="q2" value="a"> He didn't watched the movie.<br>
+        <input type="radio" name="q2" value="b"> He didn't watch the movie.<br>
+        <input type="radio" name="q2" value="c"> He not watched the movie.<br>
+        <input type="radio" name="q2" value="d"> He don't watched the movie.<br>
+        <br>
+        <button onclick="corrigir(2,'b')">Responder</button>
+        <p id="resultado2"></p>
+        <button onclick="verResolucao(2)">Ver resolução</button>
+        
+        <div class="resolucao" id="res2">
+            <b>Resolução:</b><br><br>
+            Para frases negativas no passado, usamos o auxiliar <strong>did not (didn't)</strong>. Quando o auxiliar aparece, o verbo principal deve voltar para sua <strong>forma original</strong> (sem o "ed").<br><br>
+            Resposta correta: <strong>B</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>3.</b> Complete the sentence in <strong>Past Continuous</strong>: <br><em>"While I _______ (sleep), the phone rang."</em></p>
+        <input type="radio" name="q3" value="a"> was sleeping<br>
+        <input type="radio" name="q3" value="b"> were sleeping<br>
+        <input type="radio" name="q3" value="c"> did sleep<br>
+        <input type="radio" name="q3" value="d"> slept<br>
+        <br>
+        <button onclick="corrigir(3,'a')">Responder</button>
+        <p id="resultado3"></p>
+        <button onclick="verResolucao(3)">Ver resolução</button>
+        
+        <div class="resolucao" id="res3">
+            <b>Resolução:</b><br><br>
+            O <strong>Past Continuous</strong> descreve uma ação que estava em progresso no passado. É formado por <strong>was/were + verbo com -ing</strong>. Para o sujeito "I", usamos <strong>was</strong>.<br><br>
+            Resposta correta: <strong>A</strong>
+        </div>
+    </div>
+
+    <a class="voltar" href="ingles.html">⬅ Voltar para Inglês</a>
+
+    <script>
+    function corrigir(qNum, correta){
+        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+        if(!selecionada){
+            alert("Escolha uma alternativa!");
+            return;
+        }
+
+        let acertou = selecionada.value === correta;
+
+        // CHAVE ÚNICA: respostasInglesPast
+        let respostas = JSON.parse(localStorage.getItem("respostasInglesPast")) || {};
+        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
+        localStorage.setItem("respostasInglesPast", JSON.stringify(respostas));
+
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            usuario.respondidas = (usuario.respondidas || 0) + 1;
+            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+            localStorage.setItem(logado, JSON.stringify(usuario));
+        }
+
+        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correct!" : "❌ Incorrect!";
+    }
+
+    function verResolucao(qNum){
+        document.getElementById(`res${qNum}`).style.display = "block";
+    }
+
+    function carregarRespostas(){
+        let respostas = JSON.parse(localStorage.getItem("respostasInglesPast"));
+        if(!respostas) return;
+        for(let q in respostas){
+            let info = respostas[q];
+            if(info.selecionada){
+                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+                if(input) input.checked = true;
+            }
+            if(info.acertou !== undefined){
+                let numero = q.replace("q","");
+                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ Correct!" : "❌ Incorrect!";
+            }
+        }
+    }
+
+    window.onload = carregarRespostas;
+    </script>
+
+</body>
+</html>

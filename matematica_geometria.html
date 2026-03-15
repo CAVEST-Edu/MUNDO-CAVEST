@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>CAVEST - Geometria</title>
+
+<style>
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+padding:40px;
+}
+
+h1{
+text-align:center;
+}
+
+.questao{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+margin-bottom:30px;
+}
+
+button{
+background:#22c55e;
+border:none;
+padding:10px 20px;
+border-radius:6px;
+color:white;
+font-size:15px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+.resolucao{
+display:none;
+margin-top:15px;
+background:#334155;
+padding:15px;
+border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Matemática - Geometria</h1>
+
+<div class="questao">
+<p><b>1.</b> Qual é a soma dos ângulos internos de um triângulo?</p>
+<input type="radio" name="q1" value="a"> 180°<br>
+<input type="radio" name="q1" value="b"> 90°<br>
+<input type="radio" name="q1" value="c"> 360°<br>
+<input type="radio" name="q1" value="d"> 270°<br>
+<br>
+<button onclick="corrigir(1,'a')">Responder</button>
+<p id="resultado1"></p>
+<button onclick="verResolucao(1)">Ver resolução</button>
+<div class="resolucao" id="res1">
+<b>Resolução:</b><br><br>
+A soma dos ângulos internos de qualquer triângulo é sempre <strong>180°</strong>.<br><br>
+Resposta correta: <strong>A</strong>
+</div>
+</div>
+
+<div class="questao">
+<p><b>2.</b> Qual é a fórmula da área de um círculo?</p>
+<input type="radio" name="q2" value="a"> π × r²<br>
+<input type="radio" name="q2" value="b"> 2 × π × r<br>
+<input type="radio" name="q2" value="c"> b × h / 2<br>
+<input type="radio" name="q2" value="d"> L × A<br>
+<br>
+<button onclick="corrigir(2,'a')">Responder</button>
+<p id="resultado2"></p>
+<button onclick="verResolucao(2)">Ver resolução</button>
+<div class="resolucao" id="res2">
+<b>Resolução:</b><br><br>
+A área de um círculo é calculada pela fórmula <strong>A = π × r²</strong>, onde r é o raio.<br><br>
+Resposta correta: <strong>A</strong>
+</div>
+</div>
+
+<div class="questao">
+<p><b>3.</b> Um quadrado possui lado de 5 cm. Qual é o perímetro?</p>
+<input type="radio" name="q3" value="a"> 10 cm<br>
+<input type="radio" name="q3" value="b"> 15 cm<br>
+<input type="radio" name="q3" value="c"> 20 cm<br>
+<input type="radio" name="q3" value="d"> 25 cm<br>
+<br>
+<button onclick="corrigir(3,'c')">Responder</button>
+<p id="resultado3"></p>
+<button onclick="verResolucao(3)">Ver resolução</button>
+<div class="resolucao" id="res3">
+<b>Resolução:</b><br><br>
+O perímetro de um quadrado é dado por <strong>P = 4 × lado</strong>. Aqui: 4 × 5 cm = 20 cm.<br><br>
+Resposta correta: <strong>C</strong>
+</div>
+</div>
+
+<script>
+// Corrigir questão
+function corrigir(qNum, respostaCorreta){
+    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+    if(!selecionada){
+        alert("Escolha uma alternativa!");
+        return;
+    }
+
+    let acertou = selecionada.value === respostaCorreta;
+
+    // Salvar respostas da página
+    let respostas = JSON.parse(localStorage.getItem("respostasGeometria")) || {};
+    respostas[`q${qNum}`] = {
+        selecionada: selecionada.value,
+        acertou: acertou
+    };
+    localStorage.setItem("respostasGeometria", JSON.stringify(respostas));
+
+    // Atualizar progresso do usuário logado
+    let logado = localStorage.getItem("logado");
+    if(logado){
+        let usuario = JSON.parse(localStorage.getItem(logado));
+        usuario.respondidas = (usuario.respondidas || 0) + 1;
+        if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+        localStorage.setItem(logado, JSON.stringify(usuario));
+    }
+
+    // Mostrar resultado
+    document.getElementById(`resultado${qNum}`).innerHTML =
+        acertou ? "✅ Correto!" : "❌ Incorreto!";
+}
+
+// Mostrar resolução
+function verResolucao(qNum){
+    document.getElementById(`res${qNum}`).style.display = "block";
+}
+
+// Carregar respostas salvas
+function carregarRespostas(){
+    let respostas = JSON.parse(localStorage.getItem("respostasGeometria"));
+    if(!respostas) return;
+
+    for(let q in respostas){
+        let info = respostas[q];
+        if(info.selecionada){
+            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+            if(input) input.checked = true;
+        }
+        if(info.acertou !== undefined){
+            let numero = q.replace("q","");
+            document.getElementById(`resultado${numero}`).innerHTML =
+                info.acertou ? "✅ Correto!" : "❌ Incorreto!";
+        }
+    }
+}
+
+window.onload = carregarRespostas;
+</script>
+
+</body>
+</html>

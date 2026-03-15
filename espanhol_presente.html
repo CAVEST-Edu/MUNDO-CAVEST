@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CAVEST - Presente de Indicativo</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .questao {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tip {
+            background: #064e3b;
+            padding: 10px;
+            border-left: 4px solid #10b981;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+
+        button {
+            background: #22c55e;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background: #16a34a;
+        }
+
+        .resolucao {
+            display: none;
+            margin-top: 15px;
+            background: #334155;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Español - Presente de Indicativo ⏳</h1>
+
+    <div class="questao">
+        <div class="tip">
+            <b>Diptongación:</b> Algunos verbos cambian la vocal de la raíz. <br>
+            Ejemplo: Qu<b>e</b>rer -> Yo qu<b>ie</b>ro.
+        </div>
+        <p><b>1.</b> Completa la frase con la forma correcta del verbo <strong>QUERER</strong>: <br><em>"Nosotros _________ viajar a España, pero ellos _________ ir a México."</em></p>
+        <input type="radio" name="q1" value="a"> queremos - quieren<br>
+        <input type="radio" name="q1" value="b"> quieremos - queren<br>
+        <input type="radio" name="q1" value="c"> queremos - queren<br>
+        <input type="radio" name="q1" value="d"> quieremos - quieren<br>
+        <br>
+        <button onclick="corrigir(1,'a')">Responder</button>
+        <p id="resultado1"></p>
+        <button onclick="verResolucao(1)">Ver resolución</button>
+        
+        <div class="resolucao" id="res1">
+            <b>Resolución:</b><br><br>
+            ¡Cuidado! La irregularidad (E -> IE) ocurre en todas las personas <b>excepto</b> en <i>Nosotros</i> y <i>Vosotros</i>. Por eso es: Nosotros <b>queremos</b> / Ellos <b>quieren</b>.<br><br>
+            Resposta correta: <strong>A</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>2.</b> ¿Cuál es la forma correcta del verbo <strong>TENER</strong> para la primera persona del singular (Yo)?</p>
+        <input type="radio" name="q2" value="a"> Yo teno.<br>
+        <input type="radio" name="q2" value="b"> Yo tiento.<br>
+        <input type="radio" name="q2" value="c"> Yo tengo.<br>
+        <input type="radio" name="q2" value="d"> Yo tiene.<br>
+        <br>
+        <button onclick="corrigir(2,'c')">Responder</button>
+        <p id="resultado2"></p>
+        <button onclick="verResolucao(2)">Ver resolución</button>
+        
+        <div class="resolucao" id="res2">
+            <b>Resolución:</b><br><br>
+            El verbo <b>tener</b> es irregular en la primera persona (Yo tengo). En las demás personas, sigue la diptongación (tú tienes, él tiene).<br><br>
+            Resposta correta: <strong>C</strong>
+        </div>
+    </div>
+
+    <div class="questao">
+        <p><b>3.</b> Indica la frase que usa correctamente un verbo con cambio <strong>O -> UE</strong>:</p>
+        <input type="radio" name="q3" value="a"> Yo dormo ocho horas al día.<br>
+        <input type="radio" name="q3" value="b"> Ella no podre salir hoy.<br>
+        <input type="radio" name="q3" value="c"> ¿A qué hora <b>vuelves</b> a casa?<br>
+        <input type="radio" name="q3" value="d"> Nosotros vuelven mañana.<br>
+        <br>
+        <button onclick="corrigir(3,'c')">Responder</button>
+        <p id="resultado3"></p>
+        <button onclick="verResolucao(3)">Ver resolución</button>
+        
+        <div class="resolucao" id="res3">
+            <b>Resolución:</b><br><br>
+            El verbo <b>volver</b> cambia la "O" por "UE". La forma correcta para "tú" es <b>vuelves</b>. Las otras opciones están mal conjugadas (duermo, puede).<br><br>
+            Resposta correta: <strong>C</strong>
+        </div>
+    </div>
+
+    <a class="voltar" href="espanhol.html">⬅ Voltar</a>
+
+    <script>
+    function corrigir(qNum, correta){
+        let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`);
+        if(!selecionada){
+            alert("¡Elige una opción!");
+            return;
+        }
+
+        let acertou = selecionada.value === correta;
+
+        let respostas = JSON.parse(localStorage.getItem("respostasEspanholPresente")) || {};
+        respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou };
+        localStorage.setItem("respostasEspanholPresente", JSON.stringify(respostas));
+
+        let logado = localStorage.getItem("logado");
+        if(logado){
+            let usuario = JSON.parse(localStorage.getItem(logado));
+            usuario.respondidas = (usuario.respondidas || 0) + 1;
+            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
+            localStorage.setItem(logado, JSON.stringify(usuario));
+        }
+
+        document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ ¡Correcto!" : "❌ ¡Incorrecto!";
+    }
+
+    function verResolucao(qNum){
+        document.getElementById(`res${qNum}`).style.display = "block";
+    }
+
+    function carregarRespostas(){
+        let respostas = JSON.parse(localStorage.getItem("respostasEspanholPresente"));
+        if(!respostas) return;
+        for(let q in respostas){
+            let info = respostas[q];
+            if(info.selecionada){
+                let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`);
+                if(input) input.checked = true;
+            }
+            if(info.acertou !== undefined){
+                let numero = q.replace("q","");
+                document.getElementById(`resultado${numero}`).innerText = info.acertou ? "✅ ¡Correcto!" : "❌ ¡Incorrecto!";
+            }
+        }
+    }
+
+    window.onload = carregarRespostas;
+    </script>
+
+</body>
+</html>

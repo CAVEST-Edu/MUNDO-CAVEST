@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>CAVEST - Botânica</title>
+
+<style>
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+padding:40px;
+}
+h1{text-align:center;}
+.questao{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+margin-bottom:30px;
+}
+button{
+background:#22c55e;
+border:none;
+padding:10px 20px;
+border-radius:6px;
+color:white;
+font-size:15px;
+cursor:pointer;
+margin-top:10px;
+}
+button:hover{background:#16a34a;}
+.resolucao{
+display:none;
+margin-top:15px;
+background:#334155;
+padding:15px;
+border-radius:8px;
+}
+.voltar {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+        }
+</style>
+</head>
+
+<body>
+<h1>Biologia - Botânica</h1>
+
+<!-- QUESTÃO 1 -->
+<div class="questao">
+<p><b>1.</b> Qual é a função principal das folhas nas plantas?</p>
+<input type="radio" name="q1" value="a"> Absorver água do solo<br>
+<input type="radio" name="q1" value="b"> Realizar fotossíntese<br>
+<input type="radio" name="q1" value="c"> Armazenar nutrientes<br>
+<input type="radio" name="q1" value="d"> Reproduzir a planta<br>
+<br>
+<button onclick="corrigir(1,'b')">Responder</button>
+<p id="resultado1"></p>
+<button onclick="verResolucao(1)">Ver resolução</button>
+<div class="resolucao" id="res1">
+<b>Resolução:</b><br><br>
+As <strong>folhas</strong> são responsáveis pela <strong>fotossíntese</strong>, processo que produz energia para a planta utilizando luz solar, água e CO₂.
+<br><br>Resposta correta: <strong>B</strong>
+</div>
+</div>
+
+<!-- QUESTÃO 2 -->
+<div class="questao">
+<p><b>2.</b> Qual órgão da planta é responsável pela absorção de água e sais minerais do solo?</p>
+<input type="radio" name="q2" value="a"> Caule<br>
+<input type="radio" name="q2" value="b"> Flor<br>
+<input type="radio" name="q2" value="c"> Raiz<br>
+<input type="radio" name="q2" value="d"> Fruto<br>
+<br>
+<button onclick="corrigir(2,'c')">Responder</button>
+<p id="resultado2"></p>
+<button onclick="verResolucao(2)">Ver resolução</button>
+<div class="resolucao" id="res2">
+<b>Resolução:</b><br><br>
+As <strong>raízes</strong> absorvem água e sais minerais do solo e também fixam a planta ao substrato.
+<br><br>Resposta correta: <strong>C</strong>
+</div>
+</div>
+
+<!-- QUESTÃO 3 -->
+<div class="questao">
+<p><b>3.</b> Qual é a função das flores nas plantas?</p>
+<input type="radio" name="q3" value="a"> Produzir sementes e permitir reprodução sexuada<br>
+<input type="radio" name="q3" value="b"> Realizar fotossíntese<br>
+<input type="radio" name="q3" value="c"> Absorver água do solo<br>
+<input type="radio" name="q3" value="d"> Armazenar energia<br>
+<br>
+<button onclick="corrigir(3,'a')">Responder</button>
+<p id="resultado3"></p>
+<button onclick="verResolucao(3)">Ver resolução</button>
+<div class="resolucao" id="res3">
+<b>Resolução:</b><br><br>
+As <strong>flores</strong> são os órgãos reprodutivos das plantas, responsáveis pela produção de sementes e reprodução sexuada.
+<br><br>Resposta correta: <strong>A</strong>
+</div>
+</div>
+
+<a class="voltar" href="biologia.html">⬅ Voltar para Biologia</a>
+
+<script>
+// Corrigir e salvar no localStorage
+function corrigir(qNum, respostaCorreta){
+    let selecionada = document.querySelector(`input[name="q${qNum}"]:checked`)
+    if(!selecionada){ alert("Escolha uma alternativa!"); return }
+
+    let acertou = selecionada.value === respostaCorreta
+
+    // Salva resposta no localStorage
+    let respostas = JSON.parse(localStorage.getItem("respostasBotanica")) || {}
+    respostas[`q${qNum}`] = { selecionada: selecionada.value, acertou: acertou }
+    localStorage.setItem("respostasBotanica", JSON.stringify(respostas))
+
+    // Atualiza progresso do aluno logado
+    let logado = localStorage.getItem("logado")
+    if(logado){
+        let usuario = JSON.parse(localStorage.getItem(logado))
+        usuario.respondidas = (usuario.respondidas || 0) + 1
+        if(acertou) usuario.acertos = (usuario.acertos || 0) + 1
+        localStorage.setItem(logado, JSON.stringify(usuario))
+    }
+
+    // Mostra resultado na tela
+    document.getElementById(`resultado${qNum}`).innerText = acertou ? "✅ Correto!" : "❌ Incorreto!"
+}
+
+// Mostrar resolução
+function verResolucao(qNum){ document.getElementById(`res${qNum}`).style.display = "block" }
+
+// Carrega respostas salvas ao abrir a página
+function carregarRespostas(){
+    let respostas = JSON.parse(localStorage.getItem("respostasBotanica"))
+    if(!respostas) return
+    for(let q in respostas){
+        let info = respostas[q]
+        // Marca alternativa selecionada
+        if(info.selecionada){
+            let input = document.querySelector(`input[name="${q}"][value="${info.selecionada}"]`)
+            if(input) input.checked = true
+        }
+        // Mostra resultado
+        if(info.acertou !== undefined){
+            let qNum = q.replace("q","")
+            document.getElementById(`resultado${qNum}`).innerText = info.acertou ? "✅ Correto!" : "❌ Incorreto!"
+        }
+    }
+}
+
+// Chama ao carregar a página
+window.onload = carregarRespostas
+</script>
+
+</body>
+</html>
