@@ -236,7 +236,7 @@
         renderizarListaMateriais();
     }
 
-    // --- MATERIAIS ---
+    // --- SALVAR MATERIAL ---
     window.salvarNovoMaterial = async () => {
         const nome = document.getElementById("mat_nome").value;
         const link = document.getElementById("mat_link").value;
@@ -248,11 +248,16 @@
             await addDoc(collection(db, "bancoMateriais"), { nome, link, materia, data: Date.now() });
             alert("Apostila publicada na Nuvem!");
             location.reload();
-        } catch (e) { alert("Erro ao salvar apostila."); }
+        } catch (e) { 
+            console.error("Erro material:", e);
+            alert("Erro ao salvar apostila."); 
+        }
     }
 
+    // --- LISTAR MATERIAIS ---
     window.renderizarListaMateriais = async () => {
         const lista = document.getElementById("listaMateriaisAdmin");
+        if(!lista) return;
         lista.innerHTML = "<tr><td colspan='3'>Carregando...</td></tr>";
         
         try {
@@ -268,49 +273,69 @@
                     </tr>
                 `;
             });
-        } catch (e) { lista.innerHTML = "<tr><td colspan='3'>Erro ao carregar lista.</td></tr>"; }
-    }
-
-    window.excluirMaterial = async (id) => {
-        if(confirm("Deseja apagar este material da nuvem?")) {
-            await deleteDoc(doc(db, "bancoMateriais", id));
-            renderizarListaMateriais();
+        } catch (e) { 
+            console.error("Erro lista:", e);
+            lista.innerHTML = "<tr><td colspan='3'>Erro ao carregar lista.</td></tr>"; 
         }
     }
 
-    // --- QUESTÕES ---
+    // --- EXCLUIR MATERIAL ---
+    window.excluirMaterial = async (id) => {
+        if(confirm("Deseja apagar este material da nuvem?")) {
+            try {
+                await deleteDoc(doc(db, "bancoMateriais", id));
+                renderizarListaMateriais();
+            } catch (e) { alert("Erro ao excluir."); }
+        }
+    }
+
+    // --- SALVAR QUESTÃO (CORRIGIDO) ---
     window.salvarQuestao = async () => {
+        console.log("Botão Salvar Questão clicado.");
+        
+        const q_materia = document.getElementById('q_materia').value;
+        const q_assunto = document.getElementById('q_assunto').value;
+        const q_pergunta = document.getElementById('q_pergunta').value;
+
+        if (!q_materia || !q_assunto || !q_pergunta) { 
+            alert("Erro: Preencha Disciplina, Assunto e Enunciado!"); 
+            return; 
+        }
+
         const questao = {
-            materia: document.getElementById('q_materia').value,
-            assunto: document.getElementById('q_assunto').value,
-            imagem: document.getElementById('q_imagem').value,
-            texto_apoio: document.getElementById('q_texto_apoio').value,
-            pergunta: document.getElementById('q_pergunta').value,
-            a: document.getElementById('q_a').value,
-            b: document.getElementById('q_b').value,
-            c: document.getElementById('q_c').value,
-            d: document.getElementById('q_d').value,
+            materia: q_materia,
+            assunto: q_assunto,
+            imagem: document.getElementById('q_imagem').value || "",
+            texto_apoio: document.getElementById('q_texto_apoio').value || "",
+            pergunta: q_pergunta,
+            a: document.getElementById('q_a').value || "",
+            b: document.getElementById('q_b').value || "",
+            c: document.getElementById('q_c').value || "",
+            d: document.getElementById('q_d').value || "",
             correta: document.getElementById('q_correta').value,
-            resolucao: document.getElementById('q_resolucao').value,
+            resolucao: document.getElementById('q_resolucao').value || "",
             dataCriacao: Date.now()
         };
 
-        if (!questao.materia || !questao.pergunta) { alert("Preencha os campos obrigatórios!"); return; }
-
         try {
+            console.log("Enviando para o Firebase...", questao);
             await addDoc(collection(db, "questoes"), questao);
-            alert("✅ Questão publicada na Nuvem!");
-            location.reload();
-        } catch (e) { alert("Erro ao salvar questão."); }
+            alert("✅ Questão publicada na Nuvem com sucesso!");
+            location.reload(); 
+        } catch (e) { 
+            console.error("Erro detalhado do Firebase:", e);
+            alert("Erro ao salvar questão: " + e.message); 
+        }
     }
 
-    // Tornar funções globais para o onclick funcionar com type="module"
+    // --- LOGOUT ---
     window.fazerLogout = () => {
         localStorage.removeItem("usuarioAtual");
         localStorage.removeItem("logado");
         window.location.href = "login.html";
     };
 
+    // --- LOGICA DE ASSUNTOS ---
     const baseAssuntos = {
         fisica: ["Cinemática", "Dinâmica", "Ondas", "Óptica", "Eletrodinâmica"],
         matematica: ["Funções", "Geometria", "Probabilidade"],
@@ -328,6 +353,7 @@
         if (materia && baseAssuntos[materia]) {
             baseAssuntos[materia].forEach(a => {
                 let opt = document.createElement("option");
+                // Normaliza para salvar no banco (sem acento, minúsculo)
                 opt.value = a.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '_');
                 opt.innerText = a;
                 combo.appendChild(opt);
