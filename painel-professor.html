@@ -154,10 +154,10 @@
             </div>
         </div>
 
-        <label>Link da Imagem <span style="font-weight: normal; color: var(--text-gray);">(Opcional)</span>:</label>
+        <label>Link da Imagem (Opcional):</label>
         <input type="text" id="q_imagem" placeholder="https://exemplo.com/imagem.jpg">
 
-        <label>Texto de Apoio / Citação <span style="font-weight: normal; color: var(--text-gray);">(Opcional)</span>:</label>
+        <label>Texto de Apoio / Citação (Opcional):</label>
         <textarea id="q_texto_apoio" rows="3" placeholder="Insira o texto base ou contexto da questão..."></textarea>
 
         <label>Enunciado da Questão:</label>
@@ -181,7 +181,7 @@
                 </select>
             </div>
             <div>
-                <label>Explicação/Resolução <span style="font-weight: normal; color: var(--text-gray);">(Opcional)</span>:</label>
+                <label>Explicação/Resolução (Opcional):</label>
                 <input type="text" id="q_resolucao" placeholder="Explique a resposta...">
             </div>
         </div>
@@ -190,7 +190,7 @@
     </div>
 
     <div class="sessao">
-        <h3>📋 Materiais Postados</h3>
+        <h3>📋 Materiais na Nuvem</h3>
         <table class="tabela-gerenciamento">
             <thead>
                 <tr>
@@ -206,7 +206,23 @@
     <a href="index.html" class="voltar">⬅ Voltar para a Home do Site</a>
 </div>
 
-<script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCqMEbG7Uf03vNmEcIQa3uZhjV2npiw0_w",
+        authDomain: "mundo-cavest.firebaseapp.com",
+        projectId: "mundo-cavest",
+        storageBucket: "mundo-cavest.firebasestorage.app",
+        messagingSenderId: "386396770156",
+        appId: "1:386396770156:web:2c506fdb989e4c15e6ad49"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // --- SEGURANÇA LOCAL ---
     function verificarAcesso() {
         const usuarioJson = localStorage.getItem("usuarioAtual");
         if (!usuarioJson) { window.location.href = "login.html"; return; }
@@ -220,59 +236,92 @@
         renderizarListaMateriais();
     }
 
-    function fazerLogout() {
-        localStorage.removeItem("usuarioAtual");
-        localStorage.removeItem("logado");
-        window.location.href = "login.html";
-    }
-
-    function salvarNovoMaterial() {
+    // --- MATERIAIS ---
+    window.salvarNovoMaterial = async () => {
         const nome = document.getElementById("mat_nome").value;
         const link = document.getElementById("mat_link").value;
         const materia = document.getElementById("mat_materia").value;
+
         if (!nome || !link) { alert("Preencha o nome e o link!"); return; }
-        let banco = JSON.parse(localStorage.getItem("bancoMateriais")) || [];
-        banco.push({ id: Date.now(), nome, link, materia });
-        localStorage.setItem("bancoMateriais", JSON.stringify(banco));
-        alert("Apostila publicada!");
-        location.reload();
+
+        try {
+            await addDoc(collection(db, "bancoMateriais"), { nome, link, materia, data: Date.now() });
+            alert("Apostila publicada na Nuvem!");
+            location.reload();
+        } catch (e) { alert("Erro ao salvar apostila."); }
     }
 
-    function renderizarListaMateriais() {
+    window.renderizarListaMateriais = async () => {
         const lista = document.getElementById("listaMateriaisAdmin");
-        const banco = JSON.parse(localStorage.getItem("bancoMateriais")) || [];
-        lista.innerHTML = banco.length === 0 ? "<tr><td colspan='3'>Nenhum material cadastrado.</td></tr>" : "";
-        banco.forEach(item => {
-            lista.innerHTML += `
-                <tr>
-                    <td>${item.nome}</td>
-                    <td>${item.materia.toUpperCase()}</td>
-                    <td><button class="btn-del" onclick="excluirMaterial(${item.id})">Apagar</button></td>
-                </tr>
-            `;
-        });
+        lista.innerHTML = "<tr><td colspan='3'>Carregando...</td></tr>";
+        
+        try {
+            const querySnapshot = await getDocs(query(collection(db, "bancoMateriais"), orderBy("data", "desc")));
+            lista.innerHTML = "";
+            querySnapshot.forEach((docSnap) => {
+                const item = docSnap.data();
+                lista.innerHTML += `
+                    <tr>
+                        <td>${item.nome}</td>
+                        <td>${item.materia.toUpperCase()}</td>
+                        <td><button class="btn-del" onclick="excluirMaterial('${docSnap.id}')">Apagar</button></td>
+                    </tr>
+                `;
+            });
+        } catch (e) { lista.innerHTML = "<tr><td colspan='3'>Erro ao carregar lista.</td></tr>"; }
     }
 
-    function excluirMaterial(id) {
-        if(confirm("Deseja apagar este material?")) {
-            let banco = JSON.parse(localStorage.getItem("bancoMateriais"));
-            banco = banco.filter(item => item.id !== id);
-            localStorage.setItem("bancoMateriais", JSON.stringify(banco));
+    window.excluirMaterial = async (id) => {
+        if(confirm("Deseja apagar este material da nuvem?")) {
+            await deleteDoc(doc(db, "bancoMateriais", id));
             renderizarListaMateriais();
         }
     }
+
+    // --- QUESTÕES ---
+    window.salvarQuestao = async () => {
+        const questao = {
+            materia: document.getElementById('q_materia').value,
+            assunto: document.getElementById('q_assunto').value,
+            imagem: document.getElementById('q_imagem').value,
+            texto_apoio: document.getElementById('q_texto_apoio').value,
+            pergunta: document.getElementById('q_pergunta').value,
+            a: document.getElementById('q_a').value,
+            b: document.getElementById('q_b').value,
+            c: document.getElementById('q_c').value,
+            d: document.getElementById('q_d').value,
+            correta: document.getElementById('q_correta').value,
+            resolucao: document.getElementById('q_resolucao').value,
+            dataCriacao: Date.now()
+        };
+
+        if (!questao.materia || !questao.pergunta) { alert("Preencha os campos obrigatórios!"); return; }
+
+        try {
+            await addDoc(collection(db, "questoes"), questao);
+            alert("✅ Questão publicada na Nuvem!");
+            location.reload();
+        } catch (e) { alert("Erro ao salvar questão."); }
+    }
+
+    // Tornar funções globais para o onclick funcionar com type="module"
+    window.fazerLogout = () => {
+        localStorage.removeItem("usuarioAtual");
+        localStorage.removeItem("logado");
+        window.location.href = "login.html";
+    };
 
     const baseAssuntos = {
         fisica: ["Cinemática", "Dinâmica", "Ondas", "Óptica", "Eletrodinâmica"],
         matematica: ["Funções", "Geometria", "Probabilidade"],
         historia: ["Brasil Colônia", "Brasil Império", "Idade Média", "Guerras Mundiais"],
         geografia: ["Cartografia", "Climatologia", "População"],
-        biologia: ["Citologia", "Genética", "Ecologia", "Fisiologia"],
+        biologia: ["Citologia", "Genética", "Ecologia", "Fisiologia", "Virus", "Bioquimica", "Botanica"],
         quimica: ["Tabela Periódica", "Estequiometria", "Orgânica"],
         portugues: ["Gramática", "Literatura", "Interpretação"]
     };
 
-    function atualizarAssuntos() {
+    window.atualizarAssuntos = () => {
         const materia = document.getElementById("q_materia").value;
         const combo = document.getElementById("q_assunto");
         combo.innerHTML = '<option value="">-- Selecione o assunto --</option>';
@@ -286,32 +335,7 @@
         }
     }
 
-    function salvarQuestao() {
-        const questao = {
-            id: Date.now(),
-            materia: document.getElementById('q_materia').value,
-            assunto: document.getElementById('q_assunto').value,
-            imagem: document.getElementById('q_imagem').value,
-            texto_apoio: document.getElementById('q_texto_apoio').value,
-            pergunta: document.getElementById('q_pergunta').value,
-            a: document.getElementById('q_a').value,
-            b: document.getElementById('q_b').value,
-            c: document.getElementById('q_c').value,
-            d: document.getElementById('q_d').value,
-            correta: document.getElementById('q_correta').value,
-            resolucao: document.getElementById('q_resolucao').value
-        };
-
-        if (!questao.materia || !questao.pergunta) { alert("Preencha os campos obrigatórios!"); return; }
-
-        let banco = JSON.parse(localStorage.getItem('bancoQuestoes')) || [];
-        banco.push(questao);
-        localStorage.setItem('bancoQuestoes', JSON.stringify(banco));
-        alert("✅ Questão publicada!");
-        location.reload();
-    }
-
-    window.onload = verificarAcesso;
+    verificarAcesso();
 </script>
 </body>
 </html>

@@ -1,185 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<title>CAVEST - Evolução</title>
-
-<style>
-body{
-    font-family:Arial;
-    background:#0f172a;
-    color:white;
-    padding:40px;
-}
-h1{
-    text-align:center;
-    color: #38bdf8;
-    margin-bottom: 40px;
-}
-
-/* Container para as questões dinâmicas */
-#container-questoes {
-    max-width: 800px;
-    margin: auto;
-}
-
-.questao{
-    background:#1e293b;
-    padding:25px;
-    border-radius:10px;
-    margin-bottom:30px;
-    border-left: 5px solid #22c55e;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-}
-
-.img-questao {
-    max-width: 100%;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    display: block;
-}
-
-label {
-    display: block;
-    background: #334155;
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-label:hover {
-    background: #475569;
-}
-
-button{
-    background:#22c55e;
-    border:none;
-    padding:10px 20px;
-    border-radius:6px;
-    color:white;
-    font-size:15px;
-    cursor:pointer;
-    margin-top:10px;
-    font-weight: bold;
-}
-
-button:hover{
-    background:#16a34a;
-}
-
-.resolucao-box{
-    margin-top:15px;
-    background:#0f172a;
-    padding:15px;
-    border-radius:8px;
-    border: 1px dashed #facc15;
-}
-
-.voltar {
-    display: block;
-    text-align: center;
-    margin-top: 20px;
-    color: #94a3b8;
-    text-decoration: none;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>CAVEST - Evolucao</title>
+    <style>
+        body { font-family: Arial; background: #0f172a; color: white; padding: 40px; }
+        h1 { text-align: center; color: #38bdf8; margin-bottom: 40px; }
+        #container-questoes { max-width: 800px; margin: auto; }
+        .voltar { display: block; text-align: center; margin-top: 20px; color: #94a3b8; text-decoration: none; }
+        /* O estilo visual das questões agora é controlado pelo arquivo motor */
+    </style>
 </head>
 <body>
 
-<h1>Biologia - Evolução</h1>
+    <h1>Biologia - Evolucao</h1>
 
-<div id="container-questoes">
-    <p style="text-align:center; color:#94a3b8;">Estudando a seleção natural...</p>
-</div>
+    <div id="container-questoes">
+        <p style="text-align:center; color:#38bdf8;">Conectando ao banco de dados...</p>
+    </div>
 
-<a class="voltar" href="biologia.html">⬅ Voltar para Biologia</a>
+    <a class="voltar" href="biologia.html">⬅ Voltar para Biologia</a>
 
-<script>
-// FUNÇÃO PARA CARREGAR AS QUESTÕES DINÂMICAMENTE
-function carregarQuestoes() {
-    const container = document.getElementById("container-questoes");
-    const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
-    
-    // Filtra por MATERIA e ASSUNTO (evolucao)
-    const filtradas = banco.filter(q => q.materia === "biologia" && q.assunto === "evolucao");
+    <script type="module">
+        // 1. Importa a função do seu arquivo motor
+        // Se o seu arquivo se chama motor-questoes.js, mantenha assim:
+        import { carregarQuestoes } from './motor-questoes.js';
 
-    if (filtradas.length === 0) {
-        container.innerHTML = "<p style='text-align:center; color:#94a3b8;'>Nenhuma questão de Evolução disponível no momento.</p>";
-        return;
-    }
-
-    container.innerHTML = ""; 
-
-    filtradas.forEach((q, index) => {
-        const div = document.createElement("div");
-        div.className = "questao";
-
-        let imgHtml = q.imagem ? `<img src="${q.imagem}" class="img-questao">` : "";
-        let resolucaoHtml = q.resolucao ? `
-            <div id="res-${q.id}" style="display:none;" class="resolucao-box">
-                <p style="color:#facc15; font-weight:bold; margin-bottom:5px;">💡 Resolução Comentada:</p>
-                <p style="font-size:14px; color:#cbd5e1;">${q.resolucao}</p>
-            </div>` : "";
-
-        div.innerHTML = `
-            ${imgHtml}
-            <p><b>${index + 1}.</b> ${q.pergunta}</p>
-            <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
-            <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
-            <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
-            <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
-            
-            <button onclick="verificar('${q.id}', '${q.correta}')">Responder</button>
-            <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
-            ${resolucaoHtml}
-        `;
-        container.appendChild(div);
-    });
-}
-
-// FUNÇÃO DE VERIFICAÇÃO E PROGRESSO
-function verificar(id, correta) {
-    const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
-    const feedback = document.getElementById(`feedback-${id}`);
-    const resBox = document.getElementById(`res-${id}`);
-
-    if (!selecionada) {
-        alert("Por favor, selecione uma alternativa!");
-        return;
-    }
-
-    const acertou = selecionada.value === correta;
-
-    if (acertou) {
-        feedback.innerText = "✅ Correto!";
-        feedback.style.color = "#22c55e";
-    } else {
-        feedback.innerText = `❌ Incorreto! A resposta certa era (${correta.toUpperCase()})`;
-        feedback.style.color = "#ef4444";
-    }
-
-    if (resBox) resBox.style.display = "block";
-
-    // ATUALIZA PROGRESSO NO PERFIL DO ALUNO
-    let logado = localStorage.getItem("logado");
-    if(logado){
-        let usuario = JSON.parse(localStorage.getItem(logado));
-        
-        if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
-        
-        if(!usuario.questoesResolvidas.includes(id)){
-            usuario.respondidas = (usuario.respondidas || 0) + 1;
-            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-            usuario.questoesResolvidas.push(id);
-            localStorage.setItem(logado, JSON.stringify(usuario));
-        }
-    }
-}
-
-window.onload = carregarQuestoes;
-</script>
+        // 2. Chama a função passando a matéria e o assunto
+        carregarQuestoes('biologia', 'evolucao');
+    </script>
 
 </body>
 </html>
