@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>MUNDO CAVEST - Plataforma ENEM</title>
+
+<style>
+/* --- ESTILOS GERAIS --- */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+} 
+
+body{
+    background:#0f172a;
+    color:white;
+}
+
+/* --- BARRA SUPERIOR (HEADER) --- */
+header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px 40px;
+    background:#020617;
+    box-shadow:0 4px 10px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 100;
+}
+
+.menu-btn{
+    font-size:28px;
+    cursor:pointer;
+    color:white;
+    margin-right:20px;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.logo img {
+    height: 100px;
+    filter: contrast(110%) brightness(110%);
+    mix-blend-mode: screen; 
+}
+
+.titulo{
+    font-size:20px;
+    font-weight:bold;
+    color:#38bdf8;
+}
+
+/* Widget de XP no Header */
+.user-status-header {
+    display: none;
+    text-align: right;
+    background: rgba(30, 41, 59, 0.5);
+    padding: 5px 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.user-status-header b { color: #38bdf8; display: block; font-size: 14px; }
+.user-status-header span { color: #eab308; font-size: 11px; font-weight: bold; text-transform: uppercase; }
+
+.xp-loader-mini {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #6366f1, #38bdf8);
+    width: 0%;
+    transition: 1s;
+}
+
+.menu a{
+    color:#94a3b8;
+    text-decoration:none;
+    margin-left:10px;
+    font-size:16px;
+}
+
+.menu a:hover{ color:white; }
+
+/* --- MENU LATERAL --- */
+.menu-lateral{
+    position:fixed;
+    left:-250px;
+    top:0;
+    width:250px;
+    height:100%;
+    background:#111827;
+    padding-top:60px;
+    transition:0.3s;
+    z-index: 1000;
+}
+
+.menu-lateral a{
+    display:block;
+    color:white;
+    padding:15px 25px;
+    text-decoration:none;
+    font-size:18px;
+}
+
+.menu-lateral a:hover{ background:#1f2937; }
+
+/* --- ÁREA HERO --- */
+.hero{
+    text-align:center;
+    padding:60px 20px 20px 20px;
+}
+
+.hero h1{ font-size:42px; margin-bottom:10px; color: white; }
+.hero p{ color:#94a3b8; font-size:18px; }
+
+/* --- CONTADOR REGRESSIVO --- */
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px auto 40px auto;
+    max-width: 600px;
+}
+
+.time-box {
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 12px;
+    min-width: 80px;
+    text-align: center;
+    border-bottom: 3px solid #38bdf8;
+}
+
+.time-box b { display: block; font-size: 28px; color: #38bdf8; }
+.time-box span { font-size: 10px; color: #94a3b8; text-transform: uppercase; font-weight: bold; }
+
+/* --- SEÇÃO DE NOVIDADES --- */
+.novidades-container {
+    max-width: 1200px;
+    margin: 0 auto 30px auto;
+    padding: 0 40px;
+    text-align: left;
+}
+
+.novidades-titulo {
+    font-size: 18px;
+    color: #38bdf8;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.grid-novidades {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+}
+
+.item-novidade {
+    background: #1e293b;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #22c55e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-novidade a { color: white; text-decoration: none; font-weight: bold; font-size: 14px; }
+.item-novidade span { font-size: 11px; background: #334155; padding: 3px 8px; border-radius: 5px; color: #94a3b8; text-transform: uppercase; }
+
+/* --- GRID DAS MATÉRIAS --- */
+.container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:30px;
+    padding:40px;
+    max-width:1200px;
+    margin:auto;
+}
+
+.card{
+    background:#1e293b;
+    padding:40px;
+    border-radius:15px;
+    text-align:center;
+    transition:0.3s;
+    box-shadow:0 10px 25px rgba(0,0,0,0.4);
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    background:#334155;
+}
+
+.card a{ text-decoration:none; color:white; font-size:20px; font-weight:bold; }
+
+/* --- RODAPÉ --- */
+footer{ text-align:center; padding:30px; color:#64748b; font-size:14px; margin-top:40px; }
+</style>
+</head>
+
+<body>
+
+<header>
+    <div style="display: flex; align-items: center;">
+        <div class="menu-btn" onclick="abrirMenu()">☰</div>
+        <div class="logo">
+            <img src="logo_cavest.png">
+            <div class="titulo"></div>
+        </div>
+    </div>
+
+    <div class="user-status-header" id="headerStatus">
+        <b id="headerNivel">Nível 1</b>
+        <span id="headerPatente">Calouro</span>
+    </div>
+
+    <div class="menu" id="menuVisitante">
+        <a href="login.html">Login</a> |
+        <a href="registro.html">Registrar</a>
+    </div>
+
+    <div class="menu" id="menuLogado" style="display: none;">
+        <a href="dashboard.html">Meu Progresso</a>
+    </div>
+
+    <div class="xp-loader-mini" id="miniXpBar"></div>
+</header>
+
+<div id="menuLateral" class="menu-lateral">
+    <a href="index.html" onclick="abrirMenu()">⬅ Voltar</a>
+    <a href="provas_enem.html">📝 Provas do ENEM</a>
+    <a href="simulados.html">📊 Simulados</a>
+    <a href="sobre.html">ℹ Sobre</a>
+    <a href="painel-professor.html" id="linkProfessor" style="display: none; border-top: 1px solid #334155; color: #22c55e;">👨‍🏫 Painel Professor</a>
+</div>
+
+<div class="hero">
+    <h1 id="boasVindasTitulo">Estude para o ENEM</h1>
+    <p id="boasVindasSubtitulo">Escolha uma matéria para começar a praticar</p>
+</div>
+
+<div class="countdown-container">
+    <div class="time-box"><b id="dias">00</b><span>Dias</span></div>
+    <div class="time-box"><b id="horas">00</b><span>Horas</span></div>
+    <div class="time-box"><b id="minutos">00</b><span>Minutos</span></div>
+    <div class="time-box"><b id="segundos">00</b><span>Segundos</span></div>
+</div>
+
+<div class="novidades-container" id="secaoNovidades" style="display: none;">
+    <div class="novidades-titulo">✨ Materiais Recentes</div>
+    <div class="grid-novidades" id="listaNovidades"></div>
+</div>
+
+<div class="container">
+    <div class="card"><a href="fisica.html">⚛️ Física</a></div>
+    <div class="card"><a href="matematica.html">📐 Matemática</a></div>
+    <div class="card"><a href="historia.html">📜 História</a></div>
+    <div class="card"><a href="geografia.html">🌎 Geografia</a></div>
+    <div class="card"><a href="biologia.html">🧬 Biologia</a></div>
+    <div class="card"><a href="quimica.html">⚗️ Química</a></div>
+    <div class="card"><a href="portugues.html">📖 Português</a></div>
+    <div class="card"><a href="redação.html">📝 Redação</a></div>
+    <div class="card"><a href="ingles.html">📖 Inglês</a></div>
+    <div class="card"><a href="espanhol.html">📖 Espanhol</a></div>
+    <div class="card"><a href="materiais.html">📚 Materiais</a></div>
+    <div class="card"><a href="aloes.html">📷 Aulões(WIP)</a></div>
+</div>
+
+<footer>
+    © 2026 CAVEST - Um passo para a universidade
+</footer>
+
+<script>
+function abrirMenu(){
+    let menu = document.getElementById("menuLateral")
+    menu.style.left = (menu.style.left == "0px") ? "-250px" : "0px";
+}
+
+function atualizarContador() {
+    const dataEnem = new Date("November 1, 2026 13:00:00").getTime();
+    const agora = new Date().getTime();
+    const diferenca = dataEnem - agora;
+    if (diferenca > 0) {
+        const d = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diferenca % (1000 * 60)) / 1000);
+        document.getElementById("dias").innerText = d < 10 ? "0" + d : d;
+        document.getElementById("horas").innerText = h < 10 ? "0" + h : h;
+        document.getElementById("minutos").innerText = m < 10 ? "0" + m : m;
+        document.getElementById("segundos").innerText = s < 10 ? "0" + s : s;
+    }
+}
+
+function verificarUsuario() {
+    const nomeLogado = localStorage.getItem("logado");
+    const menuVisitante = document.getElementById("menuVisitante");
+    const menuLogado = document.getElementById("menuLogado");
+    const headerStatus = document.getElementById("headerStatus");
+    const linkProf = document.getElementById("linkProfessor");
+
+    if (nomeLogado) {
+        const dadosUsuario = JSON.parse(localStorage.getItem(nomeLogado));
+        if (dadosUsuario) {
+            menuVisitante.style.display = "none";
+            menuLogado.style.display = "block";
+            headerStatus.style.display = "block";
+
+            let xp = dadosUsuario.xp || 0;
+            let nivel = 1;
+            let xpRestante = xp;
+            let xpParaProximo = 1000;
+
+            while (xpRestante >= xpParaProximo) {
+                xpRestante -= xpParaProximo;
+                nivel++;
+                xpParaProximo = nivel * 1000;
+            }
+
+            const patentes = ["Calouro 🐣", "Veterano 📚", "Estrategista 🧠", "Mestre 🎓", "Lenda 🔥"];
+            let selo = patentes[Math.min(Math.floor((nivel-1)/2), 4)];
+
+            document.getElementById("headerNivel").innerText = "Nível " + nivel;
+            document.getElementById("headerPatente").innerText = selo;
+            document.getElementById("miniXpBar").style.width = (xpRestante / xpParaProximo * 100) + "%";
+
+            document.getElementById("boasVindasTitulo").innerText = `Olá, ${nomeLogado}! 👋`;
+            document.getElementById("boasVindasSubtitulo").innerText = dadosUsuario.respondidas > 0 
+                ? `Você já resolveu ${dadosUsuario.respondidas} questões. Faltam ${xpParaProximo - xpRestante} XP para subir de nível!` 
+                : "Que tal começar o seu primeiro exercício hoje?";
+
+            if (dadosUsuario.cargo === "professor") {
+                linkProf.style.display = "block";
+            }
+        }
+    } else {
+        menuVisitante.style.display = "block";
+        menuLogado.style.display = "none";
+        headerStatus.style.display = "none";
+    }
+}
+
+function carregarNovidades() {
+    const lista = document.getElementById("listaNovidades");
+    const secao = document.getElementById("secaoNovidades");
+    const materiais = JSON.parse(localStorage.getItem("bancoMateriais")) || [];
+
+    if (materiais.length > 0) {
+        secao.style.display = "block";
+        [...materiais].reverse().slice(0, 3).forEach(item => {
+            const div = document.createElement("div");
+            div.className = "item-novidade";
+            div.innerHTML = `<a href="${item.link}" target="_blank">📄 ${item.nome}</a><span>${item.materia}</span>`;
+            lista.appendChild(div);
+        });
+    }
+}
+
+window.onload = function() {
+    verificarUsuario();
+    carregarNovidades();
+    atualizarContador();
+    setInterval(atualizarContador, 1000);
+};
+</script>
+</body>
+</html>
