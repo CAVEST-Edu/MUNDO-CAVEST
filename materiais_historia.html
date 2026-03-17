@@ -4,85 +4,30 @@
     <meta charset="UTF-8">
     <title>Materiais de História - Mundo CAVEST</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #0f172a;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        h1 { 
-            color: #f59e0b; /* Amarelo Histórico/Âmbar */
-            margin-bottom: 30px; 
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        /* Estilo dos Cards de Material - Temática História */
-        .card-material {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 12px;
-            border-left: 4px solid #f59e0b; /* Borda Âmbar */
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f172a; color: white; text-align: center; padding: 20px; margin: 0; }
+        h1 { color: #f59e0b; margin-top: 40px; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
+        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: auto; }
+        
+        .card-material { 
+            background: #1e293b; 
+            padding: 25px; 
+            border-radius: 12px; 
+            border-left: 4px solid #f59e0b; 
+            transition: 0.3s; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
             justify-content: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-
-        .card-material:hover {
-            background: #334155;
-            transform: translateY(-5px);
-            border-left: 4px solid #fbbf24;
-        }
-
-        .card-material a {
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .tag {
-            font-size: 12px;
-            background: #f59e0b;
-            color: #0f172a;
-            padding: 2px 8px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        .voltar {
-            margin-top: 40px;
-            display: inline-block;
-            color: #94a3b8;
-            text-decoration: none;
-            transition: 0.2s;
-        }
-
-        .voltar:hover {
-            color: #f59e0b;
-        }
         
-        .aviso-vazio {
-            grid-column: 1 / -1;
-            color: #64748b;
-            font-style: italic;
-            margin-top: 20px;
-        }
+        .card-material:hover { background: #334155; transform: translateY(-5px); border-left-color: #fbbf24; }
+        .card-material a { text-decoration: none; color: white; font-weight: bold; font-size: 18px; margin-top: 10px; }
+        
+        .tag { font-size: 10px; background: #f59e0b; color: #0f172a; padding: 3px 10px; border-radius: 4px; text-transform: uppercase; font-weight: bold; }
+        .voltar { margin-top: 40px; display: inline-block; color: #94a3b8; text-decoration: none; font-size: 14px; transition: 0.2s; }
+        .voltar:hover { color: #f59e0b; }
+        #status { color: #64748b; font-style: italic; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -90,50 +35,66 @@
     <h1>🏛️ Materiais de História</h1>
 
     <div class="container" id="listaMateriais">
-        <div class="card-material">
-            <span class="tag">Oficial</span>
-            <a href="LINK_DO_PDF_HISTORIA_GERAL" target="_blank">Apostila de História Geral</a>
-        </div>
-
-        <div class="card-material">
-            <span class="tag">Oficial</span>
-            <a href="LINK_DO_PDF_HISTORIA_BRASIL" target="_blank">Linha do Tempo: Brasil Colônia</a>
-        </div>
+        <p id="status">Consultando os arquivos históricos...</p>
     </div>
 
     <a href="materiais.html" class="voltar">⬅ Voltar para Matérias</a>
 
-    <script>
-        function carregarMateriaisDinamicos() {
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCqMEbG7Uf03vNmEcIQa3uZhjV2npiw0_w",
+            authDomain: "mundo-cavest.firebaseapp.com",
+            projectId: "mundo-cavest",
+            storageBucket: "mundo-cavest.appspot.com",
+            messagingSenderId: "386396770156",
+            appId: "1:386396770156:web:2c506fdb989e4c15e6ad49"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function buscarMateriais() {
             const container = document.getElementById("listaMateriais");
-            const banco = JSON.parse(localStorage.getItem("bancoMateriais")) || [];
-            
-            // FILTRO: Filtrando especificamente por 'historia'
-            const materiaisFiltrados = banco.filter(item => item.materia === "historia");
+            const status = document.getElementById("status");
 
-            // Se não houver materiais no banco E apenas os fixos estiverem na tela (len 2 neste caso)
-            if (materiaisFiltrados.length === 0) {
-                const temMensagem = document.querySelector(".aviso-vazio");
-                if (!temMensagem) {
-                    container.innerHTML += `<p class="aviso-vazio">Nenhum documento extra encontrado no arquivo histórico.</p>`;
+            try {
+                // Filtro para a disciplina de história
+                const q = query(
+                    collection(db, "materiais"), 
+                    where("materia", "==", "historia"),
+                    orderBy("criadoEm", "desc")
+                );
+
+                const querySnapshot = await getDocs(q);
+                
+                if (querySnapshot.empty) {
+                    status.innerText = "Nenhum documento extra encontrado no arquivo histórico.";
+                    return;
                 }
-                return;
-            }
 
-            materiaisFiltrados.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "card-material";
-                div.innerHTML = `
-                    <span class="tag" style="background: #22c55e;">Extra</span>
-                    <a href="${item.link}" target="_blank">${item.nome}</a>
-                `;
-                container.appendChild(div);
-            });
+                container.innerHTML = "";
+
+                querySnapshot.forEach((doc) => {
+                    const material = doc.data();
+                    const div = document.createElement("div");
+                    div.className = "card-material";
+                    div.innerHTML = `
+                        <span class="tag">História</span>
+                        <a href="${material.link}" target="_blank">${material.nome}</a>
+                    `;
+                    container.appendChild(div);
+                });
+
+            } catch (error) {
+                console.error(error);
+                status.innerText = "Erro ao acessar os registros históricos.";
+            }
         }
 
-        // Executa assim que a página abre
-        window.onload = carregarMateriaisDinamicos;
+        buscarMateriais();
     </script>
-
 </body>
 </html>

@@ -2,219 +2,33 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAVEST - Cartografia</title>
-
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            },
-            svg: { fontCache: 'global' }
-        };
-    </script>
-    
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
     <style>
-        body {
-            font-family: Arial;
-            background: #0f172a;
-            color: white;
-            padding: 40px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #38bdf8; /* Azul GPS */
-            margin-bottom: 40px;
-        }
-
-        #container-questoes {
-            max-width: 800px;
-            margin: auto;
-        }
-
-        .questao {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border-left: 5px solid #38bdf8;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .map-box {
-            background: #0c4a6e; /* Azul petróleo escuro */
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            border-left: 5px solid #7dd3fc;
-            font-size: 0.95em;
-            color: #e0f2fe;
-        }
-
-        .img-questao {
-            max-width: 100%;
-            border-radius: 8px;
-            margin: 15px 0;
-            display: block;
-        }
-
-        label {
-            display: block;
-            background: #334155;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        label:hover {
-            background: #475569;
-        }
-
-        button {
-            background: #38bdf8;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            color: #082f49;
-            font-size: 15px;
-            cursor: pointer;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background: #7dd3fc;
-        }
-
-        .resolucao-box {
-            margin-top: 15px;
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px dashed #38bdf8;
-        }
-
-        .voltar {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #94a3b8;
-            text-decoration: none;
-        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f172a; color: white; padding: 20px; margin: 0; }
+        h1 { text-align: center; color: #38bdf8; margin: 40px 0; text-transform: uppercase; }
+        #container-questoes { max-width: 800px; margin: auto; padding-bottom: 50px; }
+        .card-questao { background: #1e293b; padding: 25px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #38bdf8; }
+        .texto-apoio { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 15px; font-style: italic; color: #cbd5e1; }
+        .enunciado { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6; }
+        .alt-btn { display: block; width: 100%; text-align: left; background: #334155; color: white; border: 2px solid transparent; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        .alt-btn:hover:not([disabled]) { background: #475569; }
+        .btn-resolucao { background: #fbbf24; color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .voltar { display: block; text-align: center; margin-top: 20px; color: #94a3b8; text-decoration: none; font-weight: bold; }
     </style>
 </head>
-
 <body>
+    <h1>Geografia - Cartografia</h1>
+    <div id="container-questoes"><p style="text-align:center;">Carregando questões...</p></div>
+    <a class="voltar" href="geografia.html">⬅ Voltar para geografia</a>
 
-    <h1>Geografia - Cartografia 🧭</h1>
-
-    <div id="container-questoes">
-        <div class="map-box">
-            <h3 style="margin-top:0; color:#7dd3fc;">📍 Guia de Navegação</h3>
-            <b>Escala:</b> $E = d / D$ (distância no mapa sobre distância real).<br>
-            <b>Latitude:</b> Distância da Linha do Equador (Paralelos). Varia de 0° a 90° N/S.<br>
-            <b>Longitude:</b> Distância do Meridiano de Greenwich (Meridianos). Varia de 0° a 180° L/O.<br>
-            <b>Projeção de Mercator:</b> Preserva formas, mas distorce tamanhos (Eurocêntrica).<br>
-            <b>Projeção de Peters:</b> Preserva áreas, mas distorce formas (Terceiro-mundista).
-        </div>
-
-        <p style="text-align:center; color:#94a3b8;">Localizando as coordenadas do sucesso...</p>
-    </div>
-
-    <a class="voltar" href="geografia.html">⬅ Voltar</a>
-
-    <script>
-    function carregarQuestoes() {
-        const container = document.getElementById("container-questoes");
-        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
-        
-        const filtradas = banco.filter(q => q.materia === "geografia" && q.assunto === "cartografia");
-        const infoHtml = document.querySelector(".map-box").outerHTML;
-        
-        if (filtradas.length === 0) {
-            container.innerHTML = infoHtml + "<p style='text-align:center; color:#94a3b8;'>Nenhum mapa encontrado. Adicione questões de Cartografia ao banco.</p>";
-            // Mesmo se não houver questões, processamos o cabeçalho
-            if (window.MathJax) window.MathJax.typeset();
-            return;
-        }
-
-        container.innerHTML = infoHtml; 
-
-        filtradas.forEach((q, index) => {
-            const div = document.createElement("div");
-            div.className = "questao";
-
-            let imgHtml = q.imagem ? `<img src="${q.imagem}" class="img-questao">` : "";
-            let resolucaoHtml = q.resolucao ? `
-                <div id="res-${q.id}" style="display:none;" class="resolucao-box">
-                    <p style="color:#7dd3fc; font-weight:bold; margin-bottom:5px;">🔍 Resolução Técnica:</p>
-                    <p style="font-size:14px; color:#cbd5e1;">${q.resolucao}</p>
-                </div>` : "";
-
-            div.innerHTML = `
-                ${imgHtml}
-                <p><b>${index + 1}.</b> ${q.pergunta}</p>
-                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
-                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
-                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
-                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
-                
-                <button onclick="verificar('${q.id}', '${q.correta}')">Responder</button>
-                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
-                ${resolucaoHtml}
-            `;
-            container.appendChild(div);
-        });
-
-        // --- LINHA MÁGICA: AVISA O MATHJAX QUE TEM COISA NOVA NA TELA ---
-        if (window.MathJax) {
-            window.MathJax.typesetPromise().catch((err) => console.log(err));
-        }
-    }
-
-    function verificar(id, correta) {
-        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
-        const feedback = document.getElementById(`feedback-${id}`);
-        const resBox = document.getElementById(`res-${id}`);
-
-        if (!selecionada) {
-            alert("Você está perdido? Escolha uma alternativa!");
-            return;
-        }
-
-        const acertou = selecionada.value === correta;
-
-        if (acertou) {
-            feedback.innerText = "✅ Correto! Você encontrou o caminho certo.";
-            feedback.style.color = "#38bdf8";
-        } else {
-            feedback.innerText = `❌ Desvio de rota. A alternativa correta era (${correta.toUpperCase()})`;
-            feedback.style.color = "#f87171";
-        }
-
-        if (resBox) resBox.style.display = "block";
-
-        let logado = localStorage.getItem("logado");
-        if(logado){
-            let usuario = JSON.parse(localStorage.getItem(logado));
-            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
-            
-            if(!usuario.questoesResolvidas.includes(id)){
-                usuario.respondidas = (usuario.respondidas || 0) + 1;
-                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-                usuario.questoesResolvidas.push(id);
-                localStorage.setItem(logado, JSON.stringify(usuario));
-            }
-        }
-    }
-
-    window.onload = carregarQuestoes;
+    <script type="module">
+        import './motor-questoes.js';
+        setTimeout(() => {
+            if (window.carregarQuestoes) window.carregarQuestoes('geografia', 'cartografia');
+        }, 600);
     </script>
-
 </body>
 </html>

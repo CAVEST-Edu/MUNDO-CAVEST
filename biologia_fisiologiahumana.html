@@ -2,33 +2,33 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAVEST - Fisiologia</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        body { font-family: Arial; background: #0f172a; color: white; padding: 40px; }
-        h1 { text-align: center; color: #38bdf8; margin-bottom: 40px; }
-        #container-questoes { max-width: 800px; margin: auto; }
-        .voltar { display: block; text-align: center; margin-top: 20px; color: #94a3b8; text-decoration: none; }
-        /* O estilo visual das questões agora é controlado pelo arquivo motor */
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f172a; color: white; padding: 20px; margin: 0; }
+        h1 { text-align: center; color: #38bdf8; margin: 40px 0; text-transform: uppercase; }
+        #container-questoes { max-width: 800px; margin: auto; padding-bottom: 50px; }
+        .card-questao { background: #1e293b; padding: 25px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #38bdf8; }
+        .texto-apoio { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 15px; font-style: italic; color: #cbd5e1; }
+        .enunciado { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6; }
+        .alt-btn { display: block; width: 100%; text-align: left; background: #334155; color: white; border: 2px solid transparent; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        .alt-btn:hover:not([disabled]) { background: #475569; }
+        .btn-resolucao { background: #fbbf24; color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .voltar { display: block; text-align: center; margin-top: 20px; color: #94a3b8; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
-
     <h1>Biologia - Fisiologia</h1>
-
-    <div id="container-questoes">
-        <p style="text-align:center; color:#38bdf8;">Conectando ao banco de dados...</p>
-    </div>
-
+    <div id="container-questoes"><p style="text-align:center;">Carregando questões...</p></div>
     <a class="voltar" href="biologia.html">⬅ Voltar para Biologia</a>
 
     <script type="module">
-        // 1. Importa a função do seu arquivo motor
-        // Se o seu arquivo se chama motor-questoes.js, mantenha assim:
-        import { carregarQuestoes } from './motor-questoes.js';
-
-        // 2. Chama a função passando a matéria e o assunto
-        carregarQuestoes('biologia', 'fisiologia');
+        import './motor-questoes.js';
+        setTimeout(() => {
+            if (window.carregarQuestoes) window.carregarQuestoes('biologia', 'fisiologia');
+        }, 600);
     </script>
-
 </body>
 </html>

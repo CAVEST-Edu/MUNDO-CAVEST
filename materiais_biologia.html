@@ -4,134 +4,83 @@
     <meta charset="UTF-8">
     <title>Materiais de Biologia - Mundo CAVEST</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #0f172a;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        h1 { 
-            color: #22c55e; /* Verde Biologia */
-            margin-bottom: 30px; 
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        /* Estilo dos Cards de Material - Temática Biologia */
-        .card-material {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 12px;
-            border-left: 4px solid #22c55e; /* Borda Verde */
-            transition: 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        .card-material:hover {
-            background: #064e3b; /* Fundo verde escuro no hover */
-            transform: translateY(-5px);
-            border-left: 4px solid #4ade80;
-        }
-
-        .card-material a {
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .tag {
-            font-size: 12px;
-            background: #22c55e;
-            color: #0f172a;
-            padding: 2px 8px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-
-        .voltar {
-            margin-top: 40px;
-            display: inline-block;
-            color: #94a3b8;
-            text-decoration: none;
-            transition: 0.2s;
-        }
-
-        .voltar:hover {
-            color: #22c55e;
-        }
-        
-        .aviso-vazio {
-            grid-column: 1 / -1;
-            color: #64748b;
-            font-style: italic;
-            margin-top: 20px;
-        }
+        /* ... seu estilo permanece o mesmo ... */
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f172a; color: white; text-align: center; padding: 20px; margin: 0; }
+        h1 { color: #38bdf8; margin-top: 40px; margin-bottom: 30px; text-transform: uppercase; }
+        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: auto; }
+        .card-material { background: #1e293b; padding: 25px; border-radius: 12px; border-left: 4px solid #22c55e; transition: 0.3s; display: flex; flex-direction: column; align-items: center; justify-content: center; border-bottom: 1px solid #334155; }
+        .card-material:hover { background: #1e3a8a; transform: translateY(-5px); }
+        .card-material a { text-decoration: none; color: white; font-weight: bold; font-size: 18px; margin-top: 10px; }
+        .tag { font-size: 10px; background: #22c55e; color: #0f172a; padding: 3px 10px; border-radius: 4px; text-transform: uppercase; font-weight: bold; }
+        .voltar { margin-top: 40px; display: inline-block; color: #94a3b8; text-decoration: none; font-size: 14px; }
+        #status { color: #64748b; font-style: italic; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <h1>🌿 Materiais de Biologia</h1>
+    <h1>🧬 Materiais de Biologia</h1>
 
     <div class="container" id="listaMateriais">
-        <div class="card-material">
-            <span class="tag">Oficial</span>
-            <a href="LINK_DO_PDF_CITOLOGIA" target="_blank">Caderno de Citologia (Células)</a>
-        </div>
-
-        <div class="card-material">
-            <span class="tag">Oficial</span>
-            <a href="LINK_DO_PDF_GENETICA" target="_blank">Guia Prático de Genética</a>
-        </div>
+        <p id="status">Buscando materiais na biblioteca...</p>
     </div>
 
     <a href="materiais.html" class="voltar">⬅ Voltar para Matérias</a>
 
-    <script>
-        function carregarMateriaisDinamicos() {
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCqMEbG7Uf03vNmEcIQa3uZhjV2npiw0_w",
+            authDomain: "mundo-cavest.firebaseapp.com",
+            projectId: "mundo-cavest",
+            storageBucket: "mundo-cavest.appspot.com",
+            messagingSenderId: "386396770156",
+            appId: "1:386396770156:web:2c506fdb989e4c15e6ad49"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function buscarMateriais() {
             const container = document.getElementById("listaMateriais");
-            const banco = JSON.parse(localStorage.getItem("bancoMateriais")) || [];
-            
-            // FILTRO: Filtrando especificamente por 'biologia'
-            const materiaisFiltrados = banco.filter(item => item.materia === "biologia");
+            const status = document.getElementById("status");
 
-            if (materiaisFiltrados.length === 0) {
-                const temMensagem = document.querySelector(".aviso-vazio");
-                if (!temMensagem) {
-                    container.innerHTML += `<p class="aviso-vazio">Ainda não há materiais de apoio para este ecossistema.</p>`;
+            try {
+                // FILTRO PARA BIOLOGIA
+                const q = query(
+                    collection(db, "materiais"), 
+                    where("materia", "==", "biologia"),
+                    orderBy("criadoEm", "desc")
+                );
+
+                const querySnapshot = await getDocs(q);
+                
+                if (querySnapshot.empty) {
+                    status.innerText = "Nenhuma apostila de biologia disponível no momento.";
+                    return;
                 }
-                return;
-            }
 
-            materiaisFiltrados.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "card-material";
-                div.innerHTML = `
-                    <span class="tag" style="background: #3b82f6;">Extra</span>
-                    <a href="${item.link}" target="_blank">${item.nome}</a>
-                `;
-                container.appendChild(div);
-            });
+                container.innerHTML = "";
+
+                querySnapshot.forEach((doc) => {
+                    const material = doc.data();
+                    const div = document.createElement("div");
+                    div.className = "card-material";
+                    div.innerHTML = `
+                        <span class="tag">Biologia</span>
+                        <a href="${material.link}" target="_blank">${material.nome}</a>
+                    `;
+                    container.appendChild(div);
+                });
+
+            } catch (error) {
+                console.error(error);
+                status.innerText = "Erro ao carregar materiais.";
+            }
         }
 
-        window.onload = carregarMateriaisDinamicos;
+        buscarMateriais();
     </script>
-
 </body>
 </html>
