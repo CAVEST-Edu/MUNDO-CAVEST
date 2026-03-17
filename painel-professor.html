@@ -5,130 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Professor - Mundo CAVEST</title>
     <style>
-        :root {
-            --bg-dark: #0f172a;
-            --card-bg: #1e293b;
-            --accent: #38bdf8;
-            --success: #22c55e;
-            --error: #ef4444;
-            --text-gray: #94a3b8;
-        }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: var(--bg-dark);
-            color: white;
-            padding: 20px;
-            margin: 0;
-        }
-
-        .header-admin {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 800px;
-            margin: 0 auto 20px;
-            background: var(--card-bg);
-            padding: 15px 25px;
-            border-radius: 12px;
-        }
-
-        .btn-logout {
-            background: var(--error);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .form-card {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        h2, h3 { color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
-
-        .sessao {
-            margin-bottom: 25px;
-            padding: 20px;
-            background: rgba(15, 23, 42, 0.4);
-            border-radius: 10px;
-            border: 1px solid #334155;
-        }
-
+        :root { --bg-dark: #0f172a; --card-bg: #1e293b; --accent: #38bdf8; --success: #22c55e; --error: #ef4444; --text-gray: #94a3b8; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg-dark); color: white; padding: 20px; margin: 0; }
+        .form-card { background: var(--card-bg); padding: 30px; border-radius: 15px; max-width: 800px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h2, h3 { color: var(--accent); text-transform: uppercase; }
+        .sessao { margin-bottom: 25px; padding: 20px; background: rgba(15, 23, 42, 0.4); border-radius: 10px; border: 1px solid #334155; }
         label { display: block; margin-top: 15px; color: var(--text-gray); font-size: 11px; font-weight: bold; }
-
-        input, textarea, select {
-            width: 100%; padding: 12px; margin-top: 8px; border-radius: 8px;
-            border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box;
-        }
-
+        input, textarea, select { width: 100%; padding: 12px; margin-top: 8px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
         .grid-opcoes { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-
-        .btn-enviar {
-            width: 100%; padding: 15px; background: var(--success); color: white;
-            font-weight: bold; border: none; cursor: pointer; border-radius: 8px;
-            margin-top: 20px; font-size: 16px; transition: 0.3s;
-        }
-
-        .btn-enviar:hover { background: #16a34a; transform: translateY(-2px); }
-
-        .tabela-gerenciamento {
-            width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px;
-        }
-
-        .tabela-gerenciamento th, .tabela-gerenciamento td {
-            text-align: left; padding: 12px; border-bottom: 1px solid #334155;
-        }
-
-        .btn-del {
-            background: var(--error); color: white; border: none; padding: 5px 10px;
-            border-radius: 4px; cursor: pointer; font-size: 12px;
-        }
-
+        .btn-enviar { width: 100%; padding: 15px; background: var(--success); color: white; font-weight: bold; border: none; cursor: pointer; border-radius: 8px; margin-top: 20px; font-size: 16px; }
         .voltar { display: block; text-align: center; margin-top: 30px; color: var(--text-gray); text-decoration: none; }
     </style>
 </head>
 <body>
 
-<div class="header-admin">
-    <strong id="boasVindas">Acessando...</strong>
-    <a href="#" class="btn-logout" onclick="fazerLogout()">Sair da Conta</a>
-</div>
-
 <div class="form-card">
     <h2>🚀 Portal do Mestre - Mundo CAVEST</h2>
-
-    <div class="sessao">
-        <h3>📚 Publicar Apostila/PDF</h3>
-        <div class="grid-opcoes">
-            <div>
-                <label>Título do Material:</label>
-                <input type="text" id="mat_nome" placeholder="Ex: Resumo de Genética">
-            </div>
-            <div>
-                <label>Disciplina:</label>
-                <select id="mat_materia">
-                    <option value="fisica">Física</option>
-                    <option value="matematica">Matemática</option>
-                    <option value="historia">História</option>
-                    <option value="geografia">Geografia</option>
-                    <option value="biologia">Biologia</option>
-                    <option value="quimica">Química</option>
-                    <option value="portugues">Português</option>
-                </select>
-            </div>
-        </div>
-        <label>Link do Arquivo (Google Drive/URL):</label>
-        <input type="text" id="mat_link" placeholder="Cole o link aqui...">
-        <button class="btn-enviar" onclick="salvarNovoMaterial()" style="background: var(--accent); color: #000;">Publicar Apostila</button>
-    </div>
 
     <div class="sessao">
         <h3>📝 Criar Nova Questão</h3>
@@ -139,11 +31,8 @@
                     <option value="">-- Selecione --</option>
                     <option value="fisica">Física</option>
                     <option value="matematica">Matemática</option>
-                    <option value="historia">História</option>
-                    <option value="geografia">Geografia</option>
                     <option value="biologia">Biologia</option>
                     <option value="quimica">Química</option>
-                    <option value="portugues">Português</option>
                 </select>
             </div>
             <div>
@@ -153,12 +42,6 @@
                 </select>
             </div>
         </div>
-
-        <label>Link da Imagem (Opcional):</label>
-        <input type="text" id="q_imagem" placeholder="https://exemplo.com/imagem.jpg">
-
-        <label>Texto de Apoio / Citação (Opcional):</label>
-        <textarea id="q_texto_apoio" rows="3" placeholder="Insira o texto base ou contexto da questão..."></textarea>
 
         <label>Enunciado da Questão:</label>
         <textarea id="q_pergunta" rows="4" placeholder="Digite o comando da questão aqui..."></textarea>
@@ -170,45 +53,23 @@
             <div><label>Opção D:</label><input type="text" id="q_d"></div>
         </div>
 
-        <div class="grid-opcoes">
-            <div>
-                <label>Gabarito Correto:</label>
-                <select id="q_correta">
-                    <option value="a">Alternativa A</option>
-                    <option value="b">Alternativa B</option>
-                    <option value="c">Alternativa C</option>
-                    <option value="d">Alternativa D</option>
-                </select>
-            </div>
-            <div>
-                <label>Explicação/Resolução (Opcional):</label>
-                <input type="text" id="q_resolucao" placeholder="Explique a resposta...">
-            </div>
-        </div>
+        <label>Gabarito Correto:</label>
+        <select id="q_correta">
+            <option value="a">Alternativa A</option>
+            <option value="b">Alternativa B</option>
+            <option value="c">Alternativa C</option>
+            <option value="d">Alternativa D</option>
+        </select>
 
-        <button class="btn-enviar" onclick="salvarQuestao()">Publicar Questão</button>
+        <button class="btn-enviar" id="btnPublicar">Publicar Questão</button>
     </div>
 
-    <div class="sessao">
-        <h3>📋 Materiais na Nuvem</h3>
-        <table class="tabela-gerenciamento">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Matéria</th>
-                    <th>Ação</th>
-                </tr>
-            </thead>
-            <tbody id="listaMateriaisAdmin"></tbody>
-        </table>
-    </div>
-
-    <a href="index.html" class="voltar">⬅ Voltar para a Home do Site</a>
+    <a href="index.html" class="voltar">⬅ Voltar para a Home</a>
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCqMEbG7Uf03vNmEcIQa3uZhjV2npiw0_w",
@@ -222,128 +83,12 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // --- SEGURANÇA LOCAL ---
-    function verificarAcesso() {
-        const usuarioJson = localStorage.getItem("usuarioAtual");
-        if (!usuarioJson) { window.location.href = "login.html"; return; }
-        const usuario = JSON.parse(usuarioJson);
-        if (usuario.cargo !== "professor") {
-            alert("Área exclusiva para professores!");
-            window.location.href = "index.html";
-            return;
-        }
-        document.getElementById("boasVindas").innerText = "Olá, Mestre " + usuario.nome;
-        renderizarListaMateriais();
-    }
-
-    // --- SALVAR MATERIAL ---
-    window.salvarNovoMaterial = async () => {
-        const nome = document.getElementById("mat_nome").value;
-        const link = document.getElementById("mat_link").value;
-        const materia = document.getElementById("mat_materia").value;
-
-        if (!nome || !link) { alert("Preencha o nome e o link!"); return; }
-
-        try {
-            await addDoc(collection(db, "bancoMateriais"), { nome, link, materia, data: Date.now() });
-            alert("Apostila publicada na Nuvem!");
-            location.reload();
-        } catch (e) { 
-            console.error("Erro material:", e);
-            alert("Erro ao salvar apostila."); 
-        }
-    }
-
-    // --- LISTAR MATERIAIS ---
-    window.renderizarListaMateriais = async () => {
-        const lista = document.getElementById("listaMateriaisAdmin");
-        if(!lista) return;
-        lista.innerHTML = "<tr><td colspan='3'>Carregando...</td></tr>";
-        
-        try {
-            const querySnapshot = await getDocs(query(collection(db, "bancoMateriais"), orderBy("data", "desc")));
-            lista.innerHTML = "";
-            querySnapshot.forEach((docSnap) => {
-                const item = docSnap.data();
-                lista.innerHTML += `
-                    <tr>
-                        <td>${item.nome}</td>
-                        <td>${item.materia.toUpperCase()}</td>
-                        <td><button class="btn-del" onclick="excluirMaterial('${docSnap.id}')">Apagar</button></td>
-                    </tr>
-                `;
-            });
-        } catch (e) { 
-            console.error("Erro lista:", e);
-            lista.innerHTML = "<tr><td colspan='3'>Erro ao carregar lista.</td></tr>"; 
-        }
-    }
-
-    // --- EXCLUIR MATERIAL ---
-    window.excluirMaterial = async (id) => {
-        if(confirm("Deseja apagar este material da nuvem?")) {
-            try {
-                await deleteDoc(doc(db, "bancoMateriais", id));
-                renderizarListaMateriais();
-            } catch (e) { alert("Erro ao excluir."); }
-        }
-    }
-
-    // --- SALVAR QUESTÃO (CORRIGIDO) ---
-    window.salvarQuestao = async () => {
-        console.log("Botão Salvar Questão clicado.");
-        
-        const q_materia = document.getElementById('q_materia').value;
-        const q_assunto = document.getElementById('q_assunto').value;
-        const q_pergunta = document.getElementById('q_pergunta').value;
-
-        if (!q_materia || !q_assunto || !q_pergunta) { 
-            alert("Erro: Preencha Disciplina, Assunto e Enunciado!"); 
-            return; 
-        }
-
-        const questao = {
-            materia: q_materia,
-            assunto: q_assunto,
-            imagem: document.getElementById('q_imagem').value || "",
-            texto_apoio: document.getElementById('q_texto_apoio').value || "",
-            pergunta: q_pergunta,
-            a: document.getElementById('q_a').value || "",
-            b: document.getElementById('q_b').value || "",
-            c: document.getElementById('q_c').value || "",
-            d: document.getElementById('q_d').value || "",
-            correta: document.getElementById('q_correta').value,
-            resolucao: document.getElementById('q_resolucao').value || "",
-            dataCriacao: Date.now()
-        };
-
-        try {
-            console.log("Enviando para o Firebase...", questao);
-            await addDoc(collection(db, "questoes"), questao);
-            alert("✅ Questão publicada na Nuvem com sucesso!");
-            location.reload(); 
-        } catch (e) { 
-            console.error("Erro detalhado do Firebase:", e);
-            alert("Erro ao salvar questão: " + e.message); 
-        }
-    }
-
-    // --- LOGOUT ---
-    window.fazerLogout = () => {
-        localStorage.removeItem("usuarioAtual");
-        localStorage.removeItem("logado");
-        window.location.href = "login.html";
-    };
-
-    // --- LOGICA DE ASSUNTOS ---
+    // Lógica dos Assuntos
     const baseAssuntos = {
-        fisica: ["Cinemática", "Dinâmica", "Ondas", "Óptica", "Eletrodinâmica"],
-        matematica: ["Funções", "Geometria", "Probabilidade"],
-        historia: ["Brasil Colônia", "Brasil Império", "Idade Média", "Guerras Mundiais"],
-        geografia: ["Cartografia", "Climatologia", "População"],
-        biologia: ["Citologia", "Genética", "Ecologia", "Fisiologia", "Virus", "Bioquimica", "Botanica"],
-        quimica: ["Tabela Periódica", "Estequiometria", "Orgânica"],
-        portugues: ["Gramática", "Literatura", "Interpretação"]
+        fisica: ["Cinemática", "Dinâmica"],
+        biologia: ["Genética", "Citologia", "Bioquimica"],
+        matematica: ["Funções", "Geometria"],
+        quimica: ["Orgânica"]
     };
 
     window.atualizarAssuntos = () => {
@@ -353,15 +98,40 @@
         if (materia && baseAssuntos[materia]) {
             baseAssuntos[materia].forEach(a => {
                 let opt = document.createElement("option");
-                // Normaliza para salvar no banco (sem acento, minúsculo)
-                opt.value = a.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '_');
+                opt.value = a.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
                 opt.innerText = a;
                 combo.appendChild(opt);
             });
         }
-    }
+    };
 
-    verificarAcesso();
+    // Ação do Botão
+    document.getElementById("btnPublicar").addEventListener("click", async () => {
+        const questao = {
+            materia: document.getElementById('q_materia').value,
+            assunto: document.getElementById('q_assunto').value,
+            pergunta: document.getElementById('q_pergunta').value,
+            a: document.getElementById('q_a').value,
+            b: document.getElementById('q_b').value,
+            c: document.getElementById('q_c').value,
+            d: document.getElementById('q_d').value,
+            correta: document.getElementById('q_correta').value,
+            data: Date.now()
+        };
+
+        if (!questao.materia || !questao.assunto || !questao.pergunta) {
+            alert("Preencha os campos obrigatórios!");
+            return;
+        }
+
+        try {
+            await addDoc(collection(db, "questoes"), questao);
+            alert("✅ Questão publicada com sucesso!");
+            location.reload();
+        } catch (e) {
+            alert("Erro ao salvar: " + e.message);
+        }
+    });
 </script>
 </body>
 </html>
