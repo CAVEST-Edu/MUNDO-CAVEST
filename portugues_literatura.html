@@ -2,218 +2,33 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAVEST - Literatura</title>
-
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0f172a;
-            color: white;
-            padding: 40px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #fbbf24; /* Amber/Gold */
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        #container-questoes {
-            max-width: 850px;
-            margin: auto;
-        }
-
-        /* Linha do Tempo Literária Mundo CAVEST */
-        .timeline-banner {
-            background: #1e293b;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            border-bottom: 5px solid #fbbf24;
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.75em;
-            overflow-x: auto;
-        }
-
-        .era-tag {
-            background: #334155;
-            padding: 5px 10px;
-            border-radius: 20px;
-            white-space: nowrap;
-            margin: 0 5px;
-            border: 1px solid #fbbf24;
-        }
-
-        .questao {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            border-left: 5px solid #fbbf24;
-        }
-
-        .texto-apoio {
-            background: #0f172a;
-            padding: 20px;
-            border-left: 3px solid #fbbf24;
-            margin-bottom: 15px;
-            font-style: italic;
-            line-height: 1.6;
-            color: #cbd5e1;
-            font-family: 'Georgia', serif;
-        }
-
-        label {
-            display: block;
-            background: #334155;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        label:hover {
-            background: #78350f; /* Deep Amber-900 */
-        }
-
-        button {
-            background: #fbbf24;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            color: #0f172a;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #fcd34d;
-            transform: translateY(-2px);
-        }
-
-        .resolucao-box {
-            display: none;
-            margin-top: 15px;
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #fbbf24;
-            line-height: 1.6;
-        }
-
-        .voltar {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #94a3b8;
-            text-decoration: none;
-        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f172a; color: white; padding: 20px; margin: 0; }
+        h1 { text-align: center; color: #38bdf8; margin: 40px 0; text-transform: uppercase; }
+        #container-questoes { max-width: 800px; margin: auto; padding-bottom: 50px; }
+        .card-questao { background: #1e293b; padding: 25px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #38bdf8; }
+        .texto-apoio { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 15px; font-style: italic; color: #cbd5e1; }
+        .enunciado { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6; }
+        .alt-btn { display: block; width: 100%; text-align: left; background: #334155; color: white; border: 2px solid transparent; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        .alt-btn:hover:not([disabled]) { background: #475569; }
+        .btn-resolucao { background: #fbbf24; color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .voltar { display: block; text-align: center; margin-top: 20px; color: #94a3b8; text-decoration: none; font-weight: bold; }
     </style>
 </head>
-
 <body>
+    <h1>Portugues - Literatura</h1>
+    <div id="container-questoes"><p style="text-align:center;">Carregando questões...</p></div>
+    <a class="voltar" href="portugues.html">⬅ Voltar para portugues</a>
 
-    <h1>Português - Escolas Literárias 📚</h1>
-
-    <div id="container-questoes">
-        <div class="timeline-banner">
-            <span class="era-tag">Barroco (Dualidade)</span>
-            <span class="era-tag">Arcadismo (Campo)</span>
-            <span class="era-tag">Romantismo (Emoção)</span>
-            <span class="era-tag">Realismo (Razão)</span>
-            <span class="era-tag">Modernismo (Liberdade)</span>
-        </div>
-
-        <p style="text-align:center; color:#64748b;">Analisando a evolução do pensamento humano através da escrita...</p>
-    </div>
-
-    <a class="voltar" href="portugues.html">⬅ Voltar</a>
-
-    <script>
-    function carregarQuestoes() {
-        const container = document.getElementById("container-questoes");
-        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
-        
-        // Filtra por materia: portugues e assunto: literatura
-        const filtradas = banco.filter(q => q.materia === "portugues" && q.assunto === "literatura");
-        const bannerHtml = document.querySelector(".timeline-banner").outerHTML;
-        
-        if (filtradas.length === 0) {
-            container.innerHTML = bannerHtml + "<p style='text-align:center; color:#94a3b8;'>Os livros ainda estão nas estantes. Nenhuma questão de literatura encontrada.</p>";
-            return;
-        }
-
-        container.innerHTML = bannerHtml; 
-
-        filtradas.forEach((q, index) => {
-            const div = document.createElement("div");
-            div.className = "questao";
-
-            div.innerHTML = `
-                ${q.texto ? `<div class="texto-apoio">${q.texto}</div>` : ''}
-                <p><b>${index + 1}.</b> ${q.pergunta}</p>
-                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
-                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
-                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
-                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
-                
-                <button onclick="verificar('${q.id}', '${q.correta}')">Analisar Época</button>
-                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
-                
-                <div id="res-${q.id}" class="resolucao-box">
-                    <b style="color:#fbbf24;">Contexto Literário:</b><br><br>
-                    ${q.resolucao || "Avalie as características estéticas e o momento histórico do autor para identificar a escola literária."}
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function verificar(id, correta) {
-        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
-        const feedback = document.getElementById(`feedback-${id}`);
-        const resBox = document.getElementById(`res-${id}`);
-
-        if (!selecionada) {
-            alert("Escolha uma alternativa para análise crítica!");
-            return;
-        }
-
-        const acertou = selecionada.value === correta;
-        resBox.style.display = "block";
-
-        if (acertou) {
-            feedback.innerText = "✅ Correto! Você domina o espírito da época.";
-            feedback.style.color = "#fbbf24";
-        } else {
-            feedback.innerText = `❌ Incorreto. O período literário correspondente era (${correta.toUpperCase()})`;
-            feedback.style.color = "#f87171";
-        }
-
-        // Sistema de Progresso Mundo CAVEST
-        let logado = localStorage.getItem("logado");
-        if(logado){
-            let usuario = JSON.parse(localStorage.getItem(logado));
-            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
-            
-            if(!usuario.questoesResolvidas.includes(id)){
-                usuario.respondidas = (usuario.respondidas || 0) + 1;
-                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-                usuario.questoesResolvidas.push(id);
-                localStorage.setItem(logado, JSON.stringify(usuario));
-            }
-        }
-    }
-
-    window.onload = carregarQuestoes;
+    <script type="module">
+        import './motor-questoes.js';
+        setTimeout(() => {
+            if (window.carregarQuestoes) window.carregarQuestoes('portugues', 'literatura');
+        }, 600);
     </script>
-
 </body>
 </html>

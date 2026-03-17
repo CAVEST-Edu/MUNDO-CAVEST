@@ -2,214 +2,33 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CAVEST - Reading Comprehension</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAVEST - Interpretação de Texto</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #0f172a;
-            color: white;
-            padding: 40px;
-            line-height: 1.6;
-        }
-
-        h1 {
-            text-align: center;
-            color: #60a5fa;
-            margin-bottom: 40px;
-        }
-
-        #container-questoes {
-            max-width: 850px;
-            margin: auto;
-        }
-
-        .reading-tips {
-            background: #1e293b;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            border-right: 5px solid #60a5fa;
-            font-size: 0.9em;
-        }
-
-        .tip-tag {
-            background: #3b82f6;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-            margin-right: 5px;
-        }
-
-        .questao {
-            background: #1e293b;
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 35px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        .texto-apoio {
-            background: #0f172a;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #60a5fa;
-            margin-bottom: 20px;
-            font-family: 'Georgia', serif;
-            font-size: 1.1em;
-            color: #cbd5e1;
-        }
-
-        label {
-            display: block;
-            background: #334155;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        label:hover {
-            background: #475569;
-            transform: translateX(5px);
-        }
-
-        button {
-            background: #3b82f6;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        button:hover {
-            background: #2563eb;
-        }
-
-        .resolucao-box {
-            display: none;
-            margin-top: 20px;
-            background: #0f172a;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            color: #94a3b8;
-        }
-
-        .voltar {
-            display: block;
-            text-align: center;
-            margin-top: 30px;
-            color: #64748b;
-            text-decoration: none;
-        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f172a; color: white; padding: 20px; margin: 0; }
+        h1 { text-align: center; color: #38bdf8; margin: 40px 0; text-transform: uppercase; }
+        #container-questoes { max-width: 800px; margin: auto; padding-bottom: 50px; }
+        .card-questao { background: #1e293b; padding: 25px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #38bdf8; }
+        .texto-apoio { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 15px; font-style: italic; color: #cbd5e1; }
+        .enunciado { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6; }
+        .alt-btn { display: block; width: 100%; text-align: left; background: #334155; color: white; border: 2px solid transparent; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        .alt-btn:hover:not([disabled]) { background: #475569; }
+        .btn-resolucao { background: #fbbf24; color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .voltar { display: block; text-align: center; margin-top: 20px; color: #94a3b8; text-decoration: none; font-weight: bold; }
     </style>
 </head>
-
 <body>
+    <h1>Ingles - Interpretação de Texto</h1>
+    <div id="container-questoes"><p style="text-align:center;">Carregando questões...</p></div>
+    <a class="voltar" href="ingles.html">⬅ Voltar para ingles</a>
 
-    <h1>English - Reading Comprehension 🇺🇸📖</h1>
-
-    <div id="container-questoes">
-        <div class="reading-tips">
-            <h3 style="margin-top:0; color:#60a5fa;">💡 ENEM Strategies</h3>
-            <p><span class="tip-tag">Skimming:</span> Leia o texto rapidamente para captar a ideia geral.</p>
-            <p><span class="tip-tag">Scanning:</span> Busque palavras-chave específicas nas alternativas.</p>
-            <p><span class="tip-tag">Context:</span> Não trave em palavras desconhecidas; tente deduzir pelo contexto.</p>
-        </div>
-
-        <p style="text-align:center; color:#94a3b8;">Analyzing textual evidence...</p>
-    </div>
-
-    <a class="voltar" href="ingles.html">⬅ Voltar</a>
-
-    <script>
-    function carregarQuestoes() {
-        const container = document.getElementById("container-questoes");
-        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
-        
-        // Filtra por materia: ingles e assunto: interpretacao
-        const filtradas = banco.filter(q => q.materia === "ingles" && q.assunto === "interpretacao");
-
-        const tipsHtml = document.querySelector(".reading-tips").outerHTML;
-        
-        if (filtradas.length === 0) {
-            container.innerHTML = tipsHtml + "<p style='text-align:center; color:#94a3b8;'>No texts to interpret. Feed the question bank!</p>";
-            return;
-        }
-
-        container.innerHTML = tipsHtml; 
-
-        filtradas.forEach((q, index) => {
-            const div = document.createElement("div");
-            div.className = "questao";
-
-            // Se houver texto de apoio (usando o campo enunciado ou similar)
-            let textoHtml = q.enunciado ? `<div class="texto-apoio">${q.enunciado}</div>` : "";
-
-            div.innerHTML = `
-                ${textoHtml}
-                <p><b>${index + 1}.</b> ${q.pergunta}</p>
-                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
-                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
-                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
-                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
-                
-                <button onclick="verificar('${q.id}', '${q.correta}')">Check Answer</button>
-                <p id="feedback-${q.id}" style="margin-top:15px; font-weight:bold;"></p>
-                
-                <div id="res-${q.id}" class="resolucao-box">
-                    <b style="color:#60a5fa;">Analysis:</b><br><br>
-                    ${q.resolucao || "No detailed resolution available."}
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function verificar(id, correta) {
-        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
-        const feedback = document.getElementById(`feedback-${id}`);
-        const resBox = document.getElementById(`res-${id}`);
-
-        if (!selecionada) {
-            alert("Please read and choose an option!");
-            return;
-        }
-
-        const acertou = selecionada.value === correta;
-        resBox.style.display = "block";
-
-        if (acertou) {
-            feedback.innerText = "✅ Excellent interpretation!";
-            feedback.style.color = "#4ade80";
-        } else {
-            feedback.innerText = `❌ Incorrect. Focus on the keywords! Correct: (${correta.toUpperCase()})`;
-            feedback.style.color = "#f87171";
-        }
-
-        // Sistema de Pontuação do Usuário
-        let logado = localStorage.getItem("logado");
-        if(logado){
-            let usuario = JSON.parse(localStorage.getItem(logado));
-            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
-            
-            if(!usuario.questoesResolvidas.includes(id)){
-                usuario.respondidas = (usuario.respondidas || 0) + 1;
-                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-                usuario.questoesResolvidas.push(id);
-                localStorage.setItem(logado, JSON.stringify(usuario));
-            }
-        }
-    }
-
-    window.onload = carregarQuestoes;
+    <script type="module">
+        import './motor-questoes.js';
+        setTimeout(() => {
+            if (window.carregarQuestoes) window.carregarQuestoes('ingles', 'interpretacao');
+        }, 600);
     </script>
-
 </body>
 </html>

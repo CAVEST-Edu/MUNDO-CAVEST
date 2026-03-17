@@ -4,189 +4,41 @@
 <meta charset="UTF-8">
 <title>Meu Progresso - Mundo CAVEST</title>
 <style>
-    :root {
-        --bg: #0f172a;
-        --card: #1e293b;
-        --accent: #38bdf8;
-        --success: #22c55e;
-        --gold: #eab308;
-        --text-muted: #94a3b8;
-        --xp-bar: #6366f1;
-    }
-
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: var(--bg);
-        color: white;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: 20px;
-    }
-
-    .container {
-        background: var(--card);
-        padding: 40px;
-        border-radius: 24px;
-        max-width: 500px;
-        width: 100%;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        border: 1px solid rgba(255,255,255,0.05);
-        text-align: center;
-    }
-
-    /* --- CABEÇALHO DE NÍVEL --- */
-    .level-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 10px;
-    }
-
-    .badge-patente {
-        background: var(--xp-bar);
-        padding: 5px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
-
-    .level-number {
-        font-size: 18px;
-        font-weight: bold;
-        color: var(--accent);
-    }
-
-    .xp-bar-container {
-        width: 100%;
-        height: 12px;
-        background: #334155;
-        border-radius: 10px;
-        margin-bottom: 30px;
-        overflow: hidden;
-    }
-
-    .xp-bar-fill {
-        height: 100%;
-        background: linear-gradient(90deg, var(--xp-bar), var(--accent));
-        width: 0%; /* Animado via JS */
-        transition: 1s ease-in-out;
-    }
-
-    h1 { color: var(--accent); margin-bottom: 30px; font-size: 28px; letter-spacing: -1px; }
-
-    /* --- GRÁFICO CIRCULAR --- */
-    .progress-circle {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        background: conic-gradient(var(--accent) 0%, #334155 0%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 20px auto;
-        position: relative;
-    }
-
-    .progress-circle::before {
-        content: "";
-        position: absolute;
-        width: 120px;
-        height: 120px;
-        background: var(--card);
-        border-radius: 50%;
-    }
-
-    .progress-value {
-        position: relative;
-        font-size: 32px;
-        font-weight: bold;
-    }
-
-    /* --- GRID DE ATIVIDADE --- */
-    .stats-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-        margin-bottom: 30px;
-    }
-
-    .stat-box {
-        background: rgba(15, 23, 42, 0.5);
-        padding: 15px;
-        border-radius: 15px;
-        border: 1px solid rgba(255,255,255,0.05);
-    }
-
+    :root { --bg: #0f172a; --card: #1e293b; --accent: #38bdf8; --success: #22c55e; --gold: #eab308; --text-muted: #94a3b8; --xp-bar: #6366f1; }
+    body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+    .container { background: var(--card); padding: 40px; border-radius: 24px; max-width: 500px; width: 100%; box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+    .level-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .badge-patente { background: var(--xp-bar); padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
+    .level-number { font-size: 18px; font-weight: bold; color: var(--accent); }
+    .xp-bar-container { width: 100%; height: 12px; background: #334155; border-radius: 10px; margin-bottom: 30px; overflow: hidden; }
+    .xp-bar-fill { height: 100%; background: linear-gradient(90deg, var(--xp-bar), var(--accent)); width: 0%; transition: 1s ease-in-out; }
+    h1 { color: var(--accent); margin-bottom: 30px; font-size: 28px; }
+    .progress-circle { width: 150px; height: 150px; border-radius: 50%; background: conic-gradient(var(--accent) 0%, #334155 0%); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto; position: relative; }
+    .progress-circle::before { content: ""; position: absolute; width: 120px; height: 120px; background: var(--card); border-radius: 50%; }
+    .progress-value { position: relative; font-size: 32px; font-weight: bold; }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+    .stat-box { background: rgba(15, 23, 42, 0.5); padding: 15px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); }
     .stat-box span { display: block; color: var(--text-muted); font-size: 11px; text-transform: uppercase; margin-bottom: 5px; }
     .stat-box b { font-size: 18px; color: white; }
-
-    /* --- MEDALHAS --- */
-    .conquistas {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-        margin: 25px 0;
-    }
-
-    .medalha {
-        background: rgba(15, 23, 42, 0.4);
-        padding: 12px 5px;
-        border-radius: 12px;
-        font-size: 10px;
-        color: var(--text-muted);
-        filter: grayscale(1);
-        opacity: 0.4;
-        border: 1px solid transparent;
-        transition: 0.4s;
-    }
-
-    .medalha.desbloqueada {
-        filter: grayscale(0);
-        opacity: 1;
-        color: white;
-        border-color: var(--gold);
-        background: rgba(234, 179, 8, 0.1);
-        box-shadow: 0 0 15px rgba(234, 179, 8, 0.15);
-        animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-    }
-
-    .medalha-icon { font-size: 24px; display: block; margin-bottom: 5px; }
-
-    #mensagem-container {
-        padding: 15px;
-        border-radius: 12px;
-        background: rgba(56, 189, 248, 0.05);
-        border-left: 4px solid var(--accent);
-        font-size: 14px;
-        line-height: 1.5;
-        text-align: left;
-    }
-
-    .btn-sair {
-        background: transparent; color: #ef4444; border: 1px solid #ef4444;
-        padding: 8px 20px; border-radius: 8px; cursor: pointer;
-        font-weight: bold; margin-top: 30px; transition: 0.3s;
-    }
-
-    .btn-sair:hover { background: #ef4444; color: white; }
-    .voltar { display: block; margin-top: 20px; color: var(--text-muted); text-decoration: none; font-size: 14px; }
+    .conquistas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 25px 0; }
+    .medalha { background: rgba(15, 23, 42, 0.4); padding: 12px 5px; border-radius: 12px; font-size: 10px; color: var(--text-muted); filter: grayscale(1); opacity: 0.4; border: 1px solid transparent; }
+    .medalha.desbloqueada { filter: grayscale(0); opacity: 1; color: white; border-color: var(--gold); background: rgba(234, 179, 8, 0.1); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    
+    /* Novos Estilos de Botão */
+    .btn-container { display: flex; flex-direction: column; gap: 10px; margin-top: 30px; }
+    .btn-menu { background: var(--accent); color: #0f172a; padding: 12px 20px; border-radius: 12px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+    .btn-menu:hover { background: #7dd3fc; transform: translateY(-2px); }
+    .btn-sair { background: transparent; color: #ef4444; border: 1px solid #ef4444; padding: 10px 20px; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+    .btn-sair:hover { background: rgba(239, 68, 68, 0.1); }
 </style>
 </head>
 <body>
 
 <div class="container">
     <div class="level-header">
-        <span class="badge-patente" id="patente">Calouro</span>
-        <span class="level-number" id="txtNivel">Nível 1</span>
+        <span class="badge-patente" id="patente">Carregando...</span>
+        <span class="level-number" id="txtNivel">Lvl --</span>
     </div>
     <div class="xp-bar-container">
         <div class="xp-bar-fill" id="barraXP"></div>
@@ -199,95 +51,83 @@
     </div>
 
     <div class="stats-grid">
-        <div class="stat-box">
-            <span>Respondidas</span>
-            <b id="respondidas">0</b>
-        </div>
-        <div class="stat-box">
-            <span>XP Total</span>
-            <b id="xpTotal" style="color: var(--gold);">0</b>
-        </div>
+        <div class="stat-box"><span>Respondidas</span><b id="respondidas">0</b></div>
+        <div class="stat-box"><span>XP Total</span><b id="xpTotal" style="color: var(--gold);">0</b></div>
     </div>
 
     <div class="conquistas">
-        <div id="medalha-1" class="medalha">
-            <span class="medalha-icon">🎯</span> Primeiro Passo
-        </div>
-        <div id="medalha-2" class="medalha">
-            <span class="medalha-icon">🔥</span> Em Chamas
-        </div>
-        <div id="medalha-3" class="medalha">
-            <span class="medalha-icon">🎓</span> Mestre ENEM
-        </div>
+        <div id="medalha-1" class="medalha"><span class="medalha-icon">🎯</span> Primeiro Passo</div>
+        <div id="medalha-2" class="medalha"><span class="medalha-icon">🔥</span> Em Chamas</div>
+        <div id="medalha-3" class="medalha"><span class="medalha-icon">🎓</span> Mestre ENEM</div>
     </div>
 
-    <div id="mensagem-container">
-        <p id="mensagem-texto">Analizando seu desempenho...</p>
+    <div class="btn-container">
+        <a href="index.html" class="btn-menu">🏠 Ir para o Menu Principal</a>
+        <button class="btn-sair" id="btnSair">Sair da Conta</button>
     </div>
-
-    <button class="btn-sair" onclick="sair()">Sair da Conta</button>
-    <a href="index.html" class="voltar">⬅ Voltar ao Painel Principal</a>
 </div>
 
-<script>
-    let logado = localStorage.getItem("logado");
-    if(!logado) window.location.href="login.html";
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    let usuario = JSON.parse(localStorage.getItem(logado));
-    
-    // Dados Básicos
-    let respondidas = usuario.respondidas || 0;
-    let acertos = usuario.acertos || 0;
-    let xp = usuario.xp || 0;
-    let porcentagem = respondidas > 0 ? (acertos/respondidas)*100 : 0;
+    const firebaseConfig = {
+        apiKey: "AIzaSyCqMEbG7Uf03vNmEcIQa3uZhjV2npiw0_w",
+        authDomain: "mundo-cavest.firebaseapp.com",
+        projectId: "mundo-cavest",
+        storageBucket: "mundo-cavest.appspot.com",
+        messagingSenderId: "386396770156",
+        appId: "1:386396770156:web:2c506fdb989e4c15e6ad49"
+    };
 
-    // --- LÓGICA DE NÍVEL (RPG) ---
-    // Cada nível precisa de (Nível * 1000) XP. Ex: Lvl 1 -> 1000, Lvl 2 -> 2000...
-    let nivel = 1;
-    let xpRestante = xp;
-    let xpParaProximo = 1000;
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    while (xpRestante >= xpParaProximo) {
-        xpRestante -= xpParaProximo;
-        nivel++;
-        xpParaProximo = nivel * 1000;
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) { window.location.href = "login.html"; return; }
+
+        const docSnap = await getDoc(doc(db, "usuarios", user.uid));
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            atualizarVisual(data);
+        }
+    });
+
+    function atualizarVisual(usuario) {
+        let xp = usuario.xp || 0;
+        let respondidas = usuario.respondidas || 0;
+        let acertos = usuario.acertos || 0;
+        let porcentagem = respondidas > 0 ? (acertos/respondidas)*100 : 0;
+
+        let nivel = 1;
+        let xpRestante = xp;
+        let xpParaProximo = 1000;
+        while (xpRestante >= xpParaProximo) {
+            xpRestante -= xpParaProximo;
+            nivel++;
+            xpParaProximo = nivel * 1000;
+        }
+
+        document.getElementById("txtNivel").innerText = "Nível " + nivel;
+        document.getElementById("xpTotal").innerText = xp.toLocaleString() + " XP";
+        document.getElementById("barraXP").style.width = (xpRestante / xpParaProximo * 100) + "%";
+        document.getElementById("respondidas").innerText = respondidas;
+        document.getElementById("porcentagem").innerText = Math.round(porcentagem) + "%";
+        document.getElementById("circulo").style.background = `conic-gradient(var(--accent) ${porcentagem}%, #334155 0%)`;
+
+        const patentes = ["Calouro 🐣", "Veterano 📚", "Estrategista 🧠", "Mestre 🎓", "Lenda do ENEM 🔥"];
+        document.getElementById("patente").innerText = patentes[Math.min(Math.floor((nivel-1)/2), 4)];
+
+        if (respondidas >= 1) document.getElementById("medalha-1").classList.add("desbloqueada");
+        if (acertos >= 10) document.getElementById("medalha-2").classList.add("desbloqueada");
+        if (porcentagem >= 80 && respondidas >= 20) document.getElementById("medalha-3").classList.add("desbloqueada");
     }
 
-    let porcXpBarra = (xpRestante / xpParaProximo) * 100;
-
-    // Atualiza Visual de Nível
-    document.getElementById("txtNivel").innerText = "Nível " + nivel;
-    document.getElementById("xpTotal").innerText = xp.toLocaleString() + " XP";
-    document.getElementById("barraXP").style.width = porcXpBarra + "%";
-
-    // Define Patente
-    const patentes = ["Calouro 🐣", "Veterano 📚", "Estrategista 🧠", "Mestre 🎓", "Lenda do ENEM 🔥"];
-    let selo = patentes[Math.min(Math.floor((nivel-1)/2), 4)];
-    document.getElementById("patente").innerText = selo;
-
-    // Atualiza Gráfico de Acertos
-    document.getElementById("respondidas").innerText = respondidas;
-    document.getElementById("porcentagem").innerText = Math.round(porcentagem) + "%";
-    document.getElementById("circulo").style.background = `conic-gradient(var(--accent) ${porcentagem}%, #334155 0%)`;
-
-    // Medalhas
-    if (respondidas >= 1) document.getElementById("medalha-1").classList.add("desbloqueada");
-    if (acertos >= 10) document.getElementById("medalha-2").classList.add("desbloqueada");
-    if (porcentagem >= 80 && respondidas >= 20) document.getElementById("medalha-3").classList.add("desbloqueada");
-
-    // Mensagem de Feedback
-    const msg = document.getElementById("mensagem-texto");
-    if (respondidas === 0) {
-        msg.innerHTML = "<b>Bem-vindo!</b> Resolva questões ou faça uma redação para ganhar XP!";
-    } else {
-        msg.innerHTML = `Faltam <b>${xpParaProximo - xpRestante} XP</b> para você subir para o Nível ${nivel + 1}. Continue estudando!`;
-    }
-
-    function sair(){
-        localStorage.removeItem("logado");
-        window.location.href="login.html";
-    }
+    document.getElementById("btnSair").onclick = () => {
+        signOut(auth).then(() => { window.location.href = "login.html"; });
+    };
 </script>
-
 </body>
 </html>

@@ -2,202 +2,33 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAVEST - Probabilidade</title>
-
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0f172a;
-            color: white;
-            padding: 40px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #a855f7; /* Violet */
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        #container-questoes {
-            max-width: 850px;
-            margin: auto;
-        }
-
-        .prob-formula {
-            background: #1e293b;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            border-top: 5px solid #a855f7;
-            text-align: center;
-        }
-
-        .formula-box {
-            display: inline-block;
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            font-size: 1.1em;
-        }
-
-        .formula-box b { color: #a855f7; }
-
-        .questao {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            border-right: 5px solid #a855f7;
-        }
-
-        label {
-            display: block;
-            background: #334155;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        label:hover {
-            background: #4c1d95; /* Violet-900 */
-        }
-
-        button {
-            background: #a855f7;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #c084fc;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
-        }
-
-        .resolucao-box {
-            display: none;
-            margin-top: 15px;
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #a855f7;
-            line-height: 1.6;
-        }
-
-        .voltar {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #94a3b8;
-            text-decoration: none;
-        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f172a; color: white; padding: 20px; margin: 0; }
+        h1 { text-align: center; color: #38bdf8; margin: 40px 0; text-transform: uppercase; }
+        #container-questoes { max-width: 800px; margin: auto; padding-bottom: 50px; }
+        .card-questao { background: #1e293b; padding: 25px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #38bdf8; }
+        .texto-apoio { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 15px; font-style: italic; color: #cbd5e1; }
+        .enunciado { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6; }
+        .alt-btn { display: block; width: 100%; text-align: left; background: #334155; color: white; border: 2px solid transparent; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        .alt-btn:hover:not([disabled]) { background: #475569; }
+        .btn-resolucao { background: #fbbf24; color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .voltar { display: block; text-align: center; margin-top: 20px; color: #94a3b8; text-decoration: none; font-weight: bold; }
     </style>
 </head>
-
 <body>
+    <h1>Matematica - Probabilidade</h1>
+    <div id="container-questoes"><p style="text-align:center;">Carregando questões...</p></div>
+    <a class="voltar" href="matematica.html">⬅ Voltar para ingles</a>
 
-    <h1>Matemática - Chance e Probabilidade 🎲</h1>
-
-    <div id="container-questoes">
-        <div class="prob-formula">
-            <div class="formula-box">
-                P(E) = <b>Favoráveis</b> / <b>Total (Espaço Amostral)</b>
-            </div>
-            <p style="font-size: 0.8em; margin-top: 10px; color: #94a3b8;">A probabilidade sempre estará entre 0 (impossível) e 1 (certeza).</p>
-        </div>
-
-        <p style="text-align:center; color:#64748b;">Analisando chances estatísticas...</p>
-    </div>
-
-    <a class="voltar" href="matematica.html">⬅ Voltar</a>
-
-    <script>
-    function carregarQuestoes() {
-        const container = document.getElementById("container-questoes");
-        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
-        
-        // Filtra por materia: matematica e assunto: probabilidade
-        const filtradas = banco.filter(q => q.materia === "matematica" && q.assunto === "probabilidade");
-        const formulaHtml = document.querySelector(".prob-formula").outerHTML;
-        
-        if (filtradas.length === 0) {
-            container.innerHTML = formulaHtml + "<p style='text-align:center; color:#94a3b8;'>Espaço amostral vazio. Adicione questões de probabilidade!</p>";
-            return;
-        }
-
-        container.innerHTML = formulaHtml; 
-
-        filtradas.forEach((q, index) => {
-            const div = document.createElement("div");
-            div.className = "questao";
-
-            div.innerHTML = `
-                <p><b>${index + 1}.</b> ${q.pergunta}</p>
-                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
-                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
-                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
-                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
-                
-                <button onclick="verificar('${q.id}', '${q.correta}')">Calcular Chance</button>
-                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
-                
-                <div id="res-${q.id}" class="resolucao-box">
-                    <b style="color:#a855f7;">Raciocínio Lógico:</b><br><br>
-                    ${q.resolucao || "Identifique os casos favoráveis e divida pelo total de possibilidades."}
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function verificar(id, correta) {
-        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
-        const feedback = document.getElementById(`feedback-${id}`);
-        const resBox = document.getElementById(`res-${id}`);
-
-        if (!selecionada) {
-            alert("Faça sua aposta (escolha uma alternativa)!");
-            return;
-        }
-
-        const acertou = selecionada.value === correta;
-        resBox.style.display = "block";
-
-        if (acertou) {
-            feedback.innerText = "✅ Correto! As chances estavam a seu favor.";
-            feedback.style.color = "#a855f7";
-        } else {
-            feedback.innerText = `❌ Incorreto. O resultado provável era (${correta.toUpperCase()})`;
-            feedback.style.color = "#f87171";
-        }
-
-        // Sistema de Progresso Mundo CAVEST
-        let logado = localStorage.getItem("logado");
-        if(logado){
-            let usuario = JSON.parse(localStorage.getItem(logado));
-            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
-            
-            if(!usuario.questoesResolvidas.includes(id)){
-                usuario.respondidas = (usuario.respondidas || 0) + 1;
-                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-                usuario.questoesResolvidas.push(id);
-                localStorage.setItem(logado, JSON.stringify(usuario));
-            }
-        }
-    }
-
-    window.onload = carregarQuestoes;
+    <script type="module">
+        import './motor-questoes.js';
+        setTimeout(() => {
+            if (window.carregarQuestoes) window.carregarQuestoes('matematica', 'probabilidade');
+        }, 600);
     </script>
-
 </body>
 </html>

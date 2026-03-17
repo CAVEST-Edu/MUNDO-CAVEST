@@ -2,214 +2,33 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAVEST - Future Tenses</title>
-
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #0f172a;
-            color: white;
-            padding: 40px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #22d3ee; /* Cyan Future */
-            margin-bottom: 40px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        #container-questoes {
-            max-width: 800px;
-            margin: auto;
-        }
-
-        .future-panel {
-            background: #1e293b;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border-top: 5px solid #22d3ee;
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-        }
-
-        .future-type {
-            flex: 1;
-            padding: 10px;
-        }
-
-        .future-type b {
-            color: #22d3ee;
-            font-size: 1.2em;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .questao {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border-left: 5px solid #0891b2; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        }
-
-        label {
-            display: block;
-            background: #334155;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        label:hover {
-            background: #164e63;
-        }
-
-        button {
-            background: #06b6d4;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 6px;
-            color: #0f172a;
-            font-size: 15px;
-            cursor: pointer;
-            margin-top: 10px;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-
-        button:hover {
-            background: #22d3ee;
-            transform: scale(1.05);
-        }
-
-        .resolucao-box {
-            margin-top: 15px;
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px dashed #22d3ee;
-            font-size: 0.95em;
-        }
-
-        .voltar {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #94a3b8;
-            text-decoration: none;
-        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f172a; color: white; padding: 20px; margin: 0; }
+        h1 { text-align: center; color: #38bdf8; margin: 40px 0; text-transform: uppercase; }
+        #container-questoes { max-width: 800px; margin: auto; padding-bottom: 50px; }
+        .card-questao { background: #1e293b; padding: 25px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #38bdf8; }
+        .texto-apoio { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 15px; font-style: italic; color: #cbd5e1; }
+        .enunciado { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6; }
+        .alt-btn { display: block; width: 100%; text-align: left; background: #334155; color: white; border: 2px solid transparent; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        .alt-btn:hover:not([disabled]) { background: #475569; }
+        .btn-resolucao { background: #fbbf24; color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .voltar { display: block; text-align: center; margin-top: 20px; color: #94a3b8; text-decoration: none; font-weight: bold; }
     </style>
 </head>
-
 <body>
+    <h1>Ingles - Future Tenses</h1>
+    <div id="container-questoes"><p style="text-align:center;">Carregando questões...</p></div>
+    <a class="voltar" href="ingles.html">⬅ Voltar para ingles</a>
 
-    <h1>English - Future Frontier 🚀</h1>
-
-    <div id="container-questoes">
-        <div class="future-panel">
-            <div class="future-type">
-                <b>WILL</b>
-                <p>Predictions (Incertezas)<br>Instant Decisions<br>Promises</p>
-            </div>
-            <div style="border-left: 1px solid #334155;"></div>
-            <div class="future-type">
-                <b>GOING TO</b>
-                <p>Fixed Plans<br>Intentions<br>Present Evidence</p>
-            </div>
-        </div>
-
-        <p style="text-align:center; color:#94a3b8; font-style: italic;">Calculando trajetórias temporais...</p>
-    </div>
-
-    <a class="voltar" href="ingles.html">⬅ Voltar</a>
-
-    <script>
-    function carregarQuestoes() {
-        const container = document.getElementById("container-questoes");
-        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
-        
-        // Filtra por materia: ingles e assunto: future
-        const filtradas = banco.filter(q => q.materia === "ingles" && q.assunto === "future");
-
-        const panelHtml = document.querySelector(".future-panel").outerHTML;
-        
-        if (filtradas.length === 0) {
-            container.innerHTML = panelHtml + "<p style='text-align:center; color:#94a3b8;'>The future is empty. Add questions to the bank!</p>";
-            return;
-        }
-
-        container.innerHTML = panelHtml; 
-
-        filtradas.forEach((q, index) => {
-            const div = document.createElement("div");
-            div.className = "questao";
-
-            let resolucaoHtml = q.resolucao ? `
-                <div id="res-${q.id}" style="display:none;" class="resolucao-box">
-                    <p style="color:#22d3ee; font-weight:bold; margin-bottom:5px;">🔍 Timeline Analysis:</p>
-                    <p style="color:#cbd5e1;">${q.resolucao}</p>
-                </div>` : "";
-
-            div.innerHTML = `
-                <p><b>${index + 1}.</b> ${q.pergunta}</p>
-                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
-                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
-                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
-                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
-                
-                <button onclick="verificar('${q.id}', '${q.correta}')">Launch Answer</button>
-                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
-                ${resolucaoHtml}
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function verificar(id, correta) {
-        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
-        const feedback = document.getElementById(`feedback-${id}`);
-        const resBox = document.getElementById(`res-${id}`);
-
-        if (!selecionada) {
-            alert("Please select your destination (answer)!");
-            return;
-        }
-
-        const acertou = selecionada.value === correta;
-
-        if (acertou) {
-            feedback.innerText = "✅ Target reached! Correct future identified.";
-            feedback.style.color = "#22d3ee";
-        } else {
-            feedback.innerText = `❌ Off course. The correct timeline was (${correta.toUpperCase()})`;
-            feedback.style.color = "#f87171";
-        }
-
-        if (resBox) resBox.style.display = "block";
-
-        let logado = localStorage.getItem("logado");
-        if(logado){
-            let usuario = JSON.parse(localStorage.getItem(logado));
-            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
-            
-            if(!usuario.questoesResolvidas.includes(id)){
-                usuario.respondidas = (usuario.respondidas || 0) + 1;
-                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-                usuario.questoesResolvidas.push(id);
-                localStorage.setItem(logado, JSON.stringify(usuario));
-            }
-        }
-    }
-
-    window.onload = carregarQuestoes;
+    <script type="module">
+        import './motor-questoes.js';
+        setTimeout(() => {
+            if (window.carregarQuestoes) window.carregarQuestoes('ingles', 'future');
+        }, 600);
     </script>
-
 </body>
 </html>

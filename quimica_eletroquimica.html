@@ -2,219 +2,33 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CAVEST - Eletroquímica</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAVEST - Eletroquimica</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0f172a;
-            color: white;
-            padding: 40px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #fbbf24; /* Amber/Electric Yellow */
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
-        }
-
-        #container-questoes {
-            max-width: 850px;
-            margin: auto;
-        }
-
-        /* Guia de Fluxo de Elétrons Mundo CAVEST */
-        .electro-guide {
-            background: #1e293b;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            border-top: 5px solid #fbbf24;
-            display: flex;
-            justify-content: space-around;
-            gap: 15px;
-        }
-
-        .node-card {
-            flex: 1;
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid #334155;
-        }
-
-        .node-card b { color: #fbbf24; display: block; font-size: 1.2em; }
-        .node-card span { font-size: 0.8em; color: #94a3b8; }
-
-        .questao {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            border-right: 5px solid #fbbf24;
-        }
-
-        label {
-            display: block;
-            background: #334155;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        label:hover {
-            background: #451a03; /* Dark Amber */
-        }
-
-        button {
-            background: #fbbf24;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            color: #0f172a;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #f59e0b;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(251, 191, 36, 0.3);
-        }
-
-        .resolucao-box {
-            display: none;
-            margin-top: 15px;
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px dashed #fbbf24;
-            line-height: 1.6;
-        }
-
-        .voltar {
-            display: block;
-            text-align: center;
-            margin-top: 30px;
-            color: #94a3b8;
-            text-decoration: none;
-            font-size: 0.9em;
-        }
-
-        .voltar:hover { color: #fbbf24; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f172a; color: white; padding: 20px; margin: 0; }
+        h1 { text-align: center; color: #38bdf8; margin: 40px 0; text-transform: uppercase; }
+        #container-questoes { max-width: 800px; margin: auto; padding-bottom: 50px; }
+        .card-questao { background: #1e293b; padding: 25px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #38bdf8; }
+        .texto-apoio { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 15px; font-style: italic; color: #cbd5e1; }
+        .enunciado { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6; }
+        .alt-btn { display: block; width: 100%; text-align: left; background: #334155; color: white; border: 2px solid transparent; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        .alt-btn:hover:not([disabled]) { background: #475569; }
+        .btn-resolucao { background: #fbbf24; color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .voltar { display: block; text-align: center; margin-top: 20px; color: #94a3b8; text-decoration: none; font-weight: bold; }
     </style>
 </head>
-
 <body>
+    <h1>Portugues - Eletroquimica</h1>
+    <div id="container-questoes"><p style="text-align:center;">Carregando questões...</p></div>
+    <a class="voltar" href="quimica.html">⬅ Voltar para quimica</a>
 
-    <h1>Química - Eletroquímica ⚡</h1>
-
-    <div id="container-questoes">
-        <div class="electro-guide">
-            <div class="node-card">
-                <b>C R</b>
-                <span>Cátodo = Redução<br>(Ganha elétrons)</span>
-            </div>
-            <div class="node-card">
-                <b>A O</b>
-                <span>Ânodo = Oxidação<br>(Perde elétrons)</span>
-            </div>
-            <div class="node-card">
-                <b>ΔE > 0</b>
-                <span>Pilha (Espontâneo)<br>Gera Energia</span>
-            </div>
-        </div>
-
-        <p style="text-align:center; color:#64748b; margin-bottom: 20px;">Mapeando a jornada dos elétrons...</p>
-    </div>
-
-     <a class="voltar" href="quimica.html">⬅ Voltar</a>
-
-    <script>
-    function carregarQuestoes() {
-        const container = document.getElementById("container-questoes");
-        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
-        
-        // Filtra por materia: quimica e assunto: eletroquimica
-        const filtradas = banco.filter(q => q.materia === "quimica" && q.assunto === "eletroquimica");
-        const guideHtml = document.querySelector(".electro-guide").outerHTML;
-        
-        if (filtradas.length === 0) {
-            container.innerHTML = guideHtml + "<p style='text-align:center; color:#94a3b8;'>Circuito aberto. Nenhuma questão de eletroquímica encontrada.</p>";
-            return;
-        }
-
-        container.innerHTML = guideHtml; 
-
-        filtradas.forEach((q, index) => {
-            const div = document.createElement("div");
-            div.className = "questao";
-
-            div.innerHTML = `
-                <p><b>${index + 1}.</b> ${q.pergunta}</p>
-                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
-                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
-                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
-                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
-                
-                <button onclick="verificar('${q.id}', '${q.correta}')">Fechar Circuito</button>
-                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
-                
-                <div id="res-${q.id}" class="resolucao-box">
-                    <b style="color:#fbbf24;">Potencial de Reação:</b><br><br>
-                    ${q.resolucao || "Lembre-se: elétrons fluem do ânodo para o cátodo. Verifique quem oxida e quem reduz."}
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function verificar(id, correta) {
-        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
-        const feedback = document.getElementById("feedback-" + id);
-        const resBox = document.getElementById("res-" + id);
-
-        if (!selecionada) {
-            alert("Selecione uma alternativa para gerar corrente!");
-            return;
-        }
-
-        const acertou = selecionada.value === correta;
-        resBox.style.display = "block";
-
-        if (acertou) {
-            feedback.innerText = "✅ Correto! Fluxo de elétrons estabilizado.";
-            feedback.style.color = "#fbbf24";
-        } else {
-            feedback.innerText = `❌ Incorreto. A polaridade correta era (${correta.toUpperCase()})`;
-            feedback.style.color = "#f87171";
-        }
-
-        // Integração Mundo CAVEST Progresso
-        let logado = localStorage.getItem("logado");
-        if(logado){
-            let usuario = JSON.parse(localStorage.getItem(logado));
-            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
-            
-            if(!usuario.questoesResolvidas.includes(id)){
-                usuario.respondidas = (usuario.respondidas || 0) + 1;
-                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-                usuario.questoesResolvidas.push(id);
-                localStorage.setItem(logado, JSON.stringify(usuario));
-            }
-        }
-    }
-
-    window.onload = carregarQuestoes;
+    <script type="module">
+        import './motor-questoes.js';
+        setTimeout(() => {
+            if (window.carregarQuestoes) window.carregarQuestoes('quimica', 'eletroquimica');
+        }, 600);
     </script>
-
 </body>
 </html>

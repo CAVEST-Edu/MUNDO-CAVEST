@@ -2,201 +2,33 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CAVEST - Interpretação de Texto</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAVEST - Interpretacao de Texto</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0f172a;
-            color: white;
-            padding: 40px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #22c55e; /* Green */
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        #container-questoes {
-            max-width: 850px;
-            margin: auto;
-        }
-
-        .texto-apoio {
-            background: #1e293b;
-            padding: 20px;
-            border-left: 5px solid #22c55e;
-            margin-bottom: 20px;
-            font-style: italic;
-            line-height: 1.6;
-            color: #e2e8f0;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .questao {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        label {
-            display: block;
-            background: #334155;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        label:hover {
-            background: #064e3b; /* Emerald-900 */
-        }
-
-        button {
-            background: #22c55e;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #4ade80;
-            transform: scale(1.02);
-        }
-
-        .resolucao-box {
-            display: none;
-            margin-top: 15px;
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #22c55e;
-            line-height: 1.6;
-        }
-
-        .voltar {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #94a3b8;
-            text-decoration: none;
-        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f172a; color: white; padding: 20px; margin: 0; }
+        h1 { text-align: center; color: #38bdf8; margin: 40px 0; text-transform: uppercase; }
+        #container-questoes { max-width: 800px; margin: auto; padding-bottom: 50px; }
+        .card-questao { background: #1e293b; padding: 25px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #38bdf8; }
+        .texto-apoio { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 15px; font-style: italic; color: #cbd5e1; }
+        .enunciado { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6; }
+        .alt-btn { display: block; width: 100%; text-align: left; background: #334155; color: white; border: 2px solid transparent; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        .alt-btn:hover:not([disabled]) { background: #475569; }
+        .btn-resolucao { background: #fbbf24; color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .voltar { display: block; text-align: center; margin-top: 20px; color: #94a3b8; text-decoration: none; font-weight: bold; }
     </style>
 </head>
-
 <body>
+    <h1>Portugues - Interpretacao de Texto</h1>
+    <div id="container-questoes"><p style="text-align:center;">Carregando questões...</p></div>
+    <a class="voltar" href="portugues.html">⬅ Voltar para portugues</a>
 
-    <h1>Linguagens - Interpretação e Análise 📖</h1>
-
-    <div id="container-questoes">
-        <p style="text-align:center; color:#64748b;">Decifrando sentidos e contextos...</p>
-    </div>
-
-    <a class="voltar" href="portugues.html">⬅ Voltar</a>
-
-    <script>
-    // Banco de questões local para este módulo (pode ser integrado ao seu banco global)
-    const questoesInterpretacao = [
-        {
-            id: 'it1',
-            texto: '"A vida é a arte do encontro, embora haja tanto desencontro pela vida." (Vinícius de Moraes)',
-            pergunta: 'Qual é a ideia central contida no trecho acima?',
-            a: 'A vida é feita apenas de momentos tristes.',
-            b: 'O desencontro é o objetivo principal da existência.',
-            c: 'Apesar das dificuldades, o foco da vida são as conexões humanas.',
-            d: 'A arte não deve se misturar com os problemas da vida real.',
-            correta: 'c',
-            resolucao: 'O autor utiliza a antítese entre "encontro" e "desencontro" para ressaltar que a essência da vida reside na união, superando os obstáculos cotidianos.'
-        },
-        {
-            id: 'it2',
-            texto: '',
-            pergunta: 'O que define o uso da linguagem conotativa em um texto?',
-            a: 'O uso das palavras com sentido literal, como no dicionário.',
-            b: 'O uso das palavras em sentido figurado e simbólico.',
-            c: 'A utilização exclusiva de termos científicos e técnicos.',
-            d: 'Um texto focado em dados estatísticos.',
-            correta: 'b',
-            resolucao: 'Conotação é o sentido figurado, dependente do contexto e da emoção, oposto à Denotação (sentido "D" de dicionário).'
-        }
-    ];
-
-    function carregarQuestoes() {
-        const container = document.getElementById("container-questoes");
-        container.innerHTML = ""; 
-
-        questoesInterpretacao.forEach((q, index) => {
-            const div = document.createElement("div");
-            div.className = "questao";
-
-            div.innerHTML = `
-                ${q.texto ? `<div class="texto-apoio">${q.texto}</div>` : ''}
-                <p><b>${index + 1}.</b> ${q.pergunta}</p>
-                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
-                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
-                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
-                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
-                
-                <button onclick="verificar('${q.id}', '${q.correta}')">Confirmar Leitura</button>
-                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
-                
-                <div id="res-${q.id}" class="resolucao-box">
-                    <b style="color:#22c55e;">Análise do Texto:</b><br><br>
-                    ${q.resolucao}
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function verificar(id, correta) {
-        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
-        const feedback = document.getElementById(`feedback-${id}`);
-        const resBox = document.getElementById(`res-${id}`);
-
-        if (!selecionada) {
-            alert("Analise as opções antes de responder!");
-            return;
-        }
-
-        const acertou = selecionada.value === correta;
-        resBox.style.display = "block";
-
-        // Salvar progresso
-        let respostas = JSON.parse(localStorage.getItem("respostasInterpretacao")) || {};
-        respostas[id] = { selecionada: selecionada.value, acertou: acertou };
-        localStorage.setItem("respostasInterpretacao", JSON.stringify(respostas));
-
-        if (acertou) {
-            feedback.innerText = "✅ Excelente interpretação!";
-            feedback.style.color = "#22c55e";
-        } else {
-            feedback.innerText = `❌ Incorreto. A intenção do autor era a opção (${correta.toUpperCase()})`;
-            feedback.style.color = "#f87171";
-        }
-
-        // Atualizar perfil do usuário
-        let logado = localStorage.getItem("logado");
-        if(logado){
-            let usuario = JSON.parse(localStorage.getItem(logado));
-            usuario.respondidas = (usuario.respondidas || 0) + 1;
-            if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-            localStorage.setItem(logado, JSON.stringify(usuario));
-        }
-    }
-
-    window.onload = carregarQuestoes;
+    <script type="module">
+        import './motor-questoes.js';
+        setTimeout(() => {
+            if (window.carregarQuestoes) window.carregarQuestoes('portugues', 'interpretacao');
+        }, 600);
     </script>
-
 </body>
 </html>

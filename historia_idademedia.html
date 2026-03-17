@@ -2,202 +2,33 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>CAVEST - Idade Média</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAVEST - Idade Media</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        body {
-            font-family: Arial;
-            background: #0f172a;
-            color: white;
-            padding: 40px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #eab308; /* Dourado Medieval */
-            margin-bottom: 40px;
-        }
-
-        #container-questoes {
-            max-width: 800px;
-            margin: auto;
-        }
-
-        .questao {
-            background: #1e293b;
-            padding: 25px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border-left: 5px solid #eab308;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .medieval-box {
-            background: #334155; /* Cinza Pedra */
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            border-left: 5px solid #ca8a04;
-            font-size: 0.95em;
-            color: #f1f5f9;
-        }
-
-        .img-questao {
-            max-width: 100%;
-            border-radius: 8px;
-            margin: 15px 0;
-            display: block;
-        }
-
-        label {
-            display: block;
-            background: #334155;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        label:hover {
-            background: #475569;
-        }
-
-        button {
-            background: #eab308;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            color: #1e293b;
-            font-size: 15px;
-            cursor: pointer;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background: #ca8a04;
-        }
-
-        .resolucao-box {
-            margin-top: 15px;
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px dashed #eab308;
-        }
-
-        .voltar {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #94a3b8;
-            text-decoration: none;
-        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f172a; color: white; padding: 20px; margin: 0; }
+        h1 { text-align: center; color: #38bdf8; margin: 40px 0; text-transform: uppercase; }
+        #container-questoes { max-width: 800px; margin: auto; padding-bottom: 50px; }
+        .card-questao { background: #1e293b; padding: 25px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #38bdf8; }
+        .texto-apoio { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-bottom: 15px; font-style: italic; color: #cbd5e1; }
+        .enunciado { font-size: 1.1rem; margin-bottom: 20px; line-height: 1.6; }
+        .alt-btn { display: block; width: 100%; text-align: left; background: #334155; color: white; border: 2px solid transparent; padding: 15px; border-radius: 10px; cursor: pointer; transition: 0.2s; }
+        .alt-btn:hover:not([disabled]) { background: #475569; }
+        .btn-resolucao { background: #fbbf24; color: #000; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .voltar { display: block; text-align: center; margin-top: 20px; color: #94a3b8; text-decoration: none; font-weight: bold; }
     </style>
 </head>
-
 <body>
+    <h1>Historia - Idade Media</h1>
+    <div id="container-questoes"><p style="text-align:center;">Carregando questões...</p></div>
+    <a class="voltar" href="historia.html">⬅ Voltar para historia</a>
 
-    <h1>História - Idade Média: O Mundo Feudal 🏰</h1>
-
-    <div id="container-questoes">
-        <div class="medieval-box">
-            <h3 style="margin-top:0; color:#facc15;">🛡️ A Sociedade de Ordens</h3>
-            <b>Clero:</b> "Os que oram". Responsáveis pela salvação espiritual e educação.<br>
-            <b>Nobreza:</b> "Os que guerreiam". Detentores de terras e responsáveis pela proteção militar.<br>
-            <b>Campesinato:</b> "Os que trabalham". Servos presos à terra por obrigações (corveia, talha, banalidades).<br>
-            <b>Teocentrismo:</b> Deus como centro de tudo. A Igreja era a instituição mais poderosa da Europa.<br>
-            <b>Renascimento Comercial:</b> A partir do século XI, o ressurgimento das cidades (burgos) e das feiras.
-        </div>
-
-        <p style="text-align:center; color:#94a3b8;">Consultando os pergaminhos da biblioteca...</p>
-    </div>
-
-    <a class="voltar" href="historia.html">⬅ Voltar</a>
-
-    <script>
-    function carregarQuestoes() {
-        const container = document.getElementById("container-questoes");
-        const banco = JSON.parse(localStorage.getItem("bancoQuestoes")) || [];
-        
-        // Filtra por materia: historia e assunto: idade-media
-        const filtradas = banco.filter(q => q.materia === "historia" && q.assunto === "idade-media");
-
-        const infoHtml = document.querySelector(".medieval-box").outerHTML;
-        
-        if (filtradas.length === 0) {
-            container.innerHTML = infoHtml + "<p style='text-align:center; color:#94a3b8;'>A biblioteca está vazia. Adicione questões sobre Idade Média ao banco.</p>";
-            return;
-        }
-
-        container.innerHTML = infoHtml; 
-
-        filtradas.forEach((q, index) => {
-            const div = document.createElement("div");
-            div.className = "questao";
-
-            let imgHtml = q.imagem ? `<img src="${q.imagem}" class="img-questao">` : "";
-            let resolucaoHtml = q.resolucao ? `
-                <div id="res-${q.id}" style="display:none;" class="resolucao-box">
-                    <p style="color:#facc15; font-weight:bold; margin-bottom:5px;">🔍 Análise do Feudalismo:</p>
-                    <p style="font-size:14px; color:#cbd5e1;">${q.resolucao}</p>
-                </div>` : "";
-
-            div.innerHTML = `
-                ${imgHtml}
-                <p><b>${index + 1}.</b> ${q.pergunta}</p>
-                <label><input type="radio" name="q${q.id}" value="a"> A) ${q.a}</label>
-                <label><input type="radio" name="q${q.id}" value="b"> B) ${q.b}</label>
-                <label><input type="radio" name="q${q.id}" value="c"> C) ${q.c}</label>
-                <label><input type="radio" name="q${q.id}" value="d"> D) ${q.d}</label>
-                
-                <button onclick="verificar('${q.id}', '${q.correta}')">Responder</button>
-                <p id="feedback-${q.id}" style="margin-top:10px; font-weight:bold;"></p>
-                ${resolucaoHtml}
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function verificar(id, correta) {
-        const selecionada = document.querySelector(`input[name="q${id}"]:checked`);
-        const feedback = document.getElementById(`feedback-${id}`);
-        const resBox = document.getElementById(`res-${id}`);
-
-        if (!selecionada) {
-            alert("A Igreja ordena que você escolha uma alternativa!");
-            return;
-        }
-
-        const acertou = selecionada.value === correta;
-
-        if (acertou) {
-            feedback.innerText = "✅ Correto! Sua sabedoria é digna dos grandes monges.";
-            feedback.style.color = "#eab308";
-        } else {
-            feedback.innerText = `❌ Incorreto. Os registros apontam a alternativa (${correta.toUpperCase()})`;
-            feedback.style.color = "#f87171";
-        }
-
-        if (resBox) resBox.style.display = "block";
-
-        let logado = localStorage.getItem("logado");
-        if(logado){
-            let usuario = JSON.parse(localStorage.getItem(logado));
-            if(!usuario.questoesResolvidas) usuario.questoesResolvidas = [];
-            
-            if(!usuario.questoesResolvidas.includes(id)){
-                usuario.respondidas = (usuario.respondidas || 0) + 1;
-                if(acertou) usuario.acertos = (usuario.acertos || 0) + 1;
-                usuario.questoesResolvidas.push(id);
-                localStorage.setItem(logado, JSON.stringify(usuario));
-            }
-        }
-    }
-
-    window.onload = carregarQuestoes;
+    <script type="module">
+        import './motor-questoes.js';
+        setTimeout(() => {
+            if (window.carregarQuestoes) window.carregarQuestoes('historia', 'idade media');
+        }, 600);
     </script>
-
 </body>
 </html>

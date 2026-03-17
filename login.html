@@ -4,97 +4,51 @@
 <meta charset="UTF-8">
 <title>Login - CAVEST</title>
 <style>
-body{
-  font-family:Arial;
-  background:#0f172a;
-  color:white;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  margin: 0;
-}
-.container{
-  background:#1e293b;
-  padding:40px;
-  border-radius:10px;
-  width:300px;
-  text-align:center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-}
-input{
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-  border:none;
-  border-radius:5px;
-  box-sizing: border-box;
-}
-button{
-  padding:10px;
-  width:100%;
-  background:#38bdf8;
-  border:none;
-  border-radius:5px;
-  cursor:pointer;
-  margin-bottom: 15px;
-  font-weight: bold;
-}
-.voltar {
-    display: inline-block;
-    text-decoration: none;
-    color: white;
-    background: #22c55e;
-    padding: 10px 20px;
-    border-radius: 6px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.voltar:hover {
-    background: #16a34a;
-}
+    body{ font-family:Arial; background:#0f172a; color:white; display:flex; justify-content:center; align-items:center; height:100vh; margin: 0; }
+    .container{ background:#1e293b; padding:40px; border-radius:10px; width:300px; text-align:center; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+    input{ width:100%; padding:10px; margin:10px 0; border:none; border-radius:5px; box-sizing: border-box; }
+    button{ padding:10px; width:100%; background:#38bdf8; border:none; border-radius:5px; cursor:pointer; margin-bottom: 15px; font-weight: bold; }
+    .voltar { display: inline-block; text-decoration: none; color: white; background: #22c55e; padding: 10px 20px; border-radius: 6px; width: 100%; box-sizing: border-box; }
 </style>
 </head>
-
 <body>
 <div class="container">
-<h2>Login</h2>
-<input type="text" id="nome" placeholder="Nome">
-<input type="password" id="senha" placeholder="Senha">
-<button onclick="login()">Entrar</button>
-<a href="index.html" class="voltar">⬅ Voltar</a>
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="E-mail">
+    <input type="password" id="senha" placeholder="Senha">
+    <button id="btnLogin">Entrar</button>
+    <a href="index.html" class="voltar">⬅ Voltar</a>
+    <p style="margin-top:15px; font-size:12px;">Não tem conta? <a href="registrar.html" style="color:#38bdf8">Crie uma</a></p>
 </div>
 
-<script>
-function login(){
-  let nome = document.getElementById("nome").value.trim()
-  let senha = document.getElementById("senha").value.trim()
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  // 1. Busca os dados do usuário no "banco" (localStorage)
-  let dadosSalvos = localStorage.getItem(nome);
+    const firebaseConfig = {
+        apiKey: "AIzaSyCqMEbG7Uf03vNmEcIQa3uZhjV2npiw0_w",
+        authDomain: "mundo-cavest.firebaseapp.com",
+        projectId: "mundo-cavest",
+        storageBucket: "mundo-cavest.appspot.com",
+        messagingSenderId: "386396770156",
+        appId: "1:386396770156:web:2c506fdb989e4c15e6ad49"
+    };
 
-  if(!dadosSalvos){
-    alert("Usuário não encontrado!");
-    return;
-  }
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-  let usuario = JSON.parse(dadosSalvos);
+    document.getElementById("btnLogin").onclick = async () => {
+        const email = document.getElementById("email").value.trim();
+        const senha = document.getElementById("senha").value.trim();
 
-  // 2. Verifica se a senha confere
-  if(senha === usuario.senha){
-    // SALVA O USUÁRIO LOGADO (Isso aqui libera o painel de professor nos materiais!)
-    localStorage.setItem("usuarioAtual", JSON.stringify(usuario));
-    
-    // Mantém a sua lógica original de controle de login
-    localStorage.setItem("logado", nome);
-
-    alert("Olá, " + nome + "! Login realizado.");
-    window.location.href="index.html"; // Mudei para index para você ver a home primeiro
-  } else {
-    alert("Senha incorreta!");
-  }
-}
+        try {
+            await signInWithEmailAndPassword(auth, email, senha);
+            alert("Login realizado!");
+            window.location.href = "dashboard.html"; 
+        } catch (error) {
+            alert("E-mail ou senha incorretos!");
+        }
+    };
 </script>
 </body>
 </html>
