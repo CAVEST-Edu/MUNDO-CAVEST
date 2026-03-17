@@ -2,13 +2,14 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CAVEST - Genética</title>
     <style>
-        body { font-family: Arial; background: #0f172a; color: white; padding: 40px; }
-        h1 { text-align: center; color: #38bdf8; margin-bottom: 40px; }
-        #container-questoes { max-width: 800px; margin: auto; }
-        .voltar { display: block; text-align: center; margin-top: 20px; color: #94a3b8; text-decoration: none; }
-        /* O estilo visual das questões agora é controlado pelo arquivo motor */
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f172a; color: white; padding: 20px; margin: 0; }
+        h1 { text-align: center; color: #38bdf8; margin: 40px 0; }
+        #container-questoes { max-width: 800px; margin: auto; padding-bottom: 50px; }
+        .voltar { display: block; text-align: center; margin-top: 20px; color: #94a3b8; text-decoration: none; font-weight: bold; }
+        .voltar:hover { color: #38bdf8; }
     </style>
 </head>
 <body>
@@ -22,12 +23,14 @@
     <a class="voltar" href="biologia.html">⬅ Voltar para Biologia</a>
 
     <script type="module">
-        // 1. Importa a função do seu arquivo motor
-        // Se o seu arquivo se chama motor-questoes.js, mantenha assim:
-        import { carregarQuestoes } from './motor-questoes.js';
+        import './motor-questoes.js';
 
-        // 2. Chama a função passando a matéria e o assunto
-        carregarQuestoes('biologia', 'genetica');
+        // Pequeno atraso para garantir que o script motor foi lido
+        setTimeout(() => {
+            if (window.carregarQuestoes) {
+                window.carregarQuestoes('biologia', 'genetica');
+            }
+        }, 300);
     </script>
 
 </body>
