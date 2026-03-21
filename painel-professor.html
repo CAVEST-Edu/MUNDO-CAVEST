@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Mestre - Mundo CAVEST</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        :root { --bg: #0f172a; --card: #1e293b; --accent: #38bdf8; --success: #22c55e; --error: #ef4444; }
+        :root { --bg: #0f172a; --card: #1e293b; --accent: #38bdf8; --success: #22c55e; --error: #ef4444; --preview-bg: #0f172a; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: white; padding: 20px; margin: 0; }
         .container { max-width: 900px; margin: 0 auto; }
         .form-card { background: var(--card); padding: 30px; border-radius: 15px; margin-bottom: 40px; border: 1px solid #334155; }
@@ -20,6 +22,9 @@
         .tabela { width: 100%; border-collapse: collapse; margin-top: 15px; background: #0f172a; border-radius: 8px; overflow: hidden; font-size: 14px; }
         th, td { text-align: left; padding: 12px; border-bottom: 1px solid #334155; }
         .btn-del { background: var(--error); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        
+        .preview-box { background: var(--preview-bg); padding: 15px; border-radius: 8px; border: 1px dashed var(--accent); margin-top: 10px; min-height: 50px; color: #e2e8f0; }
+        .hint { font-size: 11px; color: #fbbf24; margin-top: 5px; font-style: italic; }
     </style>
 </head>
 <body>
@@ -75,15 +80,22 @@
             </div>
             
             <label>Link da Imagem (Opcional):</label>
-            <input type="text" id="q_imagem" placeholder="URL da imagem (Google Drive, Imgur, etc)">
+            <input type="text" id="q_imagem" placeholder="URL da imagem">
 
             <label>Texto de Apoio (Opcional):</label>
-            <textarea id="q_apoio" rows="3" placeholder="Contexto ou texto base..."></textarea>
+            <textarea id="q_apoio" rows="2" placeholder="Contexto ou texto base..." oninput="atualizarPreview()"></textarea>
 
-            <label>Enunciado / Comando:</label>
-            <textarea id="q_pergunta" rows="3" placeholder="O comando da questão..."></textarea>
+            <label>Enunciado / Comando (Use ^ para potências, ex: 10^-4):</label>
+            <textarea id="q_pergunta" rows="3" placeholder="Ex: Calcule 10^-4..." oninput="atualizarPreview()"></textarea>
+            <div class="hint">Dica: O sistema converte ^ em potência automaticamente.</div>
             
-            <div class="grid">
+            <label>Visualização em Tempo Real (Apoio + Pergunta):</label>
+            <div id="preview_container" class="preview-box">
+                <div id="pre_apoio" style="color:#94a3b8; font-style:italic; margin-bottom:8px; font-size: 0.9rem;"></div>
+                <div id="pre_pergunta">O enunciado aparecerá aqui...</div>
+            </div>
+
+            <div class="grid" style="margin-top:15px;">
                 <input type="text" id="q_a" placeholder="Opção A">
                 <input type="text" id="q_b" placeholder="Opção B">
                 <input type="text" id="q_c" placeholder="Opção C">
@@ -96,7 +108,8 @@
             </select>
 
             <label style="color: #fbbf24;">💡 Resolução Comentada (Opcional):</label>
-            <textarea id="q_resolucao" rows="4" placeholder="Explique como chegar na resposta correta..."></textarea>
+            <textarea id="q_resolucao" rows="4" placeholder="Explique o passo a passo..." oninput="atualizarPreview()"></textarea>
+            <div id="pre_resolucao" class="preview-box" style="border-color:#fbbf24; display:none; font-size: 0.9rem;"></div>
             
             <button id="btnPostarQuestao" class="btn btn-success">Publicar Questão</button>
         </div>
@@ -126,6 +139,34 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+
+    // Função para converter 10^-4 em LaTeX automaticamente
+    function autoFormatar(texto) {
+        if (!texto) return "";
+        // Transforma algo^algo em \( algo^{algo} \)
+        return texto.replace(/([a-zA-Z0-9]+)\^([a-zA-Z0-9\-]+)/g, "\\( $1^{$2} \\)");
+    }
+
+    window.atualizarPreview = function() {
+        const apoioRaw = document.getElementById("q_apoio").value;
+        const perguntaRaw = document.getElementById("q_pergunta").value;
+        const resolucaoRaw = document.getElementById("q_resolucao").value;
+
+        document.getElementById("pre_apoio").innerHTML = autoFormatar(apoioRaw);
+        document.getElementById("pre_pergunta").innerHTML = autoFormatar(perguntaRaw) || "O enunciado aparecerá aqui...";
+        
+        const preRes = document.getElementById("pre_resolucao");
+        if(resolucaoRaw) {
+            preRes.style.display = "block";
+            preRes.innerHTML = "<strong>💡 Resolução:</strong><br>" + autoFormatar(resolucaoRaw);
+        } else {
+            preRes.style.display = "none";
+        }
+
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+    };
 
     async function carregarMateriais() {
         const querySnapshot = await getDocs(query(collection(db, "materiais"), orderBy("criadoEm", "desc")));
@@ -166,26 +207,40 @@
     };
 
     document.getElementById("btnPostarQuestao").onclick = async () => {
+        const btn = document.getElementById("btnPostarQuestao");
+        btn.disabled = true;
+        btn.innerText = "Publicando...";
+
         const dados = {
             materia: document.getElementById("q_materia").value,
             assunto: document.getElementById("q_assunto").value,
             imagem: document.getElementById("q_imagem").value || "",
-            textoApoio: document.getElementById("q_apoio").value || "",
-            pergunta: document.getElementById("q_pergunta").value,
-            a: document.getElementById("q_a").value,
-            b: document.getElementById("q_b").value,
-            c: document.getElementById("q_c").value,
-            d: document.getElementById("q_d").value,
+            textoApoio: autoFormatar(document.getElementById("q_apoio").value),
+            pergunta: autoFormatar(document.getElementById("q_pergunta").value),
+            a: autoFormatar(document.getElementById("q_a").value),
+            b: autoFormatar(document.getElementById("q_b").value),
+            c: autoFormatar(document.getElementById("q_c").value),
+            d: autoFormatar(document.getElementById("q_d").value),
             correta: document.getElementById("q_correta").value,
-            resolucao: document.getElementById("q_resolucao").value || "",
+            resolucao: autoFormatar(document.getElementById("q_resolucao").value),
             criadoEm: Date.now()
         };
         
-        if(!dados.pergunta || !dados.assunto || !dados.materia) return alert("Erro: Matéria, Assunto e Enunciado são obrigatórios!");
+        if(!dados.pergunta || !dados.assunto || !dados.materia) {
+            alert("Erro: Matéria, Assunto e Enunciado são obrigatórios!");
+            btn.disabled = false;
+            btn.innerText = "Publicar Questão";
+            return;
+        }
         
-        await addDoc(collection(db, "questoes"), dados);
-        alert("Questão postada!");
-        location.reload();
+        try {
+            await addDoc(collection(db, "questoes"), dados);
+            alert("Questão postada com sucesso!");
+            location.reload();
+        } catch (e) {
+            alert("Erro: " + e);
+            btn.disabled = false;
+        }
     };
 
     carregarMateriais();
