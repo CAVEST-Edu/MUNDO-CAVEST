@@ -64,7 +64,6 @@
         #resultado h3 { color: #22c55e; border-bottom: 1px solid #334155; padding-bottom: 5px; }
         #resultado strong { color: #4ade80; }
 
-        /* Banner de XP */
         .xp-banner {
             background: rgba(234, 179, 8, 0.15);
             border: 1px solid #eab308;
@@ -156,8 +155,12 @@
             divResultado.style.display = "block";
             divResultado.innerHTML = "<em>Gerando correção baseada no tema: " + tema + "...</em>";
 
+            // --- ENDEREÇO DA API ---
+            // Substitua 'http://localhost:3000' pelo seu link do Render quando estiver pronto
+            const API_URL = "http://localhost:3000/corrigir";
+
             try {
-                let resposta = await fetch("http://localhost:3000/corrigir", {
+                let resposta = await fetch(API_URL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ 
@@ -166,16 +169,18 @@
                     })
                 });
 
+                if (!resposta.ok) throw new Error("Erro no servidor");
+
                 let dados = await resposta.json();
                 divResultado.innerHTML = marked.parse(dados.resposta);
                 btnP.style.display = "inline-block";
                 
-                // --- ADICIONAR XP AO FINALIZAR ---
                 adicionarXP(500);
                 xpBanner.style.display = "block";
 
             } catch (erro) {
-                divResultado.innerHTML = "❌ Erro ao conectar com o servidor. Verifique se a sua API está rodando.";
+                divResultado.innerHTML = "❌ Erro ao conectar com o servidor. Verifique se a sua API está rodando no link correto.";
+                console.error(erro);
             } finally {
                 btnC.innerText = "Corrigir com IA";
                 btnC.disabled = false;
