@@ -6,11 +6,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ⚠️ Mantenha sua chave segura!
-const groq = new Groq({ apiKey: "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" });
+// Mudança importante: O servidor vai buscar a chave nas configurações do Render
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 app.post("/corrigir", async (req, res) => {
-    // Agora recebemos a redação E o tema
     const { redacao, tema } = req.body;
 
     try {
@@ -56,7 +55,7 @@ ${redacao}`
                 },
             ],
             model: "llama-3.3-70b-versatile",
-            temperature: 0.5, // Diminuí um pouco para a correção ser mais técnica e menos "criativa"
+            temperature: 0.5,
         });
 
         res.json({ resposta: completion.choices[0].message.content });
@@ -67,6 +66,8 @@ ${redacao}`
     }
 });
 
-app.listen(3000, () => {
-    console.log("🚀 Servidor Mundo CAVEST rodando em http://localhost:3000");
+// Isso permite que o Render escolha a porta que ele quiser
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`🚀 Servidor Mundo CAVEST rodando na porta ${PORT}`);
 });
