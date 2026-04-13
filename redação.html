@@ -155,9 +155,8 @@
             divResultado.style.display = "block";
             divResultado.innerHTML = "<em>Gerando correção baseada no tema: " + tema + "...</em>";
 
-            // --- ENDEREÇO DA API ---
-            // Substitua 'http://localhost:3000' pelo seu link do Render quando estiver pronto
-            const API_URL = "http://localhost:3000/corrigir";
+            // --- ENDEREÇO DA API DO MUNDO CAVEST NO RENDER ---
+            const API_URL = "https://mundo-cavest.onrender.com/corrigir";
 
             try {
                 let resposta = await fetch(API_URL, {
@@ -179,7 +178,7 @@
                 xpBanner.style.display = "block";
 
             } catch (erro) {
-                divResultado.innerHTML = "❌ Erro ao conectar com o servidor. Verifique se a sua API está rodando no link correto.";
+                divResultado.innerHTML = "❌ Erro ao conectar com o servidor. Note que na primeira vez o servidor pode demorar até 1 minuto para 'acordar'.";
                 console.error(erro);
             } finally {
                 btnC.innerText = "Corrigir com IA";
