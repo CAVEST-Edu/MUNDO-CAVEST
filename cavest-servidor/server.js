@@ -3,14 +3,26 @@ const cors = require("cors");
 const Groq = require("groq-sdk");
 
 const app = express();
+
+// Configuração do CORS para aceitar conexões de qualquer lugar (evita o erro no navegador)
 app.use(cors());
 app.use(express.json());
 
-// Mudança importante: O servidor vai buscar a chave nas configurações do Render
+// Chave de API vinda das Environment Variables do Render
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+// Rota de teste para você saber se o servidor está vivo
+app.get("/", (req, res) => {
+    res.send("🚀 Servidor do Mundo CAVEST está online e operante!");
+});
 
 app.post("/corrigir", async (req, res) => {
     const { redacao, tema } = req.body;
+
+    // Verificação básica de segurança
+    if (!redacao || !tema) {
+        return res.status(400).json({ erro: "Redação ou tema ausentes." });
+    }
 
     try {
         const completion = await groq.chat.completions.create({
@@ -61,12 +73,12 @@ ${redacao}`
         res.json({ resposta: completion.choices[0].message.content });
 
     } catch (erro) {
-        console.error("ERRO:", erro);
+        console.error("ERRO NA GROQ:", erro);
         res.status(500).json({ erro: "Falha na comunicação com a IA." });
     }
 });
 
-// Isso permite que o Render escolha a porta que ele quiser
+// Porta dinâmica para o Render
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`🚀 Servidor Mundo CAVEST rodando na porta ${PORT}`);

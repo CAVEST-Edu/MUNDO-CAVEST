@@ -35,6 +35,7 @@
             width: 100%; height: 250px; padding: 15px;
             border-radius: 8px; border: none; font-size: 16px;
             background: #f8fafc; color: #1e293b; margin-bottom: 10px;
+            resize: vertical;
         }
 
         .botoes-container { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -49,6 +50,7 @@
 
         #btnCorrigir { background: #22c55e; color: white; }
         #btnCorrigir:hover { background: #16a34a; }
+        #btnCorrigir:disabled { background: #64748b; cursor: not-allowed; }
 
         #btnPDF { 
             background: #ef4444; color: white; display: none;
@@ -61,8 +63,8 @@
             display: none; color: #f1f5f9;
         }
 
-        #resultado h3 { color: #22c55e; border-bottom: 1px solid #334155; padding-bottom: 5px; }
-        #resultado strong { color: #4ade80; }
+        #resultado h1, #resultado h2, #resultado h3 { color: #22c55e; margin-top: 20px; }
+        #resultado hr { border: 0; border-top: 1px solid #334155; margin: 20px 0; }
 
         .xp-banner {
             background: rgba(234, 179, 8, 0.15);
@@ -101,7 +103,7 @@
 
     <div id="xpGanhos" class="xp-banner">✨ +500 XP por praticar redação!</div>
 
-    <textarea id="redacao" placeholder="Cole sua redação aqui..."></textarea>
+    <textarea id="redacao" placeholder="Cole sua redação aqui (mínimo 100 caracteres)..."></textarea>
 
     <div class="botoes-container">
         <button id="btnCorrigir" onclick="corrigirRedacao()">Corrigir com IA</button>
@@ -110,7 +112,7 @@
 
     <div id="resultado"></div>
 
-    <a href="index.html" class="voltar">⬅ Voltar</a>
+    <a href="index.html" class="voltar">⬅ Voltar para o Início</a>
 
     <script>
         const temasEnem = [
@@ -132,6 +134,7 @@
             document.getElementById("resultado").style.display = "none";
             document.getElementById("btnPDF").style.display = "none";
             document.getElementById("xpGanhos").style.display = "none";
+            document.getElementById("redacao").value = "";
         }
 
         async function corrigirRedacao() {
@@ -142,20 +145,20 @@
             let btnP = document.getElementById("btnPDF");
             let xpBanner = document.getElementById("xpGanhos");
 
-            if (texto.length < 100) {
-                alert("Sua redação precisa de pelo menos 100 caracteres para ser analisada!");
+            if (texto.trim().length < 100) {
+                alert("Sua redação está muito curta! Escreva pelo menos 100 caracteres.");
                 return;
             }
 
-            btnC.innerText = "Analisando...";
+            btnC.innerText = "Analisando... (pode levar 40s)";
             btnC.disabled = true;
             btnP.style.display = "none";
             xpBanner.style.display = "none";
             
             divResultado.style.display = "block";
-            divResultado.innerHTML = "<em>Gerando correção baseada no tema: " + tema + "...</em>";
+            divResultado.innerHTML = "<em>Conectando ao servidor e gerando correção...</em>";
 
-            // --- ENDEREÇO DA API DO MUNDO CAVEST NO RENDER ---
+            // LINK DO SEU SERVIDOR NO RENDER
             const API_URL = "https://mundo-cavest.onrender.com/corrigir";
 
             try {
@@ -171,6 +174,8 @@
                 if (!resposta.ok) throw new Error("Erro no servidor");
 
                 let dados = await resposta.json();
+                
+                // Converte o Markdown da IA para HTML
                 divResultado.innerHTML = marked.parse(dados.resposta);
                 btnP.style.display = "inline-block";
                 
@@ -178,8 +183,8 @@
                 xpBanner.style.display = "block";
 
             } catch (erro) {
-                divResultado.innerHTML = "❌ Erro ao conectar com o servidor. Note que na primeira vez o servidor pode demorar até 1 minuto para 'acordar'.";
-                console.error(erro);
+                divResultado.innerHTML = "❌ **Erro de conexão.**<br><br>O servidor pode estar 'acordando' (instância gratuita do Render). <br><strong>Aguarde 20 segundos e tente clicar no botão novamente.</strong>";
+                console.error("Erro detalhado:", erro);
             } finally {
                 btnC.innerText = "Corrigir com IA";
                 btnC.disabled = false;
@@ -189,7 +194,7 @@
         function adicionarXP(quantidade) {
             const nomeLogado = localStorage.getItem("logado");
             if (nomeLogado) {
-                let usuario = JSON.parse(localStorage.getItem(nomeLogado));
+                let usuario = JSON.parse(localStorage.getItem(nomeLogado)) || {};
                 usuario.xp = (usuario.xp || 0) + quantidade;
                 localStorage.setItem(nomeLogado, JSON.stringify(usuario));
             }
@@ -199,12 +204,13 @@
             const elemento = document.getElementById('resultado');
             const options = {
                 margin: 10,
-                filename: 'Correcao_CAVEST_Redacao.pdf',
+                filename: 'Correcao_Mundo_CAVEST.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, logging: false, backgroundColor: '#ffffff' },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
+            // Ajuste temporário para o PDF sair com fundo branco e letra preta
             const corOriginal = elemento.style.color;
             const bgOriginal = elemento.style.background;
             elemento.style.color = "black";
